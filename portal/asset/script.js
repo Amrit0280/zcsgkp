@@ -206,7 +206,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   if (!container) return;
 
   try {
-    const res = await fetch('http://127.0.0.1:5000/api/notices');
+    const res = await fetch('/api/notices');
     const notices = await res.json();
 
     container.innerHTML = '';
