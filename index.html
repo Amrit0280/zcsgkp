@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zenith Convent School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="portal/asset/style.css">
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="nav">
+    <a href="#" class="nav-logo">
+      <img src="portal/asset/Images/zenithlogo.png" alt="Zenith Logo" class="emblem">
+      <div class="name">Zenith Convent School<span>Sainik Kunj, Gorakhpur</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#process">Admission</a></li>
+      <li><a href="#fees">Fee Structure</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-affiliation">
+      Affiliation No. 2130701 <span style="color: #e74c3c; font-weight: 700;">(UPTO 31 March 2030)</span>
+    </div>
+    <a href="#form" class="nav-cta">Apply Now →</a>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+    <nav class="mobile-menu-nav">
+      <a href="#about">About</a>
+      <a href="#process">Admission</a>
+      <a href="#fees">Fee Structure</a>
+      <a href="#contact">Contact</a>
+      <a href="#form" class="mobile-menu-cta">Apply Now →</a>
+    </nav>
+  </div>
+
+  <!-- STICKY BAR -->
+  <div class="sticky-bar" id="stickyBar">
+    <p id="dynBannerText">🎓 <strong>Admissions 2026–27 are open.</strong> Limited seats available for all classes.</p>
+    <a href="#form">Apply Now →</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-slider" id="heroBgSlider">
+      <div class="bg-slide active" style="background-image: url('portal/asset/Images/Slide Show/1.jpeg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/2.jpeg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/3.jpeg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/4.jpeg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/5.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/6.jpeg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/7.jpeg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/8.jpeg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/9.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/10.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/11.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/12.jpeg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/13.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/14.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/15.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/16.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/17.jpg');"></div>
+      <div class="bg-slide" style="background-image: url('portal/asset/Images/Slide Show/18.png');"></div>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="floating-icons">
+      <span class="float-icon">📚</span>
+      <span class="float-icon">🎓</span>
+      <span class="float-icon">✏️</span>
+      <span class="float-icon">🏅</span>
+      <span class="float-icon">🔬</span>
+      <span class="float-icon">🎨</span>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge"><span class="badge-dot"></span> Admissions Open 2026–27</div>
+      <h1 id="dynHeroHeadline">
+        Shape Your Child's<br>
+        <span class="italic gold">Future</span> with
+        <span class="gold"> Excellence</span>
+      </h1>
+      <p class="hero-sub" id="dynHeroSubtitle">
+        Zenith Convent School offers a CBSE-affiliated, nurturing academic environment that develops tomorrow's leaders
+        through discipline, values, and innovation.
+      </p>
+      <div class="hero-btns">
+        <a href="#form" class="btn-primary">Apply Now — 2026–27</a>
+        <a href="#fees" class="btn-outline">📄 Download Prospectus</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Explore</span>
+    </div>
+  </section>
+
+  <!-- NOTICE BOARD -->
+  <section class="notice-board" id="noticeBoard">
+    <div class="reveal" style="text-align:center">
+      <div class="section-label">Announcements</div>
+      <h2 class="section-title">Latest <span>Notices</span></h2>
+      <p class="section-sub" style="margin:0 auto">Important updates and information from the school administration.</p>
+    </div>
+    <div class="notices-container" id="publicNotices" style="max-width: 800px; margin: 40px auto;">
+        <!-- Dynamic Notices injected here via JS -->
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-track" id="trustTrack">
+      <div class="trust-item">
+        <div class="trust-icon">📅</div>
+        <div class="trust-text"><strong>Est. 1999</strong><span>25+ Years of Excellence</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">📖</div>
+        <div class="trust-text"><strong>CBSE Curriculum</strong><span>Affiliated &amp; Recognised</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">👩‍🏫</div>
+        <div class="trust-text"><strong>Expert Faculty</strong><span>Trained &amp; Experienced</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🛡️</div>
+        <div class="trust-text"><strong>Safe Campus</strong><span>CCTV &amp; Security</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🏆</div>
+        <div class="trust-text"><strong>Award Winning</strong><span>Best School GKP 2023</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🌐</div>
+        <div class="trust-text"><strong>Smart Classes</strong><span>Digital Infrastructure</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🎭</div>
+        <div class="trust-text"><strong>Holistic Growth</strong><span>Sports, Arts &amp; Culture</span></div>
+      </div>
+      <!-- duplicate for seamless loop -->
+      <div class="trust-item">
+        <div class="trust-icon">📅</div>
+        <div class="trust-text"><strong>Est. 1999</strong><span>25+ Years of Excellence</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">📖</div>
+        <div class="trust-text"><strong>CBSE Curriculum</strong><span>Affiliated &amp; Recognised</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">👩‍🏫</div>
+        <div class="trust-text"><strong>Expert Faculty</strong><span>Trained &amp; Experienced</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🛡️</div>
+        <div class="trust-text"><strong>Safe Campus</strong><span>CCTV &amp; Security</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🏆</div>
+        <div class="trust-text"><strong>Award Winning</strong><span>Best School GKP 2023</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🌐</div>
+        <div class="trust-text"><strong>Smart Classes</strong><span>Digital Infrastructure</span></div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🎭</div>
+        <div class="trust-text"><strong>Holistic Growth</strong><span>Sports, Arts &amp; Culture</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRINCIPAL DESK -->
+  <section class="principal-section" id="principal">
+    <div class="reveal">
+      <div class="principal-container">
+        <div class="principal-img-wrap">
+          <img src="portal/asset/Images/principal.jpg" alt="Dr. Seema Rai - Principal" class="principal-img">
+        </div>
+        <div class="principal-content">
+          <div class="principal-block">
+            <h3>Principal's Desk</h3>
+            <p>It is truly said that children are buds, when nurtured properly, blossom into beautiful flowers. Every
+              child is born with immense potential to perform successfully in every walk of life. Teachers perform a
+              great job by identifying the hidden talents of the children, channelizing their energy and moulding them
+              into creative dynamic and responsible citizens.</p>
+            <a href="portal/asset/principal-desk.html" class="btn-secondary">Read More</a>
+          </div>
+          <div class="principal-block">
+            <h3>Principal's Vision</h3>
+            <p>Our vision is to create a nurturing and dynamic learning environment where students develop a passion for
+              knowledge, critical thinking, and lifelong learning. We aim to empower every learner to achieve their full
+              potential, embrace diversity, and become responsible global citizens who contribute positively to society.
+            </p>
+            <a href="portal/asset/principal-vision.html" class="btn-secondary">Read More</a>
+            <div class="principal-signature">
+              <div class="regards">With Best Regards,</div>
+              <div class="name">Dr. Seema Rai</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why" id="about">
+    <div class="reveal">
+      <div class="section-label">Why Zenith</div>
+      <h2 class="section-title">An Education That <span>Transforms</span></h2>
+      <p class="section-sub">We believe every child is gifted. Our role is to discover that gift, nurture it, and set it
+        free into the world.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="card-num">01</span>
+        <div class="why-card-icon">🌱</div>
+        <h3>Holistic Development</h3>
+        <p>Beyond academics — we nurture emotional intelligence, creativity, physical fitness, and social skills for
+          well-rounded individuals.</p>
+      </div>
+      <div class="why-card" style="transition-delay:0.1s">
+        <span class="card-num">02</span>
+        <div class="why-card-icon">🏛️</div>
+        <h3>Modern Infrastructure</h3>
+        <p>State-of-the-art labs, digital classrooms, vast library, sports complex, and comfortable learning
+          environments.</p>
+      </div>
+      <div class="why-card" style="transition-delay:0.2s">
+        <span class="card-num">03</span>
+        <div class="why-card-icon">⚖️</div>
+        <h3>Discipline &amp; Values</h3>
+        <p>Character building rooted in moral values, civic responsibility, and a culture of respect and integrity.</p>
+      </div>
+      <div class="why-card" style="transition-delay:0.3s">
+        <span class="card-num">04</span>
+        <div class="why-card-icon">🎯</div>
+        <h3>Academic Excellence</h3>
+        <p>Consistent board results with 95%+ pass rates. Personalised mentoring ensures every student reaches their
+          potential.</p>
+      </div>
+      <div class="why-card" style="transition-delay:0.4s">
+        <span class="card-num">05</span>
+        <div class="why-card-icon">🤝</div>
+        <h3>Parent Partnership</h3>
+        <p>Regular PTMs, digital progress reports, and an open-door policy that keeps parents closely involved in their
+          child's journey.</p>
+      </div>
+      <div class="why-card" style="transition-delay:0.5s">
+        <span class="card-num">06</span>
+        <div class="why-card-icon">🚌</div>
+        <h3>Safe Transport</h3>
+        <p>GPS-tracked buses covering all major areas of Gorakhpur with trained attendants and real-time parent
+          notifications.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT US TABS SECTION -->
+  <section class="about-tabs-section" id="about-tabs" style="background: var(--blue); padding: 80px 5%; position: relative; overflow: hidden;">
+    <!-- Background decoration -->
+    <div style="position:absolute;top:-120px;right:-120px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(244,196,48,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-80px;left:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(244,196,48,0.06) 0%,transparent 70%);pointer-events:none;"></div>
+
+    <div class="reveal" style="text-align:center; position:relative; z-index:1;">
+      <div class="section-label" style="color:rgba(244,196,48,0.8);">About Us</div>
+      <h2 class="section-title" style="color:white;">Explore <span>More</span></h2>
+      <p class="section-sub" style="margin:0 auto; color:rgba(255,255,255,0.65);">Discover our dedicated faculty, school guidelines, and celebrate the bright minds who have made us proud.</p>
+    </div>
+
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; max-width:1100px; margin:50px auto 0; position:relative; z-index:1;">
+
+      <!-- Card 1: Faculty -->
+      <a href="Tabs/faculty.html" style="text-decoration:none;" id="tabFaculty">
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(244,196,48,0.2);border-radius:24px;padding:36px 28px;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);position:relative;overflow:hidden;cursor:pointer;" class="about-tab-card">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-deep));transform:scaleX(0);transform-origin:left;transition:transform 0.35s;" class="about-tab-accent"></div>
+          <div style="width:60px;height:60px;background:rgba(244,196,48,0.12);border:1px solid rgba(244,196,48,0.25);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px;">👩‍🏫</div>
+          <h3 style="font-size:1.25rem;font-weight:700;color:white;margin-bottom:10px;">Our Faculty</h3>
+          <p style="font-size:0.88rem;color:rgba(255,255,255,0.60);line-height:1.7;margin-bottom:20px;">Meet our 46 highly qualified and experienced educators — from PhD holders to specialist teachers — who make Zenith shine.</p>
+          <div style="display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:0.82rem;font-weight:700;letter-spacing:0.3px;">View Faculty <span>→</span></div>
+        </div>
+      </a>
+
+      <!-- Card 2: Rules & Regulations -->
+      <a href="Tabs/rules-regulations.html" style="text-decoration:none;" id="tabRules">
+        <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(244,196,48,0.2);border-radius:24px;padding:36px 28px;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);position:relative;overflow:hidden;cursor:pointer;" class="about-tab-card">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-deep));transform:scaleX(0);transform-origin:left;transition:transform 0.35s;" class="about-tab-accent"></div>
+          <div style="width:60px;height:60px;background:rgba(244,196,48,0.12);border:1px solid rgba(244,196,48,0.25);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px;">📋</div>
+          <h3 style="font-size:1.25rem;font-weight:700;color:white;margin-bottom:10px;">Rules &amp; Regulations</h3>
+          <p style="font-size:0.88rem;color:rgba(255,255,255,0.60);line-height:1.7;margin-bottom:20px;">Complete school handbook covering general rules, discipline, attendance policy, uniform guidelines, and important notices for parents.</p>
+          <div style="display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:0.82rem;font-weight:700;letter-spacing:0.3px;">Read Guidelines <span>→</span></div>
+        </div>
+      </a>
+
+      <!-- Card 3: Toppers -->
+      <a href="Tabs/toppers.html" style="text-decoration:none;" id="tabToppers">
+        <div style="background:rgba(244,196,48,0.06);border:1px solid rgba(244,196,48,0.35);border-radius:24px;padding:36px 28px;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);position:relative;overflow:hidden;cursor:pointer;" class="about-tab-card">
+          <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-deep));transform:scaleX(0);transform-origin:left;transition:transform 0.35s;" class="about-tab-accent"></div>
+          <!-- Featured badge -->
+          <div style="position:absolute;top:16px;right:16px;background:var(--gold);color:var(--blue);font-size:0.65rem;font-weight:800;padding:4px 10px;border-radius:50px;letter-spacing:0.5px;">⭐ FEATURED</div>
+          <div style="width:60px;height:60px;background:rgba(244,196,48,0.18);border:1px solid rgba(244,196,48,0.4);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;margin-bottom:20px;">🏆</div>
+          <h3 style="font-size:1.25rem;font-weight:700;color:white;margin-bottom:10px;">Topper Students</h3>
+          <p style="font-size:0.88rem;color:rgba(255,255,255,0.60);line-height:1.7;margin-bottom:20px;">Celebrating our CBSE board exam achievers — Class X &amp; XII toppers with up to 96.8% marks. Hall of Fame for academic excellence.</p>
+          <div style="display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-size:0.82rem;font-weight:700;letter-spacing:0.3px;">View Hall of Fame <span>→</span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <style>
+    .about-tab-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+      border-color: rgba(244,196,48,0.5) !important;
+      background: rgba(255,255,255,0.10) !important;
+    }
+    .about-tab-card:hover .about-tab-accent {
+      transform: scaleX(1) !important;
+    }
+  </style>
+
+  <!-- ADMISSION PROCESS -->
+  <section class="process" id="process">
+    <div class="reveal" style="text-align:center">
+      <div class="section-label">Simple Steps</div>
+      <h2 class="section-title">Admission <span>Process</span></h2>
+      <p class="section-sub" style="margin:0 auto">Four easy steps to secure your child's seat at Zenith Convent School.
+      </p>
+    </div>
+    <div class="steps-container">
+      <div class="step">
+        <div class="step-circle">📝<div class="step-num">1</div>
+        </div>
+        <h4>Fill the Form</h4>
+        <p>Complete the online or offline admission form with accurate details</p>
+      </div>
+      <div class="step" style="transition-delay:0.15s">
+        <div class="step-circle">📁<div class="step-num">2</div>
+        </div>
+        <h4>Submit Documents</h4>
+        <p>Birth certificate, Aadhaar card, previous class marksheet &amp; passport photos</p>
+      </div>
+      <div class="step" style="transition-delay:0.3s">
+        <div class="step-circle">💬<div class="step-num">3</div>
+        </div>
+        <h4>Interaction</h4>
+        <p>Brief interaction/assessment with the student and parents by the principal</p>
+      </div>
+      <div class="step" style="transition-delay:0.45s">
+        <div class="step-circle">✅<div class="step-num">4</div>
+        </div>
+        <h4>Confirmation</h4>
+        <p>Fee payment, issue of admission letter and school welcome kit</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEE STRUCTURE -->
+  <section class="fees" id="fees">
+    <div class="reveal" style="text-align:center">
+      <div class="section-label">Transparent Pricing</div>
+      <h2 class="section-title">Fee Structure <span>Preview</span></h2>
+      <p class="section-sub" style="margin:0 auto">Affordable, transparent fees with no hidden charges.</p>
+    </div>
+    <div class="fee-table-wrap reveal">
+      <div class="fee-table-header">
+        <h3>Annual Fee Overview 2026–27</h3>
+        <span>Session: Apr–Mar</span>
+      </div>
+      <div class="fee-row"><span class="class">LKG – UKG</span><span class="amount">₹ 34,000 <span class="term">/
+            year</span></span></div>
+      <div class="fee-row"><span class="class">Class I – V</span><span class="amount">₹ 37,600 <span class="term">/
+            year</span></span></div>
+      <div class="fee-row"><span class="class">Class VI</span><span class="amount">₹ 41,000 <span class="term">/
+            year</span></span></div>
+      <div class="fee-row"><span class="class">Class VII – VIII</span><span class="amount">₹ 42,800 <span class="term">/
+            year</span></span></div>
+      <div class="fee-row"><span class="class">Class IX – X</span><span class="amount">₹ 54,700 <span class="term">/
+            year</span></span></div>
+      <div class="fee-row"><span class="class">Class XI – XII</span><span class="amount">₹ 71,600 <span class="term">/
+            year</span></span></div>
+      <div class="fee-note">
+        <center><strong>Note:</strong> Above fees include tuition, smart class, and activity charges.</center>
+      </div>
+    </div>
+    <div class="fee-cta reveal">
+      <a href="portal/asset/PDFs/Fee-Structure-2026-27.pdf12.pdf" target="_blank" class="btn-primary"
+        style="display:inline-block; margin-top:0">📄 View Full Fee Structure</a>
+    </div>
+  </section>
+
+  <!-- ADMISSION FORM -->
+  <section class="admission-form-section" id="form">
+    <div class="form-grid">
+      <div class="form-info">
+        <div class="section-label" style="color:rgba(244,196,48,0.8)">Start Here</div>
+        <h2 class="section-title">Apply for Admission <span>2026–27</span></h2>
+        <p class="section-sub">Fill in the form and our admissions team will contact you within 24 hours. Seats are
+          limited — don't wait.</p>
+        <div class="form-highlights">
+          <div class="form-highlight">No registration fee for online applications</div>
+          <div class="form-highlight">Acknowledgement sent within 24 hours</div>
+          <div class="form-highlight">Flexible school tour scheduling</div>
+          <div class="form-highlight">Need-based scholarship programs available</div>
+        </div>
+      </div>
+      <div class="form-card">
+        <h3>Admission Application</h3>
+        <form id="admissionForm" novalidate>
+          <div class="form-row">
+            <div class="field-group">
+              <span class="field-icon">👤</span>
+              <input type="text" id="studentName" placeholder="Student's Full Name" required>
+            </div>
+            <div class="field-group">
+              <span class="field-icon">👨‍👩‍👦</span>
+              <input type="text" id="parentName" placeholder="Parent / Guardian Name" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field-group">
+              <span class="field-icon">🎒</span>
+              <select id="classApplying" required>
+                <option value="" disabled selected>Class Applying For</option>
+                <option value="nursery">Nursery</option>
+                <option value="lkg">LKG</option>
+                <option value="ukg">UKG</option>
+                <option value="1">Class I</option>
+                <option value="2">Class II</option>
+                <option value="3">Class III</option>
+                <option value="4">Class IV</option>
+                <option value="5">Class V</option>
+                <option value="6">Class VI</option>
+                <option value="7">Class VII</option>
+                <option value="8">Class VIII</option>
+                <option value="9">Class IX</option>
+                <option value="11">Class XI</option>
+
+              </select>
+            </div>
+            <div class="field-group">
+              <span class="field-icon">📱</span>
+              <input type="tel" id="phone" placeholder="WhatsApp / Phone Number" required>
+            </div>
+          </div>
+          <div class="field-group">
+            <span class="field-icon">✉️</span>
+            <input type="email" id="email" placeholder="Email Address" required>
+          </div>
+          <div class="field-group textarea-field">
+            <span class="field-icon">💬</span>
+            <textarea id="message" placeholder="Any message or question? (Optional)"></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            Submit Application 🎓
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- URGENCY -->
+  <section class="urgency">
+    <div class="urgency-badge">⚠️ Limited Seats Remaining</div>
+    <h2>Only a Few Seats Left.<br><span>Apply Before They're Gone.</span></h2>
+    <p>Every year hundreds of families trust Zenith for their child's education. Don't miss the 2026–27 batch.</p>
+    <div class="seats-counter">
+      <span>🪑 Seats Remaining:</span>
+      <span class="num" id="seatCount">24</span>
+    </div>
+    <br><br>
+    <a href="#form" class="btn-primary" style="font-size:1.08rem; padding:16px 44px">Secure My Child's Seat →</a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="reveal">
+      <div class="section-label">Reach Us</div>
+      <h2 class="section-title">Get in <span>Touch</span></h2>
+      <p class="section-sub">Our admissions team is available Monday–Saturday, 9 AM – 4 PM.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-items reveal">
+        <div class="contact-item">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Call Us</h4>
+            <p><a href="tel:+916391002700"> +91 6391002700 </a>&nbsp;|&nbsp;<a href="tel:+916391002800"> +91 6391002800
+              </a>&nbsp;|&nbsp;<a href="tel:+916392010710"> +91 6392010710</a>
+            </p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>Email</h4>
+            <p><a href="mailto:zcsgkp@gmail.com"> zcsgkp@gmail.com </a></p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Address</h4>
+            <p>Zenith Convent School, Sainik Kunj, Nanda Nagar, Gorakhpur – 273001, U.P.</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <h4>Office Hours</h4>
+            <p>Mon – Sat: 9:00 AM – 4:00 PM</p>
+          </div>
+        </div>
+      </div>
+      <div class="map-embed reveal">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3562.7139172538414!2d83.43551237430184!3d26.75350396691643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39915b437aa78f23%3A0xd36069e587b1f5dd!2sZenith%20Convent%20School!5e0!3m2!1sen!2sin!4v1774448597333!5m2!1sen!2sin"
+          width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="name">Zenith Convent School</div>
+        <div class="tagline">Shaping Future Leaders Since 1999</div>
+        <p>CBSE-affiliated institution committed to academic excellence, moral values, and holistic development in the
+          heart of Gorakhpur.</p>
+        <div class="footer-socials" style="display: flex; gap: 12px; align-items: center;">
+          <a href="https://www.facebook.com/zenithconventschool/" target="_blank" title="Facebook">
+            <img src="portal/asset/Platform/Facebook.jpg" alt="Facebook"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://www.instagram.com/zenith_convent_school" target="_blank" title="Instagram">
+            <img src="portal/asset/Platform/instagram/2227.jpg" alt="Instagram"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://www.youtube.com/@zenithconventschool4371" target="_blank" title="YouTube">
+            <img src="portal/asset/Platform/youtubr.png" alt="YouTube"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.schoolapp.management" target="_blank"
+            title="App on Play Store">
+            <img src="portal/asset/Platform/playstore.png" alt="Play Store"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=916392010710&text=Kindly+help+me%2C+I+have+some+quries&type=phone_number&app_absent=0"
+            target="_blank" title="WhatsApp">
+            <img src="portal/asset/Platform/Whatsapp.png" alt="WhatsApp"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#about">About School</a></li>
+          <li><a href="#process">Admission Process</a></li>
+          <li><a href="#fees">Fee Structure</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Academics</h4>
+        <ul>
+          <li><a href="#">Primary School</a></li>
+          <li><a href="#">Middle School</a></li>
+          <li><a href="#">Senior School</a></li>
+          <li><a href="#">CBSE Results</a></li>
+          <li><a href="#">Scholarships</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <p>© 2026 Zenith Convent School, Gorakhpur. All rights reserved.</p>
+      <p>Made with <span>♥</span> for excellence in education.</p>
+    </div>
+  </footer>
+
+  <!-- WELCOME POPUP -->
+  <div class="welcome-popup" id="welcomePopup">
+    <div class="welcome-card">
+      <button class="welcome-close" id="welcomeClose">&times;</button>
+      <div class="welcome-slideshow" id="welcomeSlides">
+        <img class="slide" src="portal/asset/Images/Slide Show/1.jpeg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/2.jpeg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/3.jpeg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/4.jpeg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/5.jpg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/6.jpeg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/7.jpeg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/8.jpeg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/9.jpg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/10.jpg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/11.jpg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/12.jpeg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/13.jpg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/14.jpg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/15.jpg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/16.jpg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/17.jpg" alt="School Images">
+        <img class="slide" src="portal/asset/Images/Slide Show/18.png" alt="School Images">
+      </div>
+      <div class="welcome-header">
+        <h2>Admissions Open</h2>
+        <p>For Session 2026–2027</p>
+      </div>
+      <a href="#form" class="btn-primary welcome-btn" id="welcomeApplyBtn">Apply Now →</a>
+    </div>
+  </div>
+
+  <!-- SUCCESS POPUP -->
+  <div class="success-popup" id="successPopup">
+    <div class="popup-card">
+      <div class="popup-icon">✓</div>
+      <h3>Application Submitted!</h3>
+      <p>Thank you! Our admissions team will contact you within 24 hours. Please check your email for the
+        acknowledgement.</p>
+      <button class="popup-close"
+        onclick="document.getElementById('successPopup').classList.remove('show')">Close</button>
+    </div>
+  </div>
+
+  <script src="portal/asset/script.js?v=2"></script>
+
+  <!-- AI CHATBOT (Botpress) -->
+  <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/04/10/09/20260410095211-YW8SJ0OX.js" defer></script>
+  <script src="portal/asset/chatbot.js" defer></script>
+
+</body>
+
+</html>

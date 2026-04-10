@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login — Zenith Convent School</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="asset/admin.css">
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="login-card">
+
+      <!-- Logo / Emblem -->
+      <div class="login-logo">Z</div>
+      <h2>Admin Portal</h2>
+      <p>Zenith Convent School — Secure Access</p>
+
+      <form class="login-form" id="adminLoginForm" autocomplete="off">
+        <div class="form-group">
+          <label for="adminId">Admin ID</label>
+          <input
+            type="text"
+            id="adminId"
+            placeholder="Enter your Admin ID"
+            autocomplete="username"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div style="position:relative;">
+            <input
+              type="password"
+              id="password"
+              placeholder="Enter your Password"
+              autocomplete="current-password"
+              required
+              style="padding-right: 44px;"
+            >
+            <button
+              type="button"
+              id="togglePwd"
+              aria-label="Show/hide password"
+              style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:1.1rem;color:#aaa;padding:0;line-height:1;"
+              onclick="togglePassword()"
+            >👁</button>
+          </div>
+        </div>
+
+        <div class="error-msg" id="loginError">Incorrect Admin ID or Password.</div>
+
+        <button type="submit" class="btn-login" id="loginBtn">
+          🔐 Secure Login
+        </button>
+      </form>
+
+      <!-- Back to site link -->
+      <a href="../index.html" style="display:block;margin-top:20px;font-size:0.8rem;color:#aaa;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#2980b9'" onmouseout="this.style.color='#aaa'">
+        ← Back to School Website
+      </a>
+    </div>
+  </div>
+
+  <script src="asset/admin.js"></script>
+  <script>
+    function togglePassword() {
+      const inp = document.getElementById('password');
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    }
+  </script>
+</body>
+</html>

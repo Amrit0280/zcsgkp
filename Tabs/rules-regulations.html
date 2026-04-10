@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rules & Regulations — Zenith Convent School, Gorakhpur</title>
+<meta name="description" content="Official rules, regulations and guidelines for students, parents and guardians of Zenith Convent School, Gorakhpur.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:   #0F1C2E;
+  --navy2:  #162236;
+  --slate:  #253958;
+  --amber:  #D4893A;
+  --amber2: #F0AB62;
+  --cream:  #FAF8F5;
+  --white:  #FFFFFF;
+  --muted:  #7A8BA6;
+  --border: rgba(212,137,58,.18);
+  --text:   #1E2D42;
+  --rule-bg:#FDFCFA;
+  --sh-sm:  0 2px 12px rgba(15,28,46,.07);
+  --sh-md:  0 8px 32px rgba(15,28,46,.10), 0 2px 6px rgba(15,28,46,.06);
+  --sh-lg:  0 20px 60px rgba(15,28,46,.14), 0 4px 12px rgba(212,137,58,.08);
+  --nav-h:  64px;
+}
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* noise grain */
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+  opacity:.4;
+}
+
+/* ══════════ NAV ══════════ */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  height: var(--nav-h);
+  background: rgba(15,28,46,.92);
+  backdrop-filter: blur(20px) saturate(1.6);
+  border-bottom: 1px solid rgba(212,137,58,.15);
+  display: flex; align-items: center;
+  padding: 0 clamp(16px,4vw,48px);
+  gap: 8px;
+}
+
+.nav-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px; color: var(--amber2);
+  letter-spacing: .02em;
+  margin-right: auto; white-space: nowrap;
+}
+
+.nav-links {
+  display: flex; gap: 2px; flex-wrap: nowrap; overflow-x: auto;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.nav-links::-webkit-scrollbar { display:none; }
+
+.nav-link {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 12px; font-weight: 500;
+  color: rgba(255,255,255,.55);
+  text-decoration: none; white-space: nowrap;
+  transition: background .2s, color .2s;
+  letter-spacing: .03em;
+}
+.nav-link:hover { color:#fff; background:rgba(212,137,58,.2); }
+.nav-link.active { color:#fff; background:rgba(212,137,58,.3); }
+
+/* ══════════ HERO ══════════ */
+.hero {
+  position: relative;
+  background: var(--navy);
+  overflow: hidden;
+  padding: clamp(72px,12vw,130px) clamp(20px,6vw,80px) clamp(56px,9vw,100px);
+  text-align: center;
+}
+
+/* geometric accent shapes */
+.hero::before {
+  content:'';
+  position:absolute; top:-120px; right:-140px;
+  width:520px; height:520px; border-radius:50%;
+  background: radial-gradient(circle, rgba(212,137,58,.18) 0%, transparent 65%);
+  pointer-events:none;
+}
+.hero::after {
+  content:'';
+  position:absolute; bottom:-100px; left:-100px;
+  width:380px; height:380px; border-radius:50%;
+  background: radial-gradient(circle, rgba(212,137,58,.10) 0%, transparent 65%);
+  pointer-events:none;
+}
+
+/* horizontal rule lines */
+.hero-lines {
+  position:absolute; inset:0; pointer-events:none; overflow:hidden;
+}
+.hero-lines span {
+  position:absolute; left:0; right:0; height:1px;
+  background: linear-gradient(90deg,transparent,rgba(212,137,58,.12),transparent);
+}
+.hero-lines span:nth-child(1){ top:25%; }
+.hero-lines span:nth-child(2){ top:65%; }
+.hero-lines span:nth-child(3){ top:85%; }
+
+.hero-inner { position:relative; z-index:2; max-width:700px; margin:0 auto; }
+
+.hero-tag {
+  display:inline-flex; align-items:center; gap:10px;
+  font-size:11px; font-weight:600; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--amber);
+  margin-bottom:24px;
+}
+.hero-tag::before,.hero-tag::after {
+  content:''; width:28px; height:1px; background:var(--amber);
+}
+
+.hero h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(38px,8vw,82px);
+  line-height:1.0; letter-spacing:-.02em;
+  color:#fff; margin-bottom:18px;
+}
+.hero h1 em { font-style:italic; color:var(--amber2); }
+
+.hero-sub {
+  font-size:clamp(15px,2vw,18px); font-weight:300;
+  color:rgba(255,255,255,.55); max-width:480px; margin:0 auto 36px;
+}
+
+.hero-chips {
+  display:flex; flex-wrap:wrap; gap:10px; justify-content:center;
+}
+.chip {
+  padding:8px 20px; border-radius:50px;
+  border:1px solid rgba(212,137,58,.3);
+  font-size:12px; font-weight:500;
+  color:rgba(255,255,255,.7);
+  background:rgba(212,137,58,.08);
+  cursor:pointer; text-decoration:none;
+  transition:all .22s;
+}
+.chip:hover {
+  background:rgba(212,137,58,.22);
+  border-color:var(--amber); color:#fff;
+  transform:translateY(-2px);
+}
+
+/* ══════════ MAIN LAYOUT ══════════ */
+.page-wrap {
+  max-width:1100px; margin:0 auto;
+  padding:clamp(40px,6vw,80px) clamp(16px,4vw,40px) 80px;
+  display:flex; gap:36px; align-items:flex-start;
+}
+
+/* sidebar TOC (desktop) */
+.toc {
+  position:sticky; top:calc(var(--nav-h) + 24px);
+  width:220px; flex-shrink:0;
+  background:var(--white); border:1px solid var(--border);
+  border-radius:18px; padding:24px 20px;
+  box-shadow:var(--sh-sm);
+}
+.toc-title {
+  font-size:11px; font-weight:600; letter-spacing:.16em;
+  text-transform:uppercase; color:var(--amber);
+  margin-bottom:16px;
+}
+.toc-item {
+  display:flex; align-items:center; gap:10px;
+  padding:9px 12px; border-radius:10px;
+  font-size:13px; font-weight:500; color:var(--muted);
+  text-decoration:none; margin-bottom:2px;
+  transition:all .2s;
+}
+.toc-item:hover { background:rgba(212,137,58,.08); color:var(--amber); }
+.toc-item.active { background:rgba(212,137,58,.12); color:var(--amber); font-weight:600; }
+.toc-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:currentColor; flex-shrink:0; opacity:.5;
+}
+.toc-item.active .toc-dot { opacity:1; }
+
+/* main content */
+.sections { flex:1; min-width:0; }
+
+/* ══════════ SECTION CARDS ══════════ */
+.section-card {
+  background:var(--white);
+  border:1px solid rgba(15,28,46,.07);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:var(--sh-md);
+  margin-bottom:32px;
+  transition:transform .32s cubic-bezier(.34,1.56,.64,1), box-shadow .32s;
+  scroll-margin-top:calc(var(--nav-h) + 28px);
+}
+.section-card:hover {
+  transform:translateY(-5px);
+  box-shadow:var(--sh-lg);
+}
+
+/* card header band */
+.card-header {
+  display:flex; align-items:center; gap:18px;
+  padding:28px 32px;
+  background:linear-gradient(105deg, var(--navy) 0%, var(--slate) 100%);
+  border-bottom:3px solid var(--amber);
+  position:relative; overflow:hidden;
+}
+.card-header::after {
+  content:'';
+  position:absolute; top:-60px; right:-60px;
+  width:200px; height:200px; border-radius:50%;
+  background:rgba(212,137,58,.07); pointer-events:none;
+}
+
+.card-icon {
+  width:48px; height:48px; border-radius:14px; flex-shrink:0;
+  background:rgba(212,137,58,.18);
+  border:1px solid rgba(212,137,58,.3);
+  display:flex; align-items:center; justify-content:center;
+}
+.card-icon svg { width:22px; height:22px; stroke:var(--amber2); fill:none; stroke-width:1.8; }
+
+.card-heading-wrap { flex:1; }
+.card-section-tag {
+  font-size:10px; font-weight:600; letter-spacing:.2em;
+  text-transform:uppercase; color:rgba(212,137,58,.7);
+  margin-bottom:4px;
+}
+.card-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(18px,3vw,26px);
+  color:#fff; letter-spacing:-.01em;
+}
+
+.card-badge {
+  padding:5px 14px; border-radius:50px;
+  background:rgba(212,137,58,.18);
+  border:1px solid rgba(212,137,58,.3);
+  font-size:11px; font-weight:600;
+  color:var(--amber2); white-space:nowrap;
+}
+
+/* card body */
+.card-body { padding:32px; }
+
+/* ── rule list ── */
+.rule-list {
+  list-style:none;
+  display:flex; flex-direction:column; gap:0;
+}
+
+.rule-item {
+  display:flex; gap:16px;
+  padding:16px 0;
+  border-bottom:1px solid rgba(15,28,46,.06);
+  opacity:0; transform:translateX(-12px);
+  transition:opacity .4s ease, transform .4s ease;
+}
+.rule-item:last-child { border-bottom:none; }
+.rule-item.visible { opacity:1; transform:translateX(0); }
+
+.rule-num {
+  width:28px; height:28px; border-radius:8px; flex-shrink:0;
+  background:linear-gradient(135deg,var(--amber),var(--amber2));
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:700; color:#fff;
+  margin-top:1px; box-shadow:0 2px 8px rgba(212,137,58,.3);
+}
+
+.rule-text {
+  font-size:14.5px; font-weight:400;
+  color:var(--text); line-height:1.7;
+  flex:1;
+}
+
+/* sub-list (nested) */
+.sub-list { list-style:none; margin-top:10px; display:flex; flex-direction:column; gap:8px; }
+.sub-item {
+  display:flex; gap:12px; align-items:flex-start;
+  font-size:13.5px; color:#4A6080; line-height:1.65;
+}
+.sub-bullet {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--amber); flex-shrink:0; margin-top:7px;
+}
+
+/* divider between attendance + sub */
+.rule-divider {
+  height:1px; background:linear-gradient(90deg,var(--border),transparent);
+  margin:8px 0 16px;
+}
+
+/* ── Guidelines for Parents card ── */
+.guideline-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+  gap:14px; margin-top:4px;
+}
+.g-item {
+  display:flex; gap:12px; align-items:flex-start;
+  background:var(--rule-bg);
+  border:1px solid rgba(15,28,46,.07);
+  border-radius:14px; padding:16px;
+  font-size:13.5px; color:var(--text); line-height:1.65;
+  opacity:0; transform:translateY(10px);
+  transition:opacity .4s ease, transform .4s ease, box-shadow .2s;
+}
+.g-item.visible { opacity:1; transform:translateY(0); }
+.g-item:hover { box-shadow:0 4px 16px rgba(212,137,58,.1); }
+.g-icon-sm {
+  width:30px; height:30px; border-radius:8px; flex-shrink:0;
+  background:rgba(212,137,58,.12);
+  display:flex; align-items:center; justify-content:center;
+}
+.g-icon-sm svg { width:14px; height:14px; stroke:var(--amber); fill:none; stroke-width:2; }
+
+/* ── Important / removal grounds ── */
+.important-intro {
+  font-size:14.5px; line-height:1.75; color:var(--text);
+  margin-bottom:20px;
+  padding:18px 22px; border-radius:14px;
+  background:rgba(212,137,58,.06);
+  border-left:3px solid var(--amber);
+}
+.removal-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:12px;
+}
+.removal-item {
+  display:flex; align-items:center; gap:12px;
+  background:var(--rule-bg); border:1px solid rgba(15,28,46,.07);
+  border-radius:12px; padding:14px 16px;
+  font-size:13.5px; font-weight:500; color:var(--text);
+  opacity:0; transform:translateY(8px);
+  transition:opacity .35s ease, transform .35s ease, border-color .2s;
+}
+.removal-item.visible { opacity:1; transform:translateY(0); }
+.removal-item:hover { border-color:rgba(212,137,58,.3); }
+.removal-icon {
+  width:32px; height:32px; border-radius:9px; flex-shrink:0;
+  background:rgba(212,137,58,.12);
+  display:flex; align-items:center; justify-content:center;
+}
+.removal-icon svg { width:15px; height:15px; stroke:var(--amber); fill:none; stroke-width:2; }
+
+/* ══════════ FOOTER ══════════ */
+footer {
+  background:var(--navy);
+  color:rgba(255,255,255,.45);
+  text-align:center;
+  padding:40px 24px;
+  font-size:13px;
+  border-top:1px solid rgba(212,137,58,.15);
+}
+footer strong {
+  font-family:'Playfair Display',serif;
+  color:var(--amber2); font-size:16px;
+  display:block; margin-bottom:8px;
+}
+
+/* ══════════ RESPONSIVE ══════════ */
+@media(max-width:840px){
+  .page-wrap { flex-direction:column; }
+  .toc { position:static; width:100%; }
+  .toc-links { display:flex; flex-wrap:wrap; gap:6px; }
+  .toc-item { padding:6px 12px; }
+}
+@media(max-width:560px){
+  .card-header { padding:22px 20px; }
+  .card-body { padding:20px; }
+  .nav-brand { font-size:13px; }
+}
+
+/* ══════════ SCROLL ANIMATIONS ══════════ */
+.fade-in {
+  opacity:0; transform:translateY(20px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+.fade-in.visible { opacity:1; transform:translateY(0); }
+
+/* Responsive nav */
+@media (max-width: 860px) {
+  #mainNav .nav-links { display: none !important; }
+  #mainNav > a:last-of-type { display: none !important; }
+  .rules-hamburger { display: flex !important; }
+}
+@media (max-width: 600px) {
+  .hero-inner { padding: 50px 20px !important; }
+  .hero h1 { font-size: clamp(2rem,8vw,3rem) !important; }
+  .content { padding: 0 16px 60px !important; }
+  .rule-card { padding: 24px 18px !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ───── NAV ───── -->
+<nav id="mainNav">
+  <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;">
+    <img src="../portal/asset/Images/zenithlogo.png" alt="Zenith Logo" style="width:36px;height:36px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px rgba(244,196,48,0.4);">
+    <span class="nav-brand">ZCS Rules &amp; Regulations</span>
+  </a>
+  <div class="nav-links">
+    <a class="nav-link" href="#general">General</a>
+    <a class="nav-link" href="#discipline">Discipline</a>
+    <a class="nav-link" href="#attendance">Attendance</a>
+    <a class="nav-link" href="#uniform">Uniform</a>
+    <a class="nav-link" href="#parents">Parents</a>
+    <a class="nav-link" href="#important">Important</a>
+  </div>
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.8);font-size:12px;font-weight:500;text-decoration:none;padding:6px 16px;border-radius:50px;border:1px solid rgba(255,255,255,0.2);white-space:nowrap;transition:all 0.2s;" onmouseover="this.style.background='rgba(212,137,58,0.15)';this.style.borderColor='#D4893A';" onmouseout="this.style.background='transparent';this.style.borderColor='rgba(255,255,255,0.2)';">← Back to Main Site</a>
+  <button class="rules-hamburger" aria-label="Open menu" style="display:none;flex-direction:column;justify-content:center;gap:5px;background:none;border:none;cursor:pointer;padding:6px;margin-left:8px;" onclick="document.getElementById('rulesMenu').style.opacity='1';document.getElementById('rulesMenu').style.visibility='visible';">
+    <span style="display:block;width:24px;height:3px;background:white;border-radius:3px;"></span>
+    <span style="display:block;width:24px;height:3px;background:white;border-radius:3px;"></span>
+    <span style="display:block;width:24px;height:3px;background:white;border-radius:3px;"></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="rulesMenu" style="position:fixed;inset:0;z-index:2500;background:rgba(10,61,98,0.97);backdrop-filter:blur(20px);display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity 0.3s,visibility 0.3s;">
+  <button onclick="document.getElementById('rulesMenu').style.opacity='0';document.getElementById('rulesMenu').style.visibility='hidden';" style="position:absolute;top:20px;right:24px;background:none;border:none;color:white;font-size:2.2rem;cursor:pointer;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:50%;">&times;</button>
+  <nav style="display:flex;flex-direction:column;align-items:center;gap:22px;">
+    <a href="#general" onclick="document.getElementById('rulesMenu').style.opacity='0';document.getElementById('rulesMenu').style.visibility='hidden';" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:1.3rem;font-weight:600;">General</a>
+    <a href="#discipline" onclick="document.getElementById('rulesMenu').style.opacity='0';document.getElementById('rulesMenu').style.visibility='hidden';" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:1.3rem;font-weight:600;">Discipline</a>
+    <a href="#attendance" onclick="document.getElementById('rulesMenu').style.opacity='0';document.getElementById('rulesMenu').style.visibility='hidden';" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:1.3rem;font-weight:600;">Attendance</a>
+    <a href="#uniform" onclick="document.getElementById('rulesMenu').style.opacity='0';document.getElementById('rulesMenu').style.visibility='hidden';" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:1.3rem;font-weight:600;">Uniform</a>
+    <a href="#parents" onclick="document.getElementById('rulesMenu').style.opacity='0';document.getElementById('rulesMenu').style.visibility='hidden';" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:1.3rem;font-weight:600;">Parents</a>
+    <a href="#important" onclick="document.getElementById('rulesMenu').style.opacity='0';document.getElementById('rulesMenu').style.visibility='hidden';" style="color:rgba(255,255,255,0.85);text-decoration:none;font-size:1.3rem;font-weight:600;">Important</a>
+    <a href="../index.html" style="background:linear-gradient(135deg,#F4C430,#d4a017);color:#0A3D62;padding:12px 32px;border-radius:50px;font-weight:700;font-size:1rem;text-decoration:none;margin-top:10px;">← Back to Home</a>
+  </nav>
+</div>
+
+<!-- ───── HERO ───── -->
+<header class="hero">
+  <div class="hero-lines"><span></span><span></span><span></span></div>
+  <div class="hero-inner">
+    <div class="hero-tag">Official Handbook</div>
+    <h1>Rules &amp; <em>Regulations</em></h1>
+    <p class="hero-sub">Guidelines for students, parents &amp; guardians — to foster discipline, excellence &amp; community.</p>
+    <div class="hero-chips">
+      <a class="chip" href="#general">General Rules</a>
+      <a class="chip" href="#discipline">Discipline</a>
+      <a class="chip" href="#attendance">Attendance</a>
+      <a class="chip" href="#uniform">Uniform</a>
+      <a class="chip" href="#parents">For Parents</a>
+      <a class="chip" href="#important">Important</a>
+    </div>
+  </div>
+</header>
+
+<!-- ───── BODY ───── -->
+<div class="page-wrap">
+
+  <!-- sidebar -->
+  <aside class="toc">
+    <div class="toc-title">Sections</div>
+    <div class="toc-links">
+      <a class="toc-item active" href="#general"><span class="toc-dot"></span>General Rules</a>
+      <a class="toc-item" href="#discipline"><span class="toc-dot"></span>Discipline</a>
+      <a class="toc-item" href="#attendance"><span class="toc-dot"></span>Attendance &amp; Leave</a>
+      <a class="toc-item" href="#uniform"><span class="toc-dot"></span>Uniform Rules</a>
+      <a class="toc-item" href="#parents"><span class="toc-dot"></span>For Parents</a>
+      <a class="toc-item" href="#important"><span class="toc-dot"></span>Important Notice</a>
+    </div>
+  </aside>
+
+  <!-- main sections -->
+  <main class="sections">
+
+    <!-- ── 1. General Rules ── -->
+    <article class="section-card fade-in" id="general">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg>
+        </div>
+        <div class="card-heading-wrap">
+          <div class="card-section-tag">Section 01</div>
+          <div class="card-title">General Rules</div>
+        </div>
+        <div class="card-badge">15 Rules</div>
+      </div>
+      <div class="card-body">
+        <ul class="rule-list">
+          <li class="rule-item"><span class="rule-num">1</span><span class="rule-text">Every child must come to school on time. Late arrivals may not be admitted to class without the Principal's permission.</span></li>
+          <li class="rule-item"><span class="rule-num">2</span><span class="rule-text">Perfect silence should be maintained during the prayer bell.</span></li>
+          <li class="rule-item"><span class="rule-num">3</span><span class="rule-text">Students need to bring the school diary daily.</span></li>
+          <li class="rule-item"><span class="rule-num">4</span><span class="rule-text">Students are required to note their homework in the school diary.</span></li>
+          <li class="rule-item"><span class="rule-num">5</span><span class="rule-text">Students are to keep their surroundings clean and use the dustbins provided.</span></li>
+          <li class="rule-item"><span class="rule-num">6</span><span class="rule-text">Boys are to keep their nails and hair short.</span></li>
+          <li class="rule-item"><span class="rule-num">7</span><span class="rule-text">Girls are to keep their nails short and braid their long hair.</span></li>
+          <li class="rule-item"><span class="rule-num">8</span><span class="rule-text">Students are advised not to buy food from street vendors in the interest of their health.</span></li>
+          <li class="rule-item"><span class="rule-num">9</span><span class="rule-text">Students are strictly forbidden to leave the school premises or grounds during regular school hours. Permission to leave may be granted only by the Principal.</span></li>
+          <li class="rule-item"><span class="rule-num">10</span><span class="rule-text">Students must park their cycles/scooters in the parking area and lock them. Students riding two-wheelers must wear helmets and possess a driving licence.</span></li>
+          <li class="rule-item"><span class="rule-num">11</span><span class="rule-text">Lending or borrowing of money is strictly prohibited. The school authorities will not be responsible for loss of money, books, etc. Students are expected to look after their own belongings.</span></li>
+          <li class="rule-item"><span class="rule-num">12</span><span class="rule-text">Students caught triple riding will be penalized.</span></li>
+          <li class="rule-item"><span class="rule-num">13</span><span class="rule-num" style="width:auto;height:auto;background:none;color:inherit;box-shadow:none;font-size:14.5px;font-weight:400;line-height:1.7;flex:1;margin-top:0;padding:0;">Physical training, games, tours, picnics and camps are compulsory for all students. Students are required to take part in various extracurricular activities organized from time to time.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- ── 2. Discipline Rules ── -->
+    <article class="section-card fade-in" id="discipline">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div class="card-heading-wrap">
+          <div class="card-section-tag">Section 02</div>
+          <div class="card-title">Discipline Rules</div>
+        </div>
+        <div class="card-badge">3 Rules</div>
+      </div>
+      <div class="card-body">
+        <ul class="rule-list">
+          <li class="rule-item"><span class="rule-num">1</span><span class="rule-text">No student will manhandle another student. It is considered a serious offence. Any violation of this rule may result in expulsion of the offender from the school. Students are expected to exhibit exemplary behaviour inside and outside the school premises, worthy of children brought up in decent homes.</span></li>
+          <li class="rule-item"><span class="rule-num">2</span><span class="rule-text">The Principal is empowered to rusticate, suspend, or remove a student from the roll of the school on grounds of indiscipline, misbehaviour, neglect of academic work, or frequent absence.</span></li>
+          <li class="rule-item"><span class="rule-num">3</span><span class="rule-text">Students must refrain from damaging school property — furniture, fans, window panes, etc. Any knowledge of accidental or intentional damage must be reported to the Head Mistress. Damage will be remedied at the cost of the offender.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- ── 3. Attendance & Leave ── -->
+    <article class="section-card fade-in" id="attendance">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+        </div>
+        <div class="card-heading-wrap">
+          <div class="card-section-tag">Section 03</div>
+          <div class="card-title">Attendance &amp; Leave</div>
+        </div>
+        <div class="card-badge">2 Rules</div>
+      </div>
+      <div class="card-body">
+        <ul class="rule-list">
+          <li class="rule-item"><span class="rule-num">1</span><span class="rule-text">No leave of absence is granted except on a previous application from parent/guardian for plausible reasons only, or on an application from the parent when the student reports back to school.</span></li>
+          <li class="rule-item"><span class="rule-num">2</span><span class="rule-text">Absence without leave or unexplained absence for more than three consecutive days may result in the student's name being struck off the rolls. Re-admission may only be granted on payment of a fresh admission fee.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- ── 4. Uniform Rules ── -->
+    <article class="section-card fade-in" id="uniform">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
+        </div>
+        <div class="card-heading-wrap">
+          <div class="card-section-tag">Section 04</div>
+          <div class="card-title">Uniform Rules</div>
+        </div>
+        <div class="card-badge">2 Rules</div>
+      </div>
+      <div class="card-body">
+        <ul class="rule-list">
+          <li class="rule-item"><span class="rule-num">1</span><span class="rule-text">A student who is not dressed neatly and tidily in full school uniform will not be permitted to sit in class. The prescribed shade and pattern must be carefully adhered to. Any deviation will not be accepted. Strict measures will be taken against those who ignore the uniform rule.</span></li>
+          <li class="rule-item"><span class="rule-num">2</span><span class="rule-text">Students must wear house dress on <strong>Wednesday</strong> and <strong>Saturday</strong>.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <!-- ── 5. Guidelines for Parents ── -->
+    <article class="section-card fade-in" id="parents">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="card-heading-wrap">
+          <div class="card-section-tag">Section 05</div>
+          <div class="card-title">Guidelines for Parents</div>
+        </div>
+        <div class="card-badge">8 Points</div>
+      </div>
+      <div class="card-body">
+        <div class="guideline-grid">
+          <div class="g-item"><div class="g-icon-sm"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><span>Check your ward's school diary daily and ensure all work is done.</span></div>
+          <div class="g-item"><div class="g-icon-sm"><svg viewBox="0 0 24 24"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"/><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"/></svg></div><span>Sign the progress report of your ward after each examination.</span></div>
+          <div class="g-item"><div class="g-icon-sm"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><span>Maintain and sign leave records in the school diary; send advance applications to school.</span></div>
+          <div class="g-item"><div class="g-icon-sm"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><span>Ensure regularity, punctuality, discipline and completion of homework. Encourage active participation in all school activities.</span></div>
+          <div class="g-item"><div class="g-icon-sm"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><span>Keep children at home during infectious illness. A medical fitness certificate is required before the child returns to school.</span></div>
+          <div class="g-item"><div class="g-icon-sm"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.07 19a19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72A12.84 12.84 0 0 0 9.8 6.5a2 2 0 0 1-.45 2.11L8.09 9.91A16 16 0 0 0 14 15.82l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><span>Notify the school in writing of any change in address or mobile number.</span></div>
+          <div class="g-item"><div class="g-icon-sm"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span>Ensure all fees and dues are cleared on time without exception.</span></div>
+          <div class="g-item"><div class="g-icon-sm"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span>Adhere to visiting hours. No teacher is to be contacted during school hours without the prior permission of the Principal/Administrator.</span></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ── 6. Important ── -->
+    <article class="section-card fade-in" id="important">
+      <div class="card-header">
+        <div class="card-icon">
+          <svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div class="card-heading-wrap">
+          <div class="card-section-tag">Section 06</div>
+          <div class="card-title">Important Notice</div>
+        </div>
+        <div class="card-badge">Mandatory</div>
+      </div>
+      <div class="card-body">
+        <div class="important-intro">
+          Strict regularity and punctuality, implicit obedience, courtesy in speech and conduct, cleanliness of person and uniform are expected from all students. Parents are expected to co-operate with school authorities regarding these instructions, rules and regulations.<br><br>
+          A student <strong>may be removed</strong> by school authorities without prior notice to the parents on any of the following grounds:
+        </div>
+        <div class="removal-grid">
+          <div class="removal-item"><div class="removal-icon"><svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>Constant weakness in studies</div>
+          <div class="removal-item"><div class="removal-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>Habitual indiscipline &amp; disobedience</div>
+          <div class="removal-item"><div class="removal-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>Irregular attendance</div>
+          <div class="removal-item"><div class="removal-icon"><svg viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg></div>Behavioural problems / involvement in violence</div>
+          <div class="removal-item"><div class="removal-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>Indifference to school activities</div>
+          <div class="removal-item"><div class="removal-icon"><svg viewBox="0 0 24 24"><path d="M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg></div>Untidy or improper uniform</div>
+          <div class="removal-item"><div class="removal-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>Non-cooperation of parents / guardians with school staff</div>
+        </div>
+      </div>
+    </article>
+
+  </main>
+</div>
+
+<!-- ───── FOOTER ───── -->
+<footer>
+  <strong>Zenith Convent School, Gorakhpur</strong>
+  Sainik Kunj, Nanda Nagar, Gorakhpur – 273001 &nbsp;·&nbsp;
+  <a href="mailto:zcsgkp@gmail.com" style="color:var(--amber2);text-decoration:none;">zcsgkp@gmail.com</a>
+  <br>&nbsp;
+  © 2026 Zenith Convent School. All rights reserved. &nbsp;·&nbsp;
+  Rules &amp; Regulations Handbook &nbsp;·&nbsp; Affiliation No. 2130701
+</footer>
+
+<script>
+/* ── Intersection Observer: fade-in cards + rule items ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    el.classList.add('visible');
+
+    // stagger children
+    const children = el.querySelectorAll('.rule-item, .g-item, .removal-item');
+    children.forEach((child, i) => {
+      setTimeout(() => child.classList.add('visible'), i * 60);
+    });
+    observer.unobserve(el);
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ── Active nav/toc highlighting ── */
+const sections = document.querySelectorAll('.section-card[id]');
+const navLinks = document.querySelectorAll('.nav-link');
+const tocItems = document.querySelectorAll('.toc-item');
+
+const sectionObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const id = entry.target.id;
+    navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+    tocItems.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + id));
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+
+sections.forEach(s => sectionObserver.observe(s));
+</script>
+</body>
+</html>
