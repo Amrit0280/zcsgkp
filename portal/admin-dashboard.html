@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Zenith Convent School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="asset/admin.css">
+</head>
+
+<body>
+
+  <!-- MOBILE TOPBAR (shown only on small screens) -->
+  <div class="mobile-topbar" id="mobileTopbar">
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Open sidebar">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-brand">
+      <div class="s-emblem-sm">Z</div>
+      <span>ZCS Admin</span>
+    </div>
+    <div class="admin-avatar-sm">👩‍🏫</div>
+  </div>
+
+  <!-- SIDEBAR OVERLAY (mobile) -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <div class="admin-layout">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="s-emblem">Z</div>
+        <div class="s-title">Zenith Convent<span>Admin Portal</span></div>
+        <!-- Close button for mobile -->
+        <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">&times;</button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-tab="dashboard">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a class="nav-item" data-tab="seats">
+          <span class="nav-icon">🪑</span>
+          <span class="nav-label">Seat Management</span>
+        </a>
+        <a class="nav-item" data-tab="notices">
+          <span class="nav-icon">📢</span>
+          <span class="nav-label">Manage Notices</span>
+        </a>
+        <a class="nav-item" data-tab="content">
+          <span class="nav-icon">📝</span>
+          <span class="nav-label">Edit Content</span>
+        </a>
+        <a class="nav-item" data-tab="settings">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="../index.html" class="view-site-btn">
+          <span>🌐</span> <span class="nav-label">View Website</span>
+        </a>
+        <button class="logout-btn" id="logoutBtn">
+          <span>🚪</span> <span class="nav-label">Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="sidebar-toggle-desk" id="sidebarToggleDesk" aria-label="Toggle sidebar">☰</button>
+          <div class="topbar-title" id="topbarTitle">Dashboard</div>
+        </div>
+        <div class="admin-profile">
+          <div class="admin-info">
+            <div class="name">Dr. Seema Rai</div>
+            <div class="role">Administrator</div>
+          </div>
+          <div class="admin-avatar">👩‍🏫</div>
+        </div>
+      </header>
+
+      <section class="content-area">
+
+        <!-- ─── DASHBOARD TAB ─── -->
+        <div class="tab-pane active" id="tab-dashboard">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon icon-blue">👥</div>
+              <div class="stat-info">
+                <h4>Today's Visitors</h4>
+                <div class="num">1,248</div>
+                <div class="stat-trend up">↑ 12% vs yesterday</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon icon-gold">📝</div>
+              <div class="stat-info">
+                <h4>Admission Forms</h4>
+                <div class="num" id="admissionCount">--</div>
+                <div class="stat-trend up">↑ Live count</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon icon-green">🪑</div>
+              <div class="stat-info">
+                <h4>Total Seats</h4>
+                <div class="num" id="totalSeatsCount">--</div>
+                <div class="stat-trend">All classes</div>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon icon-red">📢</div>
+              <div class="stat-info">
+                <h4>Active Notices</h4>
+                <div class="num" id="noticeCount">--</div>
+                <div class="stat-trend">Published</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-box">
+            <h3>🎓 Recent Form Submissions</h3>
+            <div class="notice-list" id="admissionList">
+              <div class="skeleton-row"></div>
+              <div class="skeleton-row"></div>
+              <div class="skeleton-row"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── SEAT MANAGEMENT TAB ─── -->
+        <div class="tab-pane" id="tab-seats">
+          <div class="section-box">
+            <h3>🪑 Class-wise Seat Management</h3>
+            <p class="section-desc">Set the number of available seats for each class. This controls the "Limited Seats" counter shown on the website's admission section.</p>
+
+            <!-- Summary Bar -->
+            <div class="seat-summary-bar">
+              <div class="seat-summary-item">
+                <span class="summary-label">Total Seats Available</span>
+                <span class="summary-val" id="grandTotalSeats">0</span>
+              </div>
+              <div class="seat-summary-item">
+                <span class="summary-label">Admission Status</span>
+                <span class="summary-val" id="admissionStatus" style="color: var(--admin-success);">Open</span>
+              </div>
+              <div class="seat-summary-item">
+                <span class="summary-label">Last Updated</span>
+                <span class="summary-val" id="seatsLastUpdated">—</span>
+              </div>
+            </div>
+
+            <!-- Seats Grid -->
+            <div class="seats-grid" id="seatsGrid">
+              <!-- Generated by JS -->
+            </div>
+
+            <div class="seat-actions">
+              <button class="btn-primary" id="saveSeatsBtn" onclick="saveSeats()">
+                💾 Save Seat Changes
+              </button>
+              <button class="btn-secondary-admin" onclick="resetSeats()">
+                ↺ Reset to Default
+              </button>
+              <div class="seat-save-msg" id="seatSaveMsg"></div>
+            </div>
+          </div>
+
+          <!-- Admission toggle -->
+          <div class="section-box">
+            <h3>🎯 Admission Status Control</h3>
+            <p class="section-desc">Toggle whether admissions are currently open or closed. This will update the sticky banner and urgency section on the website.</p>
+            <div class="toggle-row">
+              <label class="toggle-label">Admissions Open</label>
+              <label class="switch">
+                <input type="checkbox" id="admissionToggle" checked>
+                <span class="slider"></span>
+              </label>
+              <span class="toggle-status" id="toggleStatus">Currently: <strong style="color:var(--admin-success)">Open</strong></span>
+            </div>
+            <button class="btn-primary" style="margin-top:16px;" onclick="saveAdmissionStatus()">Update Status</button>
+          </div>
+        </div>
+
+        <!-- ─── NOTICES TAB ─── -->
+        <div class="tab-pane" id="tab-notices">
+          <div class="section-box">
+            <h3>📢 Post a New Notice</h3>
+            <form class="admin-form" id="noticeForm">
+              <div class="form-group">
+                <label>Notice Title</label>
+                <input type="text" id="noticeTitle" placeholder="E.g., Holiday on Monday">
+              </div>
+              <div class="form-group">
+                <label>Notice Details</label>
+                <textarea id="noticeContent" placeholder="Write the notice content here..."></textarea>
+              </div>
+              <button type="button" class="btn-primary" id="publishBtn" onclick="publishNotice(event)">
+                📤 Publish Notice
+              </button>
+            </form>
+          </div>
+
+          <div class="section-box">
+            <h3>📋 Current Active Notices</h3>
+            <div class="notice-list" id="noticeList">
+              <div class="skeleton-row"></div>
+              <div class="skeleton-row"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── CONTENT TAB ─── -->
+        <div class="tab-pane" id="tab-content">
+          <div class="section-box">
+            <h3>📝 Website Content Management</h3>
+            <p class="section-desc">Update key text sections on the main website. Changes require backend integration to persist permanently.</p>
+            <form class="admin-form" id="contentForm">
+              <div class="form-group">
+                <label>Hero Section Headline</label>
+                <input type="text" id="editHeroHeadline" placeholder="Inspiring Excellence in Education">
+              </div>
+              <div class="form-group">
+                <label>Hero Section Subtitle</label>
+                <textarea id="editHeroSubtitle" placeholder="CBSE affiliated, Gorakhpur's leading school..."></textarea>
+              </div>
+              <div class="form-group">
+                <label>Admission Status Banner</label>
+                <input type="text" id="editAdmissionsBanner" placeholder="Admissions 2026–27 are open.">
+              </div>
+              <button type="button" class="btn-primary" id="saveContentBtn" onclick="saveContent(event)">
+                💾 Save Content Changes
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ─── SETTINGS TAB ─── -->
+        <div class="tab-pane" id="tab-settings">
+          <div class="section-box">
+            <h3>🔐 Update Admin Credentials</h3>
+            <p class="section-desc">Use this form to securely update your Admin ID and Password. You will be logged out after saving.</p>
+            <form class="admin-form" id="settingsForm">
+              <div class="form-group">
+                <label>New Admin ID</label>
+                <input type="text" id="newAdminId" placeholder="Enter new Admin ID">
+              </div>
+              <div class="form-group">
+                <label>New Password</label>
+                <input type="password" id="newPassword" placeholder="Enter new Password">
+              </div>
+              <button type="button" class="btn-primary" onclick="updateCredentials(event)">
+                💾 Save New Credentials
+              </button>
+            </form>
+          </div>
+
+          <div class="section-box">
+            <h3>⚠️ Danger Zone</h3>
+            <p class="section-desc" style="color:var(--admin-danger);">These actions are irreversible. Proceed with caution.</p>
+            <button class="btn-danger" onclick="if(confirm('Clear all admission applications? This cannot be undone.')) alert('Feature requires backend integration.')">
+              🗑️ Clear All Admissions
+            </button>
+          </div>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <script src="asset/admin.js"></script>
+</body>
+
+</html>

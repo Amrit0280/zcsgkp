@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Topper Students — Zenith Convent School, Gorakhpur</title>
+  <meta name="description" content="Celebrating academic excellence at Zenith Convent School, Gorakhpur. View our Class X and XII board exam toppers for 2023-24.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue:       #0A3D62;
+      --blue-mid:   #1a5276;
+      --blue-light: #2980b9;
+      --gold:       #F4C430;
+      --gold-deep:  #d4a017;
+      --gold-glow:  rgba(244,196,48,0.18);
+      --white:      #FFFFFF;
+      --off-white:  #F8F9FA;
+      --text-dark:  #1a1a2e;
+      --text-muted: #6b7280;
+      --card-bg:    #FFFFFF;
+      --border:     rgba(10,61,98,0.08);
+      --shadow-sm:  0 2px 12px rgba(10,61,98,0.06);
+      --shadow-md:  0 8px 32px rgba(10,61,98,0.10);
+      --shadow-lg:  0 20px 60px rgba(10,61,98,0.14);
+      --nav-h:      70px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--off-white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ── NAVBAR ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      height: var(--nav-h);
+      background: rgba(10,61,98,0.96);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(244,196,48,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .nav-logo .emblem {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(244,196,48,0.3);
+      object-fit: cover;
+    }
+    .nav-logo .name {
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+    .nav-logo .name span {
+      display: block;
+      color: var(--gold);
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.8);
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 7px 18px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.2s;
+    }
+    .nav-back:hover {
+      background: rgba(244,196,48,0.15);
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding-top: var(--nav-h);
+      min-height: 420px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 55%, var(--blue-light) 100%);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -140px; right: -140px;
+      width: 520px; height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(244,196,48,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(244,196,48,0.10) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    /* decorative horizontal lines */
+    .hero-lines { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
+    .hero-lines span {
+      position:absolute; left:0; right:0; height:1px;
+      background: linear-gradient(90deg,transparent,rgba(244,196,48,0.15),transparent);
+    }
+    .hero-lines span:nth-child(1){ top:25%;}
+    .hero-lines span:nth-child(2){ top:65%;}
+    .hero-lines span:nth-child(3){ top:85%;}
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+      padding: 60px 24px 70px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; width: 28px; height: 1px; background: var(--gold);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 800;
+      color: white;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 18px;
+    }
+    .hero h1 .italic-gold {
+      font-family: 'Crimson Pro', serif;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold);
+      font-size: 1.1em;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.72);
+      font-weight: 300;
+      line-height: 1.75;
+      max-width: 500px;
+      margin: 0 auto 36px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center;
+      padding: 14px 28px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(244,196,48,0.25);
+      border-radius: 16px;
+      backdrop-filter: blur(8px);
+    }
+    .hero-stat strong {
+      display: block;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .hero-stat span {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* ── WAVE DIVIDER ── */
+    .wave-divider {
+      position: relative;
+      height: 70px;
+      background: var(--blue);
+      overflow: hidden;
+      margin-bottom: -1px;
+    }
+    .wave-divider svg {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* ── SECTION BASE ── */
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--gold-deep);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 2px;
+      background: linear-gradient(to right, var(--gold), transparent);
+    }
+    .section-title {
+      font-size: clamp(1.7rem,4vw,2.6rem);
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .section-title span { color: var(--gold-deep); }
+
+    /* ── YEAR SELECTOR ── */
+    .year-selector-section {
+      background: white;
+      padding: 50px 5% 30px;
+      border-bottom: 1px solid var(--border);
+    }
+    .year-selector-section > div {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .year-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .year-tab {
+      padding: 9px 22px;
+      border-radius: 50px;
+      border: 1.5px solid var(--border);
+      background: var(--off-white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.22s;
+    }
+    .year-tab:hover { border-color: var(--gold); color: var(--gold-deep); }
+    .year-tab.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold-deep));
+      border-color: transparent;
+      color: var(--blue);
+      box-shadow: 0 4px 18px rgba(244,196,48,0.4);
+    }
+
+    /* ── TOPPERS SECTIONS ── */
+    .toppers-section { padding: 64px 5%; }
+    .toppers-section .inner { max-width: 1200px; margin: 0 auto; }
+
+    /* Class divider */
+    .class-block { margin-bottom: 72px; }
+    .class-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 36px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid rgba(244,196,48,0.25);
+    }
+    .class-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 60px; height: 60px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+      border-radius: 18px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--gold);
+      flex-shrink: 0;
+      box-shadow: 0 8px 24px rgba(10,61,98,0.25);
+    }
+    .class-info h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 4px;
+    }
+    .class-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .class-count-badge {
+      margin-left: auto;
+      padding: 6px 18px;
+      border-radius: 50px;
+      background: rgba(244,196,48,0.12);
+      border: 1px solid rgba(244,196,48,0.3);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--gold-deep);
+      white-space: nowrap;
+    }
+
+    /* Topper Cards Grid */
+    .toppers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    /* Individual Topper Card */
+    .topper-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+      animation: fadeUp 0.5s ease both;
+    }
+    .topper-card:hover {
+      transform: translateY(-7px) scale(1.012);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Gold accent line on top */
+    .topper-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-deep));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .topper-card:hover::before { transform: scaleX(1); }
+
+    /* Rank badge */
+    .rank-badge {
+      position: absolute;
+      top: 16px; right: 18px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: white;
+    }
+    .rank-1 { background: linear-gradient(135deg, #F4C430, #d4a017); color: var(--blue); box-shadow: 0 4px 14px rgba(244,196,48,0.5); }
+    .rank-2 { background: linear-gradient(135deg, #b0b0b0, #888); }
+    .rank-3 { background: linear-gradient(135deg, #cd7f32, #a0622a); }
+    .rank-other { background: linear-gradient(135deg, var(--blue), var(--blue-mid)); }
+
+    /* Avatar */
+    .topper-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 50%, var(--gold) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 16px;
+      box-shadow: 0 6px 20px rgba(10,61,98,0.25);
+      font-family: 'Crimson Pro', serif;
+      font-style: italic;
+    }
+    .topper-avatar.gold-avatar { background: linear-gradient(135deg, #F4C430, #d4a017); color: var(--blue); }
+
+    /* Name & details */
+    .topper-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 6px;
+      line-height: 1.3;
+      padding-right: 40px; /* space for rank badge */
+    }
+
+    /* Percentage display */
+    .topper-percent-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .topper-percent {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1;
+    }
+    .topper-percent .pct { font-size: 1rem; font-weight: 600; color: var(--gold-deep); }
+
+    /* Progress bar */
+    .progress-bar {
+      height: 5px;
+      background: rgba(10,61,98,0.08);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 50px;
+      background: linear-gradient(90deg, var(--gold-deep), var(--gold));
+      transition: width 1.2s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    /* Tags row */
+    .topper-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+    .topper-tag {
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 50px;
+      background: rgba(10,61,98,0.07);
+      color: var(--blue-mid);
+      letter-spacing: 0.3px;
+    }
+    .topper-tag.gold-tag {
+      background: rgba(244,196,48,0.15);
+      color: var(--gold-deep);
+    }
+
+    /* Card stagger animations */
+    .topper-card:nth-child(1) { animation-delay: .04s; }
+    .topper-card:nth-child(2) { animation-delay: .08s; }
+    .topper-card:nth-child(3) { animation-delay: .12s; }
+    .topper-card:nth-child(4) { animation-delay: .16s; }
+    .topper-card:nth-child(5) { animation-delay: .20s; }
+    .topper-card:nth-child(6) { animation-delay: .24s; }
+    .topper-card:nth-child(7) { animation-delay: .28s; }
+    .topper-card:nth-child(8) { animation-delay: .32s; }
+    .topper-card:nth-child(9) { animation-delay: .36s; }
+
+    /* ── BANNER / ACHIEVEMENT STRIP ── */
+    .achievement-banner {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 100%);
+      padding: 50px 5%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .achievement-banner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M100 0L0 100L100 200L200 100Z' fill='rgba(244,196,48,0.04)'/%3E%3C/svg%3E") repeat;
+      background-size: 80px;
+      pointer-events: none;
+    }
+    .achievement-banner h2 {
+      font-size: clamp(1.6rem,4vw,2.4rem);
+      font-weight: 800;
+      color: white;
+      margin-bottom: 12px;
+    }
+    .achievement-banner h2 span { color: var(--gold); }
+    .achievement-banner p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem;
+      max-width: 540px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .achievement-stats {
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .ach-stat {
+      text-align: center;
+      padding: 18px 32px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(244,196,48,0.25);
+      border-radius: 18px;
+    }
+    .ach-stat strong {
+      display: block;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .ach-stat span {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blue);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 36px 5%;
+      font-size: 0.82rem;
+      border-top: 1px solid rgba(244,196,48,0.15);
+    }
+    footer strong { color: var(--gold); display: block; font-size: 1rem; margin-bottom: 8px; }
+    footer a { color: var(--gold); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2.1rem; }
+      .hero-stats { gap: 12px; }
+      .hero-stat { padding: 10px 18px; }
+      .toppers-grid { grid-template-columns: 1fr; }
+      .class-header { flex-wrap: wrap; }
+      .class-count-badge { margin-left: 0; }
+    }
+
+    /* ── YEAR DATA SECTIONS ── */
+    .year-data { display: none; }
+    .year-data.active { display: block; }
+
+    /* Merit badge ring for #1 */
+    .rank-1-glow::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(var(--gold), var(--gold-deep), var(--gold));
+      z-index: -1;
+    }
+
+    /* Confetti star decoration */
+    .star-decoration {
+      display: inline-block;
+      color: var(--gold);
+      font-size: 1.1rem;
+      margin: 0 4px;
+      animation: twinkle 2s ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* Top performer special card */
+    .topper-card.champion {
+      background: linear-gradient(145deg, #fff 0%, #fffbea 100%);
+      border-color: rgba(244,196,48,0.4);
+    }
+    .topper-card.champion::after {
+      content: '🏆 School Topper';
+      position: absolute;
+      bottom: 16px; right: 16px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--gold-deep);
+      background: rgba(244,196,48,0.12);
+      padding: 4px 10px;
+      border-radius: 50px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="nav">
+  <a href="../index.html" class="nav-logo">
+    <img src="../portal/asset/Images/zenithlogo.png" alt="Zenith Logo" class="emblem">
+    <div class="name">Zenith Convent School<span>Sainik Kunj, Gorakhpur</span></div>
+  </a>
+  <a href="../index.html" class="nav-back">← Back to Main Site</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-lines"><span></span><span></span><span></span></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Hall of Fame</div>
+    <h1>Our <span class="italic-gold">Topper</span> Students</h1>
+    <p class="hero-sub">
+      Celebrating the outstanding academic achievements of Zenith Convent School's brightest minds in CBSE Board Examinations.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <strong>96.8%</strong>
+        <span>Highest Score</span>
+      </div>
+      <div class="hero-stat">
+        <strong>15+</strong>
+        <span>Toppers (2023–24)</span>
+      </div>
+      <div class="hero-stat">
+        <strong>95%+</strong>
+        <span>Pass Rate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Wave -->
+<div class="wave-divider" style="background: var(--blue);">
+  <svg viewBox="0 0 1440 60" preserveAspectRatio="none" height="60">
+    <path d="M0,40 C360,70 1080,10 1440,40 L1440,60 L0,60 Z" fill="#F8F9FA"/>
+  </svg>
+</div>
+
+<!-- ── YEAR SELECTOR ── -->
+<div class="year-selector-section">
+  <div>
+    <div>
+      <div class="section-label">Academic Results</div>
+      <div class="section-title">Select <span>Academic Year</span></div>
+    </div>
+    <div class="year-tabs" id="yearTabs">
+      <button class="year-tab active" data-year="2023-24">2023–24</button>
+      <button class="year-tab" data-year="2022-23">2022–23</button>
+      <button class="year-tab" data-year="2021-22">2021–22</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOPPERS SECTION (2023-24) ── -->
+<section class="toppers-section">
+  <div class="inner">
+
+    <!-- Year 2023-24 -->
+    <div class="year-data active" id="year-2023-24">
+
+      <!-- Class XII -->
+      <div class="class-block fade-in" id="class12">
+        <div class="class-header">
+          <div class="class-badge">XII</div>
+          <div class="class-info">
+            <h2>Class XII — Intermediate Toppers</h2>
+            <p>CBSE Board Examination Results — Academic Year 2023–24</p>
+          </div>
+          <div class="class-count-badge">🎓 6 Toppers</div>
+        </div>
+
+        <div class="toppers-grid">
+
+          <!-- Rank 1 -->
+          <div class="topper-card champion">
+            <div class="rank-badge rank-1">🥇</div>
+            <div class="topper-avatar gold-avatar">AS</div>
+            <div class="topper-name">Ansh Srivastav</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">96.6<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:96.6%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag gold-tag">🥇 Class Topper</span>
+              <span class="topper-tag">Class XII</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+          <!-- Rank 2 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-2">🥈</div>
+            <div class="topper-avatar">AY</div>
+            <div class="topper-name">Ankita Yadav</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">93.8<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:93.8%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">🥈 2nd Rank</span>
+              <span class="topper-tag">Class XII</span>
+            </div>
+          </div>
+
+          <!-- Rank 3 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-3">🥉</div>
+            <div class="topper-avatar">AJ</div>
+            <div class="topper-name">Astha Jaiswal</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">93.4<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:93.4%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">🥉 3rd Rank</span>
+              <span class="topper-tag">Class XII</span>
+            </div>
+          </div>
+
+          <!-- Rank 4 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-other">4</div>
+            <div class="topper-avatar">SA</div>
+            <div class="topper-name">Sana Ansari</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">92.2<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:92.2%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">Class XII</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+          <!-- Rank 4 (Tied) -->
+          <div class="topper-card">
+            <div class="rank-badge rank-other">4</div>
+            <div class="topper-avatar">TM</div>
+            <div class="topper-name">Trisha Mishra</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">92.2<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:92.2%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">Class XII</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+          <!-- Rank 6 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-other">6</div>
+            <div class="topper-avatar">AJ</div>
+            <div class="topper-name">Archit Jaiswal</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">91.0<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:91.0%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">Class XII</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+        </div><!-- /toppers-grid -->
+      </div><!-- /class-block XII -->
+
+
+      <!-- Class X -->
+      <div class="class-block fade-in" id="class10">
+        <div class="class-header">
+          <div class="class-badge">X</div>
+          <div class="class-info">
+            <h2>Class X — High School Toppers</h2>
+            <p>CBSE Board Examination Results — Academic Year 2023–24</p>
+          </div>
+          <div class="class-count-badge">🎓 9 Toppers</div>
+        </div>
+
+        <div class="toppers-grid">
+
+          <!-- Rank 1 -->
+          <div class="topper-card champion">
+            <div class="rank-badge rank-1">🥇</div>
+            <div class="topper-avatar gold-avatar">RG</div>
+            <div class="topper-name">Rishabh Gupta</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">96.8<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:96.8%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag gold-tag">🥇 School Topper</span>
+              <span class="topper-tag">Class X</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+          <!-- Rank 2 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-2">🥈</div>
+            <div class="topper-avatar">SS</div>
+            <div class="topper-name">Shreya Singh</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">94.4<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:94.4%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">🥈 2nd Rank</span>
+              <span class="topper-tag">Class X</span>
+            </div>
+          </div>
+
+          <!-- Rank 3 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-3">🥉</div>
+            <div class="topper-avatar">AR</div>
+            <div class="topper-name">Arpita</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">92.4<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:92.4%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">🥉 3rd Rank</span>
+              <span class="topper-tag">Class X</span>
+            </div>
+          </div>
+
+          <!-- Rank 4 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-other">4</div>
+            <div class="topper-avatar">PK</div>
+            <div class="topper-name">Priti Kannojiya</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">92.2<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:92.2%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">Class X</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+          <!-- Rank 5 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-other">5</div>
+            <div class="topper-avatar">AK</div>
+            <div class="topper-name">Ayush Kumar Yadav</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">91.8<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:91.8%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">Class X</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+          <!-- Rank 6 (tied) -->
+          <div class="topper-card">
+            <div class="rank-badge rank-other">6</div>
+            <div class="topper-avatar">JS</div>
+            <div class="topper-name">Jyoti Singh</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">91.2<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:91.2%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">Class X</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+          <!-- Rank 6 (tied) -->
+          <div class="topper-card">
+            <div class="rank-badge rank-other">6</div>
+            <div class="topper-avatar">SS</div>
+            <div class="topper-name">Samridhi Soni</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">91.2<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:91.2%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">Class X</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+          <!-- Rank 8 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-other">8</div>
+            <div class="topper-avatar">SK</div>
+            <div class="topper-name">Sudhanshu Kannojiya</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">90.4<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:90.4%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">Class X</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+          <!-- Rank 9 -->
+          <div class="topper-card">
+            <div class="rank-badge rank-other">9</div>
+            <div class="topper-avatar">VK</div>
+            <div class="topper-name">Vanshika Kasaudhan</div>
+            <div class="topper-percent-row">
+              <div class="topper-percent">90.2<span class="pct">%</span></div>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width:90.2%"></div>
+            </div>
+            <div class="topper-tags">
+              <span class="topper-tag">Class X</span>
+              <span class="topper-tag">2023–24</span>
+            </div>
+          </div>
+
+        </div><!-- /toppers-grid X -->
+      </div><!-- /class-block X -->
+
+    </div><!-- /year-data 2023-24 -->
+
+    <!-- Year 2022-23 -->
+    <div class="year-data" id="year-2022-23">
+      <div class="class-block fade-in">
+        <div class="class-header">
+          <div class="class-badge">XII</div>
+          <div class="class-info">
+            <h2>Class XII — Intermediate Toppers</h2>
+            <p>CBSE Board Examination Results — Academic Year 2022–23</p>
+          </div>
+          <div class="class-count-badge">🎓 Previous Year</div>
+        </div>
+        <div style="padding: 40px; text-align: center; color: var(--text-muted); background: white; border-radius: 20px; border: 1px dashed var(--border);">
+          <div style="font-size: 3rem; margin-bottom: 12px;">📋</div>
+          <p style="font-size: 1rem; font-weight: 500;">Result data for 2022–23 is being compiled.</p>
+          <p style="font-size: 0.85rem; margin-top: 6px;">Please contact the school office for more information.</p>
+          <a href="../index.html#contact" style="display:inline-block;margin-top:16px;padding:10px 24px;background:var(--gold);color:var(--blue);border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none;">Contact School →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Year 2021-22 -->
+    <div class="year-data" id="year-2021-22">
+      <div class="class-block fade-in">
+        <div class="class-header">
+          <div class="class-badge">★</div>
+          <div class="class-info">
+            <h2>Academic Year 2021–22</h2>
+            <p>CBSE Board Examination Results</p>
+          </div>
+        </div>
+        <div style="padding: 40px; text-align: center; color: var(--text-muted); background: white; border-radius: 20px; border: 1px dashed var(--border);">
+          <div style="font-size: 3rem; margin-bottom: 12px;">📋</div>
+          <p style="font-size: 1rem; font-weight: 500;">Result data for 2021–22 is being compiled.</p>
+          <p style="font-size: 0.85rem; margin-top: 6px;">Please contact the school office for more information.</p>
+          <a href="../index.html#contact" style="display:inline-block;margin-top:16px;padding:10px 24px;background:var(--gold);color:var(--blue);border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none;">Contact School →</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /inner -->
+</section>
+
+<!-- ── ACHIEVEMENT BANNER ── -->
+<div class="achievement-banner fade-in">
+  <h2>Excellence is Our <span>Standard</span></h2>
+  <p>Zenith Convent School consistently produces outstanding results in CBSE Board Examinations, with students achieving top scores across all streams.</p>
+  <div class="achievement-stats">
+    <div class="ach-stat">
+      <strong>96.8%</strong>
+      <span>Highest Score</span>
+    </div>
+    <div class="ach-stat">
+      <strong>15+</strong>
+      <span>Toppers (2023–24)</span>
+    </div>
+    <div class="ach-stat">
+      <strong>25+</strong>
+      <span>Years of Excellence</span>
+    </div>
+    <div class="ach-stat">
+      <strong>100%</strong>
+      <span>Board Pass Rate</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <strong>Zenith Convent School, Gorakhpur</strong>
+  Sainik Kunj, Nanda Nagar, Gorakhpur – 273001 &nbsp;·&nbsp;
+  <a href="mailto:zcsgkp@gmail.com">zcsgkp@gmail.com</a> &nbsp;·&nbsp;
+  <a href="tel:+916391002700">+91 6391002700</a>
+  <br><br>
+  © 2026 Zenith Convent School. All rights reserved. &nbsp;·&nbsp;
+  Affiliation No. 2130701 (UPTO 31 March 2030)
+</footer>
+
+<script>
+/* ── Year tab switching ── */
+const yearTabs = document.querySelectorAll('.year-tab');
+const yearDatas = document.querySelectorAll('.year-data');
+
+yearTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    yearTabs.forEach(t => t.classList.remove('active'));
+    yearDatas.forEach(d => d.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('year-' + tab.dataset.year).classList.add('active');
+  });
+});
+
+/* ── Intersection Observer: fade-in ── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('visible');
+    observer.unobserve(entry.target);
+  });
+}, { threshold: 0.07 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ── Animate progress bars when visible ── */
+const barObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.querySelectorAll('.progress-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0%';
+      requestAnimationFrame(() => {
+        setTimeout(() => { bar.style.width = w; }, 100);
+      });
+    });
+    barObserver.unobserve(entry.target);
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.topper-card').forEach(card => barObserver.observe(card));
+</script>
+
+</body>
+</html>
