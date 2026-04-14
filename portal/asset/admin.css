@@ -908,3 +908,124 @@ body {
   .seats-grid { grid-template-columns: 1fr; }
   .mobile-brand span { display: none; }
 }
+
+/* ─── FORGOT PASSWORD MODAL ─── */
+.fp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 27, 62, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.fp-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.fp-modal {
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 420px;
+  padding: clamp(28px, 5vw, 44px);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  position: relative;
+  text-align: center;
+  animation: fpSlideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes fpSlideUp {
+  from { opacity: 0; transform: translateY(30px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.fp-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: #aaa;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.2s;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.fp-close:hover {
+  color: var(--admin-danger);
+  background: rgba(231, 76, 60, 0.08);
+  transform: scale(1.1);
+}
+
+.fp-icon {
+  width: 72px;
+  height: 72px;
+  background: linear-gradient(135deg, #2980b9, #1a5276);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  margin-bottom: 18px;
+  box-shadow: 0 0 0 6px rgba(41, 128, 185, 0.15);
+}
+
+.fp-step h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--admin-sidebar);
+  margin-bottom: 8px;
+}
+
+.fp-step p {
+  color: var(--admin-text-light);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.fp-email-preview {
+  background: rgba(41, 128, 185, 0.08);
+  border: 1.5px solid rgba(41, 128, 185, 0.2);
+  color: var(--admin-primary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 12px 18px;
+  border-radius: 10px;
+  margin-bottom: 18px;
+}
+
+.fp-msg {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin-top: 12px;
+  min-height: 0;
+  transition: all 0.2s;
+}
+.fp-msg:empty { display: none; }
+.fp-msg.error {
+  display: block;
+  background: rgba(231, 76, 60, 0.08);
+  color: var(--admin-danger);
+}
+.fp-msg.success {
+  display: block;
+  background: rgba(39, 174, 96, 0.08);
+  color: var(--admin-success);
+}

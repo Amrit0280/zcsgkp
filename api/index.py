@@ -3,6 +3,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 import shutil
+import random
+import string
+import time
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 from dotenv import load_dotenv
 
@@ -10,6 +16,12 @@ load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
+
+# ─── OTP STORE (in-memory, resets on restart) ───
+_otp_store = {}  # { 'code': '123456', 'expires': timestamp }
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'mauryaamrit0280@gmail.com')
+SMTP_EMAIL = os.environ.get('SMTP_EMAIL', '')
+SMTP_PASSWORD = os.environ.get('SMTP_PASSWORD', '')
 
 try:
     import psycopg2
@@ -443,7 +455,88 @@ def update_gallery_image(img_id):
              (title, category_id if category_id else None, img_id), commit=True)
     return jsonify({'success': True, 'message': 'Image updated.'}), 200
 
-# 21. Health Check (for Render/Deployment monitoring)
+# ─── FORGOT PASSWORD / RESET PASSWORD ───
+
+def _generate_otp():
+    code = ''.join(random.choices(string.digits, k=6))
+    _otp_store['code'] = code
+    _otp_store['expires'] = time.time() + 600  # 10 minutes
+    return code
+
+def _send_otp_email(code):
+    if not SMTP_EMAIL or not SMTP_PASSWORD:
+        raise RuntimeError('SMTP_EMAIL and SMTP_PASSWORD environment variables are required to send emails.')
+    
+    msg = MIMEMultipart('alternative')
+    msg['From'] = SMTP_EMAIL
+    msg['To'] = ADMIN_EMAIL
+    msg['Subject'] = f'🔐 Zenith Admin Password Reset Code: {code}'
+    
+    html_body = f"""
+    <div style="font-family:'Poppins',Arial,sans-serif;max-width:480px;margin:0 auto;padding:32px;background:#f8fafc;border-radius:16px;">
+        <div style="text-align:center;margin-bottom:24px;">
+            <div style="width:60px;height:60px;background:linear-gradient(135deg,#F4C430,#d4a017);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#0A3D62;">Z</div>
+        </div>
+        <h2 style="text-align:center;color:#0A3D62;margin-bottom:8px;">Password Reset Request</h2>
+        <p style="text-align:center;color:#7F8C8D;font-size:14px;margin-bottom:28px;">Use the verification code below to reset your Admin Portal password.</p>
+        <div style="background:white;border:2px dashed #F4C430;border-radius:12px;padding:24px;text-align:center;margin-bottom:24px;">
+            <p style="color:#7F8C8D;font-size:12px;margin-bottom:8px;text-transform:uppercase;letter-spacing:1px;">Your Verification Code</p>
+            <p style="font-size:36px;font-weight:900;color:#0A3D62;letter-spacing:8px;margin:0;">{code}</p>
+        </div>
+        <p style="text-align:center;color:#e74c3c;font-size:13px;font-weight:600;">⏰ This code expires in 10 minutes.</p>
+        <hr style="border:none;border-top:1px solid #eee;margin:24px 0;">
+        <p style="text-align:center;color:#aaa;font-size:11px;">Zenith Convent School — Admin Portal<br>If you didn't request this, please ignore this email.</p>
+    </div>
+    """
+    
+    msg.attach(MIMEText(html_body, 'html'))
+    
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+        server.login(SMTP_EMAIL, SMTP_PASSWORD)
+        server.sendmail(SMTP_EMAIL, ADMIN_EMAIL, msg.as_string())
+
+# 22. Request Password Reset OTP
+@app.route('/api/forgot-password', methods=['POST'])
+def forgot_password():
+    try:
+        code = _generate_otp()
+        _send_otp_email(code)
+        # Mask the email for privacy in response
+        masked = ADMIN_EMAIL[:3] + '***' + ADMIN_EMAIL[ADMIN_EMAIL.index('@'):]
+        return jsonify({'success': True, 'message': f'Verification code sent to {masked}'}), 200
+    except Exception as e:
+        print('Forgot Password Error:', e)
+        return jsonify({'success': False, 'message': 'Failed to send verification code. Please contact the administrator.'}), 500
+
+# 23. Verify OTP and Reset Password
+@app.route('/api/reset-password', methods=['POST'])
+def reset_password():
+    data = request.json
+    code = (data.get('code') or '').strip()
+    new_password = (data.get('new_password') or '').strip()
+    
+    if not code or not new_password:
+        return jsonify({'success': False, 'message': 'Verification code and new password are required.'}), 400
+    
+    if len(new_password) < 4:
+        return jsonify({'success': False, 'message': 'Password must be at least 4 characters.'}), 400
+    
+    stored = _otp_store.get('code')
+    expires = _otp_store.get('expires', 0)
+    
+    if not stored or code != stored:
+        return jsonify({'success': False, 'message': 'Invalid verification code.'}), 401
+    
+    if time.time() > expires:
+        _otp_store.clear()
+        return jsonify({'success': False, 'message': 'Verification code has expired. Please request a new one.'}), 401
+    
+    # Code is valid — reset password
+    _otp_store.clear()
+    db_query('UPDATE admins SET password = ? WHERE id = 1', (new_password,), commit=True)
+    return jsonify({'success': True, 'message': 'Password reset successfully! You can now login.'}), 200
+
+# 24. Health Check (for Render/Deployment monitoring)
 @app.route('/api/health', methods=['GET'])
 def health_check():
     return jsonify({"status": "healthy", "database": "postgres" if IS_POSTGRES else "sqlite"}), 200

@@ -59,10 +59,79 @@
         </button>
       </form>
 
+      <!-- Forgot Password Link -->
+      <a href="#" id="forgotPwdLink" style="display:block;margin-top:16px;font-size:0.82rem;color:#2980b9;text-decoration:none;font-weight:600;transition:color 0.2s;" onmouseover="this.style.color='#1a5276'" onmouseout="this.style.color='#2980b9'">
+        🔑 Forgot Password?
+      </a>
+
       <!-- Back to site link -->
-      <a href="../index.html" style="display:block;margin-top:20px;font-size:0.8rem;color:#aaa;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#2980b9'" onmouseout="this.style.color='#aaa'">
+      <a href="../index.html" style="display:block;margin-top:12px;font-size:0.8rem;color:#aaa;text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='#2980b9'" onmouseout="this.style.color='#aaa'">
         ← Back to School Website
       </a>
+    </div>
+  </div>
+
+  <!-- FORGOT PASSWORD MODAL -->
+  <div class="fp-overlay" id="fpOverlay">
+    <div class="fp-modal">
+      <button class="fp-close" id="fpClose">&times;</button>
+
+      <!-- Step 1: Request Code -->
+      <div class="fp-step" id="fpStep1">
+        <div class="fp-icon">🔑</div>
+        <h3>Forgot Password?</h3>
+        <p>We'll send a 6-digit verification code to your registered admin email.</p>
+        <div class="fp-email-preview" id="fpEmailPreview">📧 mau***@gmail.com</div>
+        <button class="btn-login" id="fpSendBtn" style="width:100%;margin-top:8px;">
+          📩 Send Verification Code
+        </button>
+        <div class="fp-msg" id="fpMsg1"></div>
+      </div>
+
+      <!-- Step 2: Enter Code + New Password -->
+      <div class="fp-step" id="fpStep2" style="display:none;">
+        <div class="fp-icon" style="background:linear-gradient(135deg,#27ae60,#2ecc71);">✅</div>
+        <h3>Enter Verification Code</h3>
+        <p>A code was sent to your email. Enter it below with your new password.</p>
+        
+        <div class="form-group" style="text-align:left;">
+          <label for="fpCode">Verification Code</label>
+          <input
+            type="text"
+            id="fpCode"
+            placeholder="Enter 6-digit code"
+            maxlength="6"
+            style="text-align:center;font-size:1.3rem;font-weight:800;letter-spacing:6px;"
+            autocomplete="one-time-code"
+          >
+        </div>
+        <div class="form-group" style="text-align:left;">
+          <label for="fpNewPwd">New Password</label>
+          <input
+            type="password"
+            id="fpNewPwd"
+            placeholder="Enter new password"
+            autocomplete="new-password"
+          >
+        </div>
+        <button class="btn-login" id="fpResetBtn" style="width:100%;margin-top:4px;">
+          🔓 Reset Password
+        </button>
+        <div class="fp-msg" id="fpMsg2"></div>
+        <a href="#" id="fpResend" style="display:block;margin-top:14px;font-size:0.78rem;color:#2980b9;text-decoration:none;font-weight:600;">
+          Didn't receive it? Send again
+        </a>
+      </div>
+
+      <!-- Step 3: Success -->
+      <div class="fp-step" id="fpStep3" style="display:none;">
+        <div class="fp-icon" style="background:linear-gradient(135deg,#F4C430,#d4a017);font-size:2rem;">🎉</div>
+        <h3>Password Reset!</h3>
+        <p>Your password has been updated successfully. You can now login with your new credentials.</p>
+        <button class="btn-login" id="fpDoneBtn" style="width:100%;margin-top:8px;">
+          🔐 Go to Login
+        </button>
+      </div>
     </div>
   </div>
 
@@ -72,6 +141,133 @@
       const inp = document.getElementById('password');
       inp.type = inp.type === 'password' ? 'text' : 'password';
     }
+
+    // ─── FORGOT PASSWORD LOGIC ───
+    const fpOverlay = document.getElementById('fpOverlay');
+    const fpClose = document.getElementById('fpClose');
+    const fpStep1 = document.getElementById('fpStep1');
+    const fpStep2 = document.getElementById('fpStep2');
+    const fpStep3 = document.getElementById('fpStep3');
+
+    function showStep(step) {
+      fpStep1.style.display = step === 1 ? 'block' : 'none';
+      fpStep2.style.display = step === 2 ? 'block' : 'none';
+      fpStep3.style.display = step === 3 ? 'block' : 'none';
+    }
+
+    // Open modal
+    document.getElementById('forgotPwdLink').addEventListener('click', (e) => {
+      e.preventDefault();
+      showStep(1);
+      fpOverlay.classList.add('show');
+    });
+
+    // Close modal
+    fpClose.addEventListener('click', () => fpOverlay.classList.remove('show'));
+    fpOverlay.addEventListener('click', (e) => {
+      if (e.target === fpOverlay) fpOverlay.classList.remove('show');
+    });
+
+    // Step 1: Send Code
+    document.getElementById('fpSendBtn').addEventListener('click', async function() {
+      const btn = this;
+      const msg = document.getElementById('fpMsg1');
+      btn.textContent = '⏳ Sending...';
+      btn.disabled = true;
+      msg.textContent = '';
+      msg.className = 'fp-msg';
+
+      try {
+        const res = await fetch('/api/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: '{}'
+        });
+        const data = await res.json();
+        if (data.success) {
+          showStep(2);
+        } else {
+          msg.textContent = data.message;
+          msg.className = 'fp-msg error';
+        }
+      } catch (e) {
+        msg.textContent = 'Network error. Please try again.';
+        msg.className = 'fp-msg error';
+      }
+      btn.textContent = '📩 Send Verification Code';
+      btn.disabled = false;
+    });
+
+    // Step 2: Reset Password
+    document.getElementById('fpResetBtn').addEventListener('click', async function() {
+      const btn = this;
+      const code = document.getElementById('fpCode').value.trim();
+      const newPwd = document.getElementById('fpNewPwd').value;
+      const msg = document.getElementById('fpMsg2');
+
+      if (!code || code.length !== 6) {
+        msg.textContent = 'Please enter the 6-digit code.';
+        msg.className = 'fp-msg error';
+        return;
+      }
+      if (!newPwd || newPwd.length < 4) {
+        msg.textContent = 'Password must be at least 4 characters.';
+        msg.className = 'fp-msg error';
+        return;
+      }
+
+      btn.textContent = '⏳ Verifying...';
+      btn.disabled = true;
+      msg.textContent = '';
+      msg.className = 'fp-msg';
+
+      try {
+        const res = await fetch('/api/reset-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code, new_password: newPwd })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showStep(3);
+        } else {
+          msg.textContent = data.message;
+          msg.className = 'fp-msg error';
+        }
+      } catch (e) {
+        msg.textContent = 'Network error. Please try again.';
+        msg.className = 'fp-msg error';
+      }
+      btn.textContent = '🔓 Reset Password';
+      btn.disabled = false;
+    });
+
+    // Resend code
+    document.getElementById('fpResend').addEventListener('click', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('fpMsg2');
+      msg.textContent = 'Sending new code...';
+      msg.className = 'fp-msg';
+      try {
+        const res = await fetch('/api/forgot-password', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: '{}'
+        });
+        const data = await res.json();
+        msg.textContent = data.success ? '✅ New code sent!' : data.message;
+        msg.className = data.success ? 'fp-msg success' : 'fp-msg error';
+      } catch (e) {
+        msg.textContent = 'Failed to resend.';
+        msg.className = 'fp-msg error';
+      }
+    });
+
+    // Step 3: Back to login
+    document.getElementById('fpDoneBtn').addEventListener('click', () => {
+      fpOverlay.classList.remove('show');
+      showStep(1);
+    });
   </script>
 </body>
 </html>
