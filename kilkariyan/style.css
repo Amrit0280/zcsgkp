@@ -482,7 +482,7 @@ body.hp-active { overflow-y: auto; }
   position: relative;
   overflow: hidden;
   padding-top: 78px;
-  background: linear-gradient(135deg, #FF6B35 0%, #FF9A3C 30%, #FF5FA0 65%, #A855F7 100%);
+  background: transparent;
 }
 
 .kk-hero-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
@@ -625,7 +625,9 @@ body.hp-active { overflow-y: auto; }
 
 .kk-about-desc {
   padding: 100px 0;
-  background: linear-gradient(135deg, #5C21A8 0%, #2B2FA8 55%, #0D65A6 100%);
+  background: 
+    linear-gradient(135deg, rgba(92,33,168,0.85) 0%, rgba(43,47,168,0.85) 55%, rgba(13,101,166,0.85) 100%),
+    url('../Images/Kilkariyan/Infra Structure268.jpg') center/cover no-repeat;
 }
 .kk-about-inner {
   display: grid;
@@ -700,7 +702,9 @@ body.hp-active { overflow-y: auto; }
 
 .kk-cta {
   padding: 100px 0;
-  background: linear-gradient(135deg,#FF6B35 0%,#FF9A3C 50%,#FFD93D 100%);
+  background: 
+    linear-gradient(135deg, rgba(255,107,53,0.88) 0%, rgba(255,154,60,0.88) 50%, rgba(255,217,61,0.88) 100%),
+    url('../Images/Kilkariyan/Infra Structure183.jpg') center/cover fixed no-repeat;
   text-align: center;
   position: relative;
   overflow: hidden;
