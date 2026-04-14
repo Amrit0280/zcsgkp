@@ -91,7 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
     seats:     'Seat Management',
     notices:   'Manage Notices',
     content:   'Edit Content',
-    settings:  'Settings'
+    settings:  'Settings',
+    gallery:   'Gallery Management'
   };
 
   sidebarNavItems.forEach(item => {
@@ -109,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (targetTab === 'notices')   loadNotices();
       if (targetTab === 'content')   loadContent();
       if (targetTab === 'seats')     initSeats();
+      if (targetTab === 'gallery')   loadGalleryAdmin();
 
       // close on mobile after selecting
       if (window.innerWidth <= 900) closeSidebar();
@@ -246,6 +248,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('editHeroHeadline').value    = data.hero_headline;
         document.getElementById('editHeroSubtitle').value    = data.hero_subtitle;
         document.getElementById('editAdmissionsBanner').value = data.admissions_banner;
+        if (data.academic_year) {
+          document.getElementById('editAcademicYear').value = data.academic_year;
+        }
       }
     } catch(e) { /* silent */ }
   }
@@ -261,7 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({
           hero_headline:     document.getElementById('editHeroHeadline').value,
           hero_subtitle:     document.getElementById('editHeroSubtitle').value,
-          admissions_banner: document.getElementById('editAdmissionsBanner').value
+          admissions_banner: document.getElementById('editAdmissionsBanner').value,
+          academic_year:     document.getElementById('editAcademicYear').value
         })
       });
       const data = await res.json();
@@ -323,15 +329,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const SEATS_KEY = 'zcs_seats_data';
   const SEATS_TS_KEY = 'zcs_seats_timestamp';
 
-  function getSeats() {
+  async function fetchSeatsFromAPI() {
     try {
-      const stored = localStorage.getItem(SEATS_KEY);
-      return stored ? JSON.parse(stored) : { ...DEFAULT_SEATS };
-    } catch { return { ...DEFAULT_SEATS }; }
+      const res = await fetch('/api/seats');
+      return await res.json();
+    } catch {
+      return { ...DEFAULT_SEATS };
+    }
   }
 
   function saveSeatsToStorage(data) {
-    localStorage.setItem(SEATS_KEY, JSON.stringify(data));
     localStorage.setItem(SEATS_TS_KEY, new Date().toLocaleString('en-IN'));
   }
 
@@ -353,52 +360,59 @@ document.addEventListener('DOMContentLoaded', () => {
   function initSeats() {
     const grid = document.getElementById('seatsGrid');
     if (!grid) return;
-    const data = getSeats();
 
-    // Timestamp
-    const ts = localStorage.getItem(SEATS_TS_KEY);
-    const tsEl = document.getElementById('seatsLastUpdated');
-    if (tsEl) tsEl.textContent = ts || 'Never';
+    // Show loading state
+    grid.innerHTML = '<p style="color:var(--admin-text-light);padding:16px;">Loading seat data...</p>';
 
-    // Grand total
-    const gtEl = document.getElementById('grandTotalSeats');
-    if (gtEl) gtEl.textContent = calcTotal(data).toLocaleString();
+    fetchSeatsFromAPI().then(data => {
+      // Timestamp
+      const ts = localStorage.getItem(SEATS_TS_KEY);
+      const tsEl = document.getElementById('seatsLastUpdated');
+      if (tsEl) tsEl.textContent = ts || 'Not yet saved';
 
-    // Also keep dashboard count up to date
-    const statEl = document.getElementById('totalSeatsCount');
-    if (statEl) statEl.textContent = calcTotal(data).toLocaleString();
+      // Grand total
+      const gtEl = document.getElementById('grandTotalSeats');
+      if (gtEl) gtEl.textContent = calcTotal(data).toLocaleString();
 
-    grid.innerHTML = '';
-    Object.entries(data).forEach(([cls, seats]) => {
-      const shortLabel = cls.replace('Class ', '');
-      const div = document.createElement('div');
-      div.className = 'seat-item';
-      div.innerHTML = `
-        <div class="seat-item-label">
-          <div class="class-badge">${shortLabel.slice(0,3)}</div>
-          ${cls}
-        </div>
-        <div class="seat-input-wrap">
-          <button class="seat-btn" onclick="adjustSeat(this,-1)" type="button">−</button>
-          <input class="seat-input" type="number" min="0" max="200"
-            value="${seats}" data-class="${cls}"
-            oninput="updateGrandTotal()">
-          <button class="seat-btn" onclick="adjustSeat(this,1)" type="button">+</button>
-        </div>`;
-      grid.appendChild(div);
+      const statEl = document.getElementById('totalSeatsCount');
+      if (statEl) statEl.textContent = calcTotal(data).toLocaleString();
+
+      grid.innerHTML = '';
+      Object.entries(data).forEach(([cls, seats]) => {
+        const shortLabel = cls.replace('Class ', '');
+        const div = document.createElement('div');
+        div.className = 'seat-item';
+        div.innerHTML = `
+          <div class="seat-item-label">
+            <div class="class-badge">${shortLabel.slice(0,3)}</div>
+            ${cls}
+          </div>
+          <div class="seat-input-wrap">
+            <button class="seat-btn" onclick="adjustSeat(this,-1)" type="button">−</button>
+            <input class="seat-input" type="number" min="0" max="200"
+              value="${seats}" data-class="${cls}"
+              oninput="updateGrandTotal()">
+            <button class="seat-btn" onclick="adjustSeat(this,1)" type="button">+</button>
+          </div>`;
+        grid.appendChild(div);
+      });
+
+      updateGrandTotal();
+
+      // Admission toggle state — load from server
+      const toggle = document.getElementById('admissionToggle');
+      if (toggle) {
+        fetch('/api/admission-status')
+          .then(r => r.json())
+          .then(d => {
+            const isOpen = d.admission_open !== false;
+            toggle.checked = isOpen;
+            updateToggleStatus(isOpen);
+          })
+          .catch(() => { toggle.checked = true; updateToggleStatus(true); });
+        toggle.addEventListener('change', () => updateToggleStatus(toggle.checked));
+      }
     });
-
-    // Seat count on dashboard card
-    updateGrandTotal();
-
-    // Admission toggle state
-    const toggle = document.getElementById('admissionToggle');
-    const isOpen = localStorage.getItem('zcs_admission_open') !== 'false';
-    if (toggle) {
-      toggle.checked = isOpen;
-      updateToggleStatus(isOpen);
-      toggle.addEventListener('change', () => updateToggleStatus(toggle.checked));
-    }
   }
 
   // Make accessible globally for inline handlers
@@ -411,27 +425,46 @@ document.addEventListener('DOMContentLoaded', () => {
     updateGrandTotal();
   };
 
-  window.saveSeats = function() {
+  window.saveSeats = async function() {
     const inputs = document.querySelectorAll('.seat-input');
     const data   = {};
     inputs.forEach(inp => {
       const cls = inp.dataset.class;
       data[cls] = parseInt(inp.value) || 0;
     });
-    saveSeatsToStorage(data);
 
-    const ts = new Date().toLocaleString('en-IN');
-    const tsEl = document.getElementById('seatsLastUpdated');
-    if (tsEl) tsEl.textContent = ts;
+    const btn = document.getElementById('saveSeatsBtn');
+    if (btn) btn.textContent = 'Saving...';
 
-    const msg = document.getElementById('seatSaveMsg');
-    if (msg) {
-      msg.className = 'seat-save-msg success';
-      msg.textContent = '✅ Seat counts saved successfully!';
-      setTimeout(() => { msg.className = 'seat-save-msg'; }, 3000);
+    try {
+      const res = await fetch('/api/seats', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        const ts = new Date().toLocaleString('en-IN');
+        localStorage.setItem(SEATS_TS_KEY, ts);
+        const tsEl = document.getElementById('seatsLastUpdated');
+        if (tsEl) tsEl.textContent = ts;
+
+        const msg = document.getElementById('seatSaveMsg');
+        if (msg) {
+          msg.className = 'seat-save-msg success';
+          msg.textContent = '✅ Seat counts saved to server!';
+          setTimeout(() => { msg.className = 'seat-save-msg'; }, 3000);
+        }
+        updateGrandTotal();
+      } else {
+        showToast('Failed to save seats.', 'error');
+      }
+    } catch(e) {
+      showToast('Server error saving seats.', 'error');
     }
 
-    updateGrandTotal();
+    if (btn) btn.textContent = '💾 Save Seat Changes';
   };
 
   window.resetSeats = function() {
@@ -462,19 +495,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  window.saveAdmissionStatus = function() {
+  window.saveAdmissionStatus = async function() {
     const toggle = document.getElementById('admissionToggle');
     if (!toggle) return;
-    localStorage.setItem('zcs_admission_open', toggle.checked ? 'true' : 'false');
-    updateToggleStatus(toggle.checked);
-    showToast(toggle.checked ? 'Admissions marked as Open' : 'Admissions marked as Closed', 'success');
+    const btn = document.querySelector('[onclick="saveAdmissionStatus()"]');
+    if (btn) btn.textContent = 'Saving...';
+    try {
+      const res = await fetch('/api/admission-status', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ admission_open: toggle.checked })
+      });
+      const data = await res.json();
+      if (data.success) {
+        updateToggleStatus(toggle.checked);
+        showToast(toggle.checked ? '✅ Admissions marked as Open on website!' : '🔴 Admissions marked as Closed on website!', 'success');
+      } else {
+        showToast('Failed to update admission status.', 'error');
+      }
+    } catch (e) {
+      showToast('Server error. Could not update status.', 'error');
+    }
+    if (btn) btn.textContent = 'Update Status';
   };
 
   // Initialise seat counts on dashboard load
   (() => {
-    const data   = getSeats();
     const statEl = document.getElementById('totalSeatsCount');
-    if (statEl) statEl.textContent = calcTotal(data).toLocaleString();
+    if (statEl) {
+      fetchSeatsFromAPI().then(data => {
+        if (statEl) statEl.textContent = calcTotal(data).toLocaleString();
+      }).catch(() => { if (statEl) statEl.textContent = '--'; });
+    }
     // Also load notice count indicator
     const nc = document.getElementById('noticeCount');
     if (nc) nc.textContent = '—';
@@ -515,5 +567,404 @@ document.addEventListener('DOMContentLoaded', () => {
       toast.style.transform = 'translateY(12px)';
     }, 3200);
   }
+
+  // ══════════════════════════════════════════════
+  //  GALLERY MANAGEMENT
+  // ══════════════════════════════════════════════
+
+  let galleryCats   = [];  // [{id, name}]
+  let galleryImages = [];  // all images from API
+  let selectedImgB64 = null; // base64 of selected file
+
+  // ── Load everything when tab opens ───────────
+  window.loadGalleryAdmin = async function() {
+    await loadGalleryCats();
+    await loadGalleryImages();
+  };
+
+  // ── Categories ───────────────────────────────
+  async function loadGalleryCats() {
+    const list = document.getElementById('catList');
+    if (list) list.innerHTML = '<div class="skeleton-row"></div><div class="skeleton-row"></div>';
+    try {
+      const res = await fetch('/api/gallery/categories');
+      galleryCats = await res.json();
+      renderCatList();
+      populateCatSelects();
+    } catch(e) {
+      if (list) list.innerHTML = '<p style="color:var(--admin-danger)">Failed to load categories.</p>';
+    }
+  }
+
+  function renderCatList() {
+    const list = document.getElementById('catList');
+    if (!list) return;
+    if (galleryCats.length === 0) {
+      list.innerHTML = '<p style="color:var(--admin-text-light);padding:12px 0;">No categories yet. Add one above.</p>';
+      return;
+    }
+    list.innerHTML = '';
+    galleryCats.forEach(cat => {
+      const count = galleryImages.filter(img => img.category_id == cat.id).length;
+      list.innerHTML += `
+        <div class="notice-item">
+          <div class="notice-content">
+            <h4>${cat.name} <span style="font-weight:400;color:#888;font-size:0.82rem;">(${count} photo${count !== 1 ? 's' : ''})</span></h4>
+          </div>
+          <div class="notice-actions">
+            <button class="btn-delete" onclick="deleteGalleryCat(${cat.id}, '${cat.name.replace(/'/g,"\\'")}')">Delete</button>
+          </div>
+        </div>`;
+    });
+  }
+
+  function populateCatSelects() {
+    // Upload form select
+    const sel = document.getElementById('imgCategory');
+    if (sel) {
+      const curr = sel.value;
+      sel.innerHTML = '<option value="">— Select Category —</option>';
+      galleryCats.forEach(c => {
+        sel.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+      });
+      if (curr) sel.value = curr;
+    }
+    // Library filter select
+    const libSel = document.getElementById('libFilter');
+    if (libSel) {
+      const curr2 = libSel.value;
+      libSel.innerHTML = '<option value="all">All Categories</option>';
+      galleryCats.forEach(c => {
+        libSel.innerHTML += `<option value="${c.id}">${c.name}</option>`;
+      });
+      if (curr2) libSel.value = curr2;
+    }
+  }
+
+  window.addGalleryCategory = async function() {
+    const input = document.getElementById('newCatName');
+    const name  = (input.value || '').trim();
+    if (!name) return alert('Please enter a category name.');
+    const btn = document.getElementById('addCatBtn');
+    btn.textContent = 'Adding...';
+    try {
+      const res  = await fetch('/api/gallery/categories', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ name })
+      });
+      const data = await res.json();
+      if (data.success) {
+        input.value = '';
+        await loadGalleryCats();
+        showToast('Category added!', 'success');
+      } else alert(data.message);
+    } catch(e) { alert('Error adding category.'); }
+    btn.textContent = '➕ Add Category';
+  };
+
+  window.deleteGalleryCat = async function(id, name) {
+    if (!confirm(`Delete category "${name}"? Images in this category will become uncategorized.`)) return;
+    try {
+      const res  = await fetch(`/api/gallery/categories/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) { await loadGalleryAdmin(); showToast('Category deleted.', 'success'); }
+      else alert(data.message);
+    } catch(e) { alert('Error deleting category.'); }
+  };
+
+  // ── Images ───────────────────────────────────
+  async function loadGalleryImages() {
+    try {
+      const res  = await fetch('/api/gallery');
+      galleryImages = await res.json();
+      renderCatList(); // refresh counts
+      renderAdminLibrary();
+    } catch(e) {
+      document.getElementById('adminGalleryEmpty').style.display = 'block';
+      document.getElementById('adminGalleryEmpty').textContent = 'Failed to load images.';
+    }
+  }
+
+  window.renderAdminLibrary = function() {
+    const grid    = document.getElementById('adminGalleryGrid');
+    const empty   = document.getElementById('adminGalleryEmpty');
+    const filter  = (document.getElementById('libFilter') || {}).value || 'all';
+    if (!grid) return;
+
+    const imgs = filter === 'all' ? galleryImages : galleryImages.filter(i => String(i.category_id) === String(filter));
+    grid.innerHTML    = '';
+    empty.style.display = imgs.length === 0 ? 'block' : 'none';
+
+    imgs.forEach(img => {
+      const catName = (galleryCats.find(c => c.id == img.category_id) || {}).name || 'Uncategorized';
+      const card = document.createElement('div');
+      card.style.cssText = 'border-radius:12px;overflow:hidden;position:relative;box-shadow:0 4px 14px rgba(0,0,0,0.10);background:#eee;';
+      card.innerHTML = `
+        <img src="${img.image_data}" alt="${img.title || 'photo'}" loading="lazy"
+          style="width:100%;height:130px;object-fit:cover;display:block;">
+        <div style="padding:8px 10px;background:#fff;">
+          <p style="font-size:0.78rem;font-weight:600;color:#222;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;" title="${img.title || ''}">${ img.title || '<em style="color:#aaa;">Untitled</em>' }</p>
+          <p style="font-size:0.7rem;color:#666;">${catName}</p>
+          <div style="display:flex;gap:6px;margin-top:8px;">
+            <button onclick="openEditModal(${img.id},\`${(img.title||'').replace(/`/g,'\\`')}\`,${img.category_id || 'null'})"
+              style="flex:1;padding:5px 0;border:none;border-radius:8px;font-size:0.75rem;font-weight:600;cursor:pointer;background:var(--admin-primary,#0d1b3e);color:#fff;">✎ Edit</button>
+            <button onclick="deleteGalleryImg(${img.id})"
+              style="flex:1;padding:5px 0;border:none;border-radius:8px;font-size:0.75rem;font-weight:600;cursor:pointer;background:#e74c3c;color:#fff;">🗑 Del</button>
+          </div>
+        </div>`;
+      grid.appendChild(card);
+    });
+  };
+
+  window.deleteGalleryImg = async function(id) {
+    if (!confirm('Delete this image permanently?')) return;
+    try {
+      const res  = await fetch(`/api/gallery/${id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.success) { await loadGalleryImages(); showToast('Image deleted.', 'success'); }
+      else alert(data.message);
+    } catch(e) { alert('Error deleting image.'); }
+  };
+
+  // ── Image Upload with Canvas Compression (multi-file) ──
+  let selectedFiles = []; // Array of { dataUrl, name } after compression
+
+  const dropZone = document.getElementById('dropZone');
+  const imgFile  = document.getElementById('imgFile');
+
+  if (dropZone) {
+    dropZone.addEventListener('click', () => imgFile && imgFile.click());
+    dropZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      dropZone.style.borderColor = '#0d1b3e';
+      dropZone.style.background  = 'rgba(13,27,62,0.05)';
+    });
+    dropZone.addEventListener('dragleave', () => {
+      dropZone.style.borderColor = '';
+      dropZone.style.background  = '';
+    });
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.style.borderColor = '';
+      dropZone.style.background  = '';
+      if (e.dataTransfer.files.length) handleImageFiles(e.dataTransfer.files);
+    });
+  }
+  if (imgFile) {
+    imgFile.addEventListener('change', () => {
+      if (imgFile.files.length) handleImageFiles(imgFile.files);
+    });
+  }
+
+  function handleImageFiles(fileList) {
+    const files = Array.from(fileList).filter(f => f.type.startsWith('image/'));
+    if (!files.length) return alert('Please select valid image files (JPG, PNG, WEBP).');
+
+    const grid = document.getElementById('imgPreviewGrid');
+    const wrap = document.getElementById('imgPreviewWrap');
+    const zone = document.getElementById('dropZone');
+
+    // Append new files (don't replace existing selection)
+    let processed = 0;
+    files.forEach(file => {
+      if (file.size > 15 * 1024 * 1024) {
+        showToast(`"${file.name}" is too large (max 15MB). Skipping.`, 'error');
+        processed++;
+        if (processed === files.length && selectedFiles.length) finishPreview();
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = e => {
+        compressImage(e.target.result, 1200, 0.82, compressed => {
+          selectedFiles.push({ dataUrl: compressed, name: file.name });
+
+          // Add thumbnail
+          const thumb = document.createElement('div');
+          thumb.style.cssText = 'position:relative;border-radius:8px;overflow:hidden;aspect-ratio:1;background:#eee;';
+          const idx = selectedFiles.length - 1;
+          thumb.innerHTML = `
+            <img src="${compressed}" style="width:100%;height:100%;object-fit:cover;display:block;">
+            <button onclick="removeSelectedFile(${idx}, this.closest('div'))" title="Remove"
+              style="position:absolute;top:4px;right:4px;background:rgba(0,0,0,0.55);color:#fff;border:none;
+                     border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:0.7rem;line-height:1;">✕</button>
+          `;
+          if (grid) grid.appendChild(thumb);
+
+          processed++;
+          if (processed === files.length) finishPreview();
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function finishPreview() {
+    const wrap = document.getElementById('imgPreviewWrap');
+    const zone = document.getElementById('dropZone');
+    if (wrap && selectedFiles.length) {
+      wrap.style.display = 'block';
+      zone.style.display = 'none';
+    }
+  }
+
+  window.removeSelectedFile = function(idx, thumbEl) {
+    selectedFiles.splice(idx, 1);
+    if (thumbEl) thumbEl.remove();
+    // Re-index remove buttons
+    const grid = document.getElementById('imgPreviewGrid');
+    if (grid) {
+      Array.from(grid.children).forEach((child, i) => {
+        const btn = child.querySelector('button');
+        if (btn) btn.setAttribute('onclick', `removeSelectedFile(${i}, this.closest('div'))`);
+      });
+    }
+    if (selectedFiles.length === 0) window.clearImagePreview();
+  };
+
+  function compressImage(dataUrl, maxWidth, quality, cb) {
+    const img = new Image();
+    img.onload = function() {
+      let w = img.width, h = img.height;
+      if (w > maxWidth) { h = Math.round(h * maxWidth / w); w = maxWidth; }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      cb(canvas.toDataURL('image/jpeg', quality));
+    };
+    img.src = dataUrl;
+  }
+
+  window.clearImagePreview = function() {
+    selectedFiles = [];
+    const imgFile = document.getElementById('imgFile');
+    if (imgFile) imgFile.value = '';
+    const grid = document.getElementById('imgPreviewGrid');
+    const wrap = document.getElementById('imgPreviewWrap');
+    const zone = document.getElementById('dropZone');
+    if (grid) grid.innerHTML = '';
+    if (wrap) wrap.style.display = 'none';
+    if (zone) zone.style.display = 'block';
+  };
+
+  window.uploadGalleryImage = async function() {
+    const title  = (document.getElementById('imgTitle') || {}).value || '';
+    const catId  = (document.getElementById('imgCategory') || {}).value || null;
+    const msgEl  = document.getElementById('uploadMsg');
+    const btn    = document.getElementById('uploadBtn');
+
+    if (!selectedFiles.length) {
+      if (msgEl) { msgEl.style.color = '#e74c3c'; msgEl.textContent = '⚠️ Please select at least one image first.'; }
+      return;
+    }
+
+    btn.disabled = true;
+    if (msgEl) msgEl.textContent = '';
+
+    let successCount = 0;
+    let failCount    = 0;
+    const total      = selectedFiles.length;
+
+    for (let i = 0; i < total; i++) {
+      btn.textContent = `Uploading ${i + 1} of ${total}…`;
+      const { dataUrl } = selectedFiles[i];
+      try {
+        const res  = await fetch('/api/gallery', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ title: title.trim(), category_id: catId || null, image_data: dataUrl })
+        });
+        const data = await res.json();
+        if (data.success) successCount++;
+        else { failCount++; console.warn('Upload failed for image', i + 1, data.message); }
+      } catch(e) {
+        failCount++;
+        console.warn('Network error for image', i + 1, e);
+      }
+    }
+
+    // Done
+    if (msgEl) {
+      if (failCount === 0) {
+        msgEl.style.color = '#27ae60';
+        msgEl.textContent = `✅ ${successCount} image${successCount !== 1 ? 's' : ''} uploaded successfully!`;
+      } else {
+        msgEl.style.color = '#e67e22';
+        msgEl.textContent = `⚠️ ${successCount} uploaded, ${failCount} failed.`;
+      }
+      setTimeout(() => { if (msgEl) msgEl.textContent = ''; }, 5000);
+    }
+
+    if (successCount > 0) {
+      showToast(`${successCount} image${successCount !== 1 ? 's' : ''} uploaded to gallery!`, 'success');
+      window.clearImagePreview();
+      document.getElementById('imgTitle').value = '';
+      document.getElementById('imgCategory').value = '';
+      await loadGalleryImages();
+    }
+
+    btn.textContent = '📤 Upload to Gallery';
+    btn.disabled    = false;
+  };
+
+  // ── Edit Modal ───────────────────────────────
+  window.openEditModal = function(imgId, currentTitle, currentCatId) {
+    // Build modal if not exists
+    let modal = document.getElementById('editImgModal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'editImgModal';
+      modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;padding:20px;';
+      modal.innerHTML = `
+        <div style="background:#fff;border-radius:20px;padding:32px;max-width:460px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.3);">
+          <h3 style="margin-bottom:20px;color:#0d1b3e;">✎ Edit Image Details</h3>
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="editImgTitle" placeholder="Image title">
+          </div>
+          <div class="form-group">
+            <label>Category</label>
+            <select id="editImgCat"><option value="">— Uncategorized —</option></select>
+          </div>
+          <div style="display:flex;gap:12px;margin-top:20px;">
+            <button class="btn-primary" id="editImgSaveBtn" style="flex:1;">💾 Save Changes</button>
+            <button class="btn-secondary-admin" onclick="document.getElementById('editImgModal').remove()" style="flex:1;">Cancel</button>
+          </div>
+        </div>`;
+      document.body.appendChild(modal);
+      modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+    }
+
+    // Populate fields
+    document.getElementById('editImgTitle').value = currentTitle || '';
+    const catSel = document.getElementById('editImgCat');
+    catSel.innerHTML = '<option value="">— Uncategorized —</option>';
+    galleryCats.forEach(c => {
+      catSel.innerHTML += `<option value="${c.id}"${c.id == currentCatId ? ' selected' : ''}>${c.name}</option>`;
+    });
+
+    document.getElementById('editImgSaveBtn').onclick = async function() {
+      const title = document.getElementById('editImgTitle').value.trim();
+      const catId = document.getElementById('editImgCat').value || null;
+      this.textContent = 'Saving...';
+      try {
+        const res  = await fetch(`/api/gallery/${imgId}`, {
+          method:  'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ title, category_id: catId })
+        });
+        const data = await res.json();
+        if (data.success) {
+          modal.remove();
+          await loadGalleryImages();
+          showToast('Image updated!', 'success');
+        } else alert(data.message);
+      } catch(e) { alert('Error saving changes.'); }
+      this.textContent = '💾 Save Changes';
+    };
+
+    modal.style.display = 'flex';
+  };
 
 }); // end DOMContentLoaded

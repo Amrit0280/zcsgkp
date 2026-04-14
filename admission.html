@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admission Form - Zenith Convent School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="portal/asset/style.css">
+  <style>
+    /* Add top padding so the fixed navbar doesn't cover the top of the form */
+    .admission-form-section {
+      padding-top: 120px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="portal/asset/Images/zenithlogo.png" alt="Zenith Logo" class="emblem">
+      <div class="name">Zenith Convent School<span>Sainik Kunj, Gorakhpur</span></div>
+    </a>
+    <ul class="nav-links">
+      <li class="dropdown">
+        <a href="index.html#about" class="dropbtn">About us ▾</a>
+        <div class="dropdown-content">
+          <a href="index.html#about">Why Zenith</a>
+          <a href="portal/asset/principal-desk.html">Principal's Desk</a>
+          <a href="Tabs/toppers.html">Topper Students</a>
+          <a href="Tabs/faculty.html">Our Faculty</a>
+          <a href="Tabs/rules-regulations.html">Rules &amp; Regulations</a>
+          <a href="index.html#process">Admission Process</a>
+        </div>
+      </li>
+      <li><a href="admission.html">Admission</a></li>
+      <li><a href="admission.html">Admission</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-affiliation">
+      Affiliation No. 2130701 <span style="color: #e74c3c; font-weight: 700;">(UPTO 31 March 2030)</span>
+    </div>
+    <div class="nav-extra" style="display:flex; gap:12px;">
+      <a href="kilkariyan.html" class="nav-cta" style="background: linear-gradient(135deg, #EC4899, #F97316); box-shadow: 0 4px 18px rgba(236,72,153,0.4); border:none;">Kilkariyan 🎈</a>
+      <a href="admission.html" class="nav-cta">Apply Now →</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU OVERLAY -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+    <nav class="mobile-menu-nav">
+      <details class="mobile-dropdown">
+        <summary class="mobile-dropbtn">About us ▾</summary>
+        <div class="mobile-dropdown-content">
+          <a href="index.html#about">Why Zenith</a>
+          <a href="portal/asset/principal-desk.html">Principal's Desk</a>
+          <a href="Tabs/toppers.html">Topper Students</a>
+          <a href="Tabs/faculty.html">Our Faculty</a>
+          <a href="Tabs/rules-regulations.html">Rules &amp; Regulations</a>
+          <a href="index.html#process">Admission Process</a>
+        </div>
+      </details>
+      <a href="admission.html">Admission</a>
+      <a href="index.html#contact">Contact</a>
+      <a href="kilkariyan.html" class="mobile-menu-cta" style="background: linear-gradient(135deg, #EC4899, #F97316) !important; box-shadow: 0 8px 30px rgba(236,72,153,0.4);">Kilkariyan 🎈</a>
+      <a href="admission.html" class="mobile-menu-cta">Apply Now →</a>
+    </nav>
+  </div>
+
+  <!-- ADMISSION FORM -->
+  <section class="admission-form-section" id="form">
+    <div class="form-grid">
+      <div class="form-info">
+        <div class="section-label" style="color:rgba(244,196,48,0.8)">Start Here</div>
+        <h2 class="section-title">Apply for Admission <span><span class="dyn-academic-year">2026–27</span></span></h2>
+        <p class="section-sub">Fill in the form and our admissions team will contact you within 24 hours. Seats are
+          limited — don't wait.</p>
+        <div class="form-highlights">
+          <div class="form-highlight">No registration fee for online applications</div>
+          <div class="form-highlight">Acknowledgement sent within 24 hours</div>
+          <div class="form-highlight">Flexible school tour scheduling</div>
+          <div class="form-highlight">Need-based scholarship programs available</div>
+        </div>
+      </div>
+      <div class="form-card">
+        <h3>Admission Application</h3>
+        <form id="admissionForm" novalidate>
+          <div class="form-row">
+            <div class="field-group">
+              <span class="field-icon">👤</span>
+              <input type="text" id="studentName" placeholder="Student's Full Name" required>
+            </div>
+            <div class="field-group">
+              <span class="field-icon">👨‍👩‍👦</span>
+              <input type="text" id="parentName" placeholder="Parent / Guardian Name" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field-group">
+              <span class="field-icon">🎒</span>
+              <select id="classApplying" required>
+                <option value="" disabled selected>Class Applying For</option>
+                <option value="nursery">Nursery</option>
+                <option value="lkg">LKG</option>
+                <option value="ukg">UKG</option>
+                <option value="1">Class I</option>
+                <option value="2">Class II</option>
+                <option value="3">Class III</option>
+                <option value="4">Class IV</option>
+                <option value="5">Class V</option>
+                <option value="6">Class VI</option>
+                <option value="7">Class VII</option>
+                <option value="8">Class VIII</option>
+                <option value="9">Class IX</option>
+                <option value="11">Class XI</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <span class="field-icon">📱</span>
+              <input type="tel" id="phone" placeholder="WhatsApp / Phone Number" required>
+            </div>
+          </div>
+          <div class="field-group">
+            <span class="field-icon">✉️</span>
+            <input type="email" id="email" placeholder="Email Address" required>
+          </div>
+          <div class="field-group textarea-field">
+            <span class="field-icon">💬</span>
+            <textarea id="message" placeholder="Any message or question? (Optional)"></textarea>
+          </div>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            Submit Application 🎓
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUCCESS POPUP -->
+  <div class="success-popup" id="successPopup">
+    <div class="popup-card">
+      <div class="popup-icon">✓</div>
+      <h3>Application Submitted!</h3>
+      <p>Thank you! Our admissions team will contact you within 24 hours. Please check your email for the
+        acknowledgement.</p>
+      <button class="popup-close"
+        onclick="document.getElementById('successPopup').classList.remove('show')">Close</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="name">Zenith Convent School</div>
+        <div class="tagline">Shaping Future Leaders Since 1999</div>
+        <p>CBSE-affiliated institution committed to academic excellence, moral values, and holistic development in the
+          heart of Gorakhpur.</p>
+        <div class="footer-socials" style="display: flex; gap: 12px; align-items: center;">
+          <a href="https://www.facebook.com/zenithconventschool/" target="_blank" title="Facebook">
+            <img src="portal/asset/Platform/Facebook.jpg" alt="Facebook"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://www.instagram.com/zenith_convent_school" target="_blank" title="Instagram">
+            <img src="portal/asset/Platform/instagram/2227.jpg" alt="Instagram"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://www.youtube.com/@zenithconventschool4371" target="_blank" title="YouTube">
+            <img src="portal/asset/Platform/youtubr.png" alt="YouTube"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.schoolapp.management" target="_blank"
+            title="App on Play Store">
+            <img src="portal/asset/Platform/playstore.png" alt="Play Store"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+          <a href="https://api.whatsapp.com/send/?phone=916392010710&text=Kindly+help+me%2C+I+have+some+quries&type=phone_number&app_absent=0"
+            target="_blank" title="WhatsApp">
+            <img src="portal/asset/Platform/Whatsapp.png" alt="WhatsApp"
+              style="width: 36px; height: 36px; border-radius: 8px; object-fit: cover; transition: transform 0.2s;"
+              onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#about">About School</a></li>
+          <li><a href="index.html#process">Admission Process</a></li>
+          <li><a href="admission.html">Admission</a></li>
+      <li><a href="admission.html">Admission</a></li>
+          <li><a href="index.html#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Academics</h4>
+        <ul>
+          <li><a href="#">Primary School</a></li>
+          <li><a href="#">Middle School</a></li>
+          <li><a href="#">Senior School</a></li>
+          <li><a href="#">CBSE Results</a></li>
+          <li><a href="#">Scholarships</a></li>
+        </ul>
+      </div>
+    </div>
+    <hr class="footer-divider">
+    <div class="footer-bottom">
+      <p>© <span class="dyn-copyright-year">2026</span> Zenith Convent School, Gorakhpur. All rights reserved.</p>
+      <p>Made with <span>♥</span> for excellence in education.</p>
+    </div>
+  </footer>
+
+  <script src="portal/asset/script.js?v=2"></script>
+
+  <!-- AI CHATBOT (Botpress) -->
+  <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/04/10/09/20260410095211-YW8SJ0OX.js" defer></script>
+  <script src="portal/asset/chatbot.js" defer></script>
+
+</body>
+
+</html>

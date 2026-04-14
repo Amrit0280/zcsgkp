@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Zenith Convent School</title>
+  <meta name="description" content="Explore the Zenith Convent School photo gallery — capturing memories from Annual Events, Sports Day, Farewell, Infrastructure, Facilities, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../portal/asset/style.css">
+  <style>
+    /* ─── GALLERY PAGE STYLES ─── */
+    :root {
+      --blue: #0d1b3e;
+      --gold: #f4c430;
+      --gold-deep: #d4a017;
+      --gallery-bg: #f4f6fb;
+      --card-radius: 18px;
+      --shadow: 0 8px 32px rgba(13,27,62,0.10);
+      --shadow-hover: 0 20px 60px rgba(13,27,62,0.20);
+      --transition: all 0.38s cubic-bezier(0.22,1,0.36,1);
+    }
+
+    .filter-bar { transition: transform 0.4s ease, opacity 0.3s ease !important; }
+    .filter-bar.filter-hidden { 
+      transform: translateY(-110px); 
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    @media (max-width: 768px) {
+      .filter-bar { top: 72px; } /* Sticks below nav */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Poppins', sans-serif; background: var(--gallery-bg); }
+
+    /* ─── HERO BANNER ─── */
+    .gallery-hero {
+      background: linear-gradient(135deg, rgba(13,27,62,0.88) 0%, rgba(26,58,110,0.8) 60%, rgba(13,27,62,0.88) 100%), url('../portal/asset/Images/images.jpeg') center/cover no-repeat;
+      padding: 120px 5% 70px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .gallery-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(244,196,48,0.12) 0%, transparent 65%);
+    }
+    .gallery-hero .hero-particles {
+      position: absolute; inset: 0; pointer-events: none;
+    }
+    .gallery-hero .hero-particles span {
+      position: absolute; border-radius: 50%; opacity: 0.15;
+      animation: floatDot 8s ease-in-out infinite;
+    }
+    @keyframes floatDot {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-20px) scale(1.15); }
+    }
+    .gallery-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800; color: #fff;
+      position: relative; z-index: 2;
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .gallery-hero h1 span { color: var(--gold); }
+    .gallery-hero p {
+      color: rgba(255,255,255,0.7); font-size: 1.05rem;
+      max-width: 600px; margin: 0 auto 14px;
+      position: relative; z-index: 2;
+    }
+    .breadcrumb {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; font-size: 0.82rem; color: rgba(255,255,255,0.5);
+      position: relative; z-index: 2; margin-top: 10px;
+    }
+    .breadcrumb a { color: var(--gold); text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    /* ─── MAIN GALLERY SECTION ─── */
+    .gallery-section {
+      max-width: 1300px; margin: 0 auto;
+      padding: 60px 5% 80px;
+    }
+
+    /* ─── FILTER BAR ─── */
+    .filter-bar {
+      display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; margin-bottom: 48px;
+      position: sticky; top: 0;
+      background: var(--gallery-bg);
+      padding: 18px 5%; z-index: 50;
+      box-shadow: 0 4px 20px rgba(13,27,62,0.06);
+      margin-left: -5%; margin-right: -5%;
+      border-bottom: 1px solid rgba(13,27,62,0.07);
+    }
+    .filter-btn {
+      padding: 9px 22px;
+      border-radius: 50px;
+      border: 2px solid rgba(13,27,62,0.15);
+      background: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem; font-weight: 600;
+      color: #444; cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .filter-btn .count-badge {
+      background: rgba(13,27,62,0.08);
+      border-radius: 50px; padding: 1px 8px;
+      font-size: 0.72rem; font-weight: 700;
+      min-width: 22px; text-align: center;
+      transition: var(--transition);
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--blue); color: #fff;
+      border-color: var(--blue);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(13,27,62,0.20);
+    }
+    .filter-btn.active .count-badge, .filter-btn:hover .count-badge {
+      background: rgba(255,255,255,0.2); color: #fff;
+    }
+    .filter-btn.active { background: linear-gradient(135deg, var(--blue), #1a3a6e); }
+
+    /* ─── GALLERY STATS ─── */
+    .gallery-stats {
+      text-align: center; margin-bottom: 30px;
+    }
+    .gallery-stats p {
+      font-size: 0.9rem; color: #888; font-weight: 500;
+    }
+    .gallery-stats span { color: var(--blue); font-weight: 700; }
+
+    /* ─── IMAGE GRID ─── */
+    .gallery-grid {
+      columns: 4;
+      column-gap: 20px;
+    }
+    @media (max-width: 1100px) { .gallery-grid { columns: 3; } }
+    @media (max-width: 720px) { .gallery-grid { columns: 2; } }
+    @media (max-width: 450px) { .gallery-grid { columns: 1; } }
+
+    .gallery-card {
+      break-inside: avoid;
+      margin-bottom: 20px;
+      border-radius: var(--card-radius);
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      background: #eee;
+      transition: var(--transition);
+    }
+    .gallery-card.hide {
+      display: none;
+    }
+    .gallery-card.fade-in {
+      animation: galleryFadeIn 0.5s ease forwards;
+    }
+    @keyframes galleryFadeIn {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .gallery-card img {
+      width: 100%; height: auto; display: block;
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+      object-fit: cover;
+    }
+    .gallery-card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+    .gallery-card:hover img { transform: scale(1.06); }
+
+    .gallery-card .card-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,27,62,0.85) 0%, rgba(13,27,62,0.1) 50%, transparent 100%);
+      opacity: 0; transition: opacity 0.35s ease;
+      display: flex; flex-direction: column;
+      justify-content: flex-end; padding: 20px;
+    }
+    .gallery-card:hover .card-overlay { opacity: 1; }
+    .card-overlay h4 {
+      color: #fff; font-size: 0.92rem; font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .card-overlay .cat-tag {
+      display: inline-block;
+      background: var(--gold); color: var(--blue);
+      font-size: 0.7rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 50px;
+      text-transform: uppercase; letter-spacing: 0.3px;
+    }
+    .card-overlay .expand-icon {
+      position: absolute; top: 14px; right: 14px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%; width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; backdrop-filter: blur(4px);
+      color: #fff;
+    }
+    .card-overlay .download-icon {
+      position: absolute; bottom: 14px; right: 14px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%; width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; backdrop-filter: blur(4px);
+      color: #fff; cursor: pointer; border: none;
+      transition: var(--transition); z-index: 10;
+    }
+    .card-overlay .download-icon:hover {
+      background: var(--gold); color: var(--blue); transform: scale(1.1);
+    }
+
+    /* ─── EMPTY STATE ─── */
+    .gallery-empty {
+      text-align: center; padding: 80px 20px;
+      display: none;
+    }
+    .gallery-empty.show { display: block; }
+    .gallery-empty .empty-icon { font-size: 4rem; margin-bottom: 16px; }
+    .gallery-empty h3 { color: var(--blue); margin-bottom: 8px; font-size: 1.3rem; }
+    .gallery-empty p { color: #888; font-size: 0.9rem; }
+
+    /* ─── LOADING SKELETON ─── */
+    .skeleton-grid {
+      columns: 4; column-gap: 20px;
+    }
+    @media (max-width: 1100px) { .skeleton-grid { columns: 3; } }
+    @media (max-width: 720px) { .skeleton-grid { columns: 2; } }
+    .skeleton-card {
+      break-inside: avoid; margin-bottom: 20px;
+      border-radius: var(--card-radius);
+      background: linear-gradient(90deg, #e8eaf0 25%, #f0f2f7 50%, #e8eaf0 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(0,0,0,0.93);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: all 0.35s ease;
+      padding: 20px;
+    }
+    .lightbox.open { opacity: 1; visibility: visible; }
+    .lightbox-content {
+      position: relative; max-width: 90vw; max-height: 90vh;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .lightbox-content img {
+      max-width: 80vw; max-height: 75vh;
+      border-radius: 12px; object-fit: contain;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+    .lightbox-info {
+      margin-top: 16px; text-align: center;
+    }
+    .lightbox-info h3 { color: #fff; font-size: 1.1rem; margin-bottom: 6px; }
+    .lightbox-info .cat-tag {
+      background: var(--gold); color: var(--blue);
+      font-size: 0.75rem; font-weight: 700;
+      padding: 4px 12px; border-radius: 50px;
+    }
+    .lightbox-close {
+      position: absolute; top: -44px; right: -14px;
+      background: rgba(255,255,255,0.1); border: none;
+      color: #fff; font-size: 1.5rem; width: 40px; height: 40px;
+      border-radius: 50%; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+    .lightbox-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.12); border: none;
+      color: #fff; font-size: 1.6rem; width: 48px; height: 48px;
+      border-radius: 50%; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+    .lightbox-nav.prev { left: -70px; }
+    .lightbox-nav.next { right: -70px; }
+    @media (max-width: 600px) {
+      .lightbox-nav.prev { left: -52px; }
+      .lightbox-nav.next { right: -52px; }
+      .lightbox-content img { max-width: 95vw; }
+    }
+
+    /* ─── LOAD MORE ─── */
+    .load-more-wrap {
+      text-align: center; margin-top: 48px;
+    }
+    .btn-load-more {
+      padding: 14px 40px; background: var(--blue);
+      color: #fff; border: none; border-radius: 50px;
+      font-family: 'Poppins', sans-serif; font-size: 0.92rem;
+      font-weight: 600; cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 8px 24px rgba(13,27,62,0.2);
+    }
+    .btn-load-more:hover {
+      background: #1a3a6e; transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(13,27,62,0.28);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR (same structure as main site) -->
+  <nav class="nav">
+    <a href="../index.html" class="nav-logo">
+      <img src="../portal/asset/Images/zenithlogo.png" alt="Zenith Logo" class="emblem">
+      <div class="name">Zenith Convent School<span>Sainik Kunj, Gorakhpur</span></div>
+    </a>
+    <ul class="nav-links">
+      <li class="dropdown">
+        <a href="../index.html#about" class="dropbtn">About us ▾</a>
+        <div class="dropdown-content">
+          <a href="../index.html#about">Why Zenith</a>
+          <a href="../portal/asset/principal-desk.html">Principal's Desk</a>
+          <a href="toppers.html">Topper Students</a>
+          <a href="faculty.html">Our Faculty</a>
+          <a href="rules-regulations.html">Rules &amp; Regulations</a>
+          <a href="../index.html#process">Admission Process</a>
+          <a href="../index.html#fees">Fee Structure</a>
+        </div>
+      </li>
+      <li><a href="../admission.html">Admission</a></li>
+      <li><a href="gallery.html" class="nav-active-gallery">Gallery</a></li>
+      <li><a href="../index.html#contact">Contact</a></li>
+    </ul>
+    <div class="nav-affiliation">
+      Affiliation No. 2130701 <span style="color: #e74c3c; font-weight: 700;">(UPTO 31 March 2030)</span>
+    </div>
+    <div class="nav-extra" style="display:flex; gap:12px;">
+      <a href="../kilkariyan.html" class="nav-cta" style="background: linear-gradient(135deg, #EC4899, #F97316); box-shadow: 0 4px 18px rgba(236,72,153,0.4); border:none;">Kilkariyan 🎈</a>
+      <a href="../admission.html" class="nav-cta">Apply Now →</a>
+    </div>
+    <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
+    <nav class="mobile-menu-nav">
+      <details class="mobile-dropdown">
+        <summary class="mobile-dropbtn">About us ▾</summary>
+        <div class="mobile-dropdown-content">
+          <a href="../index.html#about">Why Zenith</a>
+          <a href="../portal/asset/principal-desk.html">Principal's Desk</a>
+          <a href="toppers.html">Topper Students</a>
+          <a href="faculty.html">Our Faculty</a>
+          <a href="rules-regulations.html">Rules &amp; Regulations</a>
+          <a href="../index.html#process">Admission Process</a>
+          <a href="../index.html#fees">Fee Structure</a>
+        </div>
+      </details>
+      <a href="../admission.html">Admission</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="../kilkariyan.html" class="mobile-menu-cta" style="background: linear-gradient(135deg, #EC4899, #F97316) !important;">Kilkariyan 🎈</a>
+      <a href="../admission.html" class="mobile-menu-cta">Apply Now →</a>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <section class="gallery-hero">
+    <div class="hero-particles">
+      <span style="width:140px;height:140px;background:var(--gold);top:10%;left:5%;animation-delay:0s;animation-duration:9s;"></span>
+      <span style="width:80px;height:80px;background:rgba(255,255,255,0.6);top:65%;left:88%;animation-delay:2s;animation-duration:7s;"></span>
+      <span style="width:60px;height:60px;background:var(--gold);top:80%;left:15%;animation-delay:4s;animation-duration:11s;"></span>
+    </div>
+    <h1>Our School <span>Gallery</span></h1>
+    <p>Moments that define us — from classrooms to celebrations, sports to ceremonies.</p>
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span>›</span>
+      <span>Gallery</span>
+    </div>
+  </section>
+
+  <!-- GALLERY SECTION -->
+  <div class="gallery-section">
+
+    <!-- Filter Bar -->
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-cat="all" id="filter-all">
+        All <span class="count-badge" id="count-all">0</span>
+      </button>
+      <!-- Dynamic categories injected here -->
+    </div>
+
+    <!-- Stats -->
+    <div class="gallery-stats">
+      <p>Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> photos</p>
+    </div>
+
+    <!-- Loading Skeletons -->
+    <div class="skeleton-grid" id="skeletonGrid">
+      <div class="skeleton-card" style="height:220px;"></div>
+      <div class="skeleton-card" style="height:160px;"></div>
+      <div class="skeleton-card" style="height:260px;"></div>
+      <div class="skeleton-card" style="height:190px;"></div>
+      <div class="skeleton-card" style="height:240px;"></div>
+      <div class="skeleton-card" style="height:180px;"></div>
+      <div class="skeleton-card" style="height:200px;"></div>
+      <div class="skeleton-card" style="height:230px;"></div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="gallery-grid" id="galleryGrid"></div>
+
+    <!-- Empty State -->
+    <div class="gallery-empty" id="galleryEmpty">
+      <div class="empty-icon" style="font-size:3.5rem;opacity:0.25;">&#128247;</div>
+      <h3>No Photos Yet</h3>
+      <p>Images for this category will appear here once uploaded by the admin.</p>
+    </div>
+
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+      <button class="lightbox-nav prev" id="lightboxPrev" aria-label="Previous">‹</button>
+      <img id="lightboxImg" src="" alt="Gallery Image">
+      <button class="lightbox-nav next" id="lightboxNext" aria-label="Next">›</button>
+      <div class="lightbox-info">
+        <h3 id="lightboxTitle"></h3>
+        <span class="cat-tag" id="lightboxCat"></span>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .nav-active-gallery { color: var(--gold) !important; font-weight: 700 !important; }
+  </style>
+
+  <script src="../portal/asset/script.js?v=2"></script>
+  <script>
+    // ─── GALLERY PAGE LOGIC ───
+    const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:5000/api'
+      : '/api';
+
+    let allImages = [];
+    let categories = [];
+    let activeFilter = 'all';
+    let lightboxIndex = 0;
+    let filteredImages = [];
+
+    // ─── FETCH CATEGORIES ───
+    async function fetchCategories() {
+      try {
+        const res = await fetch(`${API}/gallery/categories`);
+        categories = await res.json();
+        renderFilterButtons();
+      } catch (e) { console.warn('Failed to load categories', e); }
+    }
+
+    // ─── FETCH IMAGES ───
+    async function fetchImages() {
+      try {
+        const res = await fetch(`${API}/gallery`);
+        allImages = await res.json();
+        document.getElementById('skeletonGrid').style.display = 'none';
+        renderGallery('all');
+        updateCounts();
+      } catch (e) {
+        console.warn('Failed to load gallery', e);
+        document.getElementById('skeletonGrid').style.display = 'none';
+        showEmpty(true);
+      }
+    }
+
+    // ─── RENDER FILTER BUTTONS ───
+    function renderFilterButtons() {
+      const bar = document.getElementById('filterBar');
+      // Remove old dynamic buttons
+      bar.querySelectorAll('[data-cat]:not([data-cat="all"])').forEach(b => b.remove());
+
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.dataset.cat = cat.id;
+        btn.id = `filter-${cat.id}`;
+        const count = allImages.filter(img => img.category_id == cat.id).length;
+        btn.innerHTML = `${cat.name} <span class="count-badge" id="count-${cat.id}">${count}</span>`;
+        btn.addEventListener('click', () => filterGallery(cat.id));
+        bar.appendChild(btn);
+      });
+    }
+
+    function getCatIcon(name) {
+      const map = { 'Infrastructure':'🏫', 'Annual Events':'🎉', 'Farewell':'🎓', 'Sports Day':'🏅', 'Facilities':'🏊', 'Other Events':'📌' };
+      for (const [k, v] of Object.entries(map)) {
+        if (name.toLowerCase().includes(k.toLowerCase().split(' ')[0].toLowerCase())) return v;
+      }
+      return '📷';
+    }
+
+    // ─── UPDATE BADGE COUNTS ───
+    function updateCounts() {
+      document.getElementById('count-all').textContent = allImages.length;
+      categories.forEach(cat => {
+        const el = document.getElementById(`count-${cat.id}`);
+        if (el) el.textContent = allImages.filter(img => img.category_id == cat.id).length;
+      });
+    }
+
+    // ─── RENDER GALLERY ───
+    function renderGallery(catFilter) {
+      activeFilter = catFilter;
+      const grid = document.getElementById('galleryGrid');
+      grid.innerHTML = '';
+
+      filteredImages = catFilter === 'all'
+        ? [...allImages]
+        : allImages.filter(img => img.category_id == catFilter);
+
+      document.getElementById('totalCount').textContent = allImages.length;
+      document.getElementById('visibleCount').textContent = filteredImages.length;
+
+      showEmpty(filteredImages.length === 0);
+
+      filteredImages.forEach((img, idx) => {
+        const card = document.createElement('div');
+        card.className = 'gallery-card fade-in';
+        card.style.animationDelay = `${Math.min(idx * 0.05, 0.6)}s`;
+        card.dataset.index = idx;
+        card.innerHTML = `
+          <img src="${img.image_data}" alt="${img.title || 'School Photo'}" loading="lazy">
+          <div class="card-overlay">
+            <span class="expand-icon" title="View Full">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg>
+            </span>
+            <button class="download-icon" title="Download Image" data-img-data="${img.image_data}" data-img-title="${(img.title || 'School Photo').replace(/"/g, '&quot;')}" onclick="downloadImage(event, this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+            </button>
+            <h4>${img.title || 'School Photo'}</h4>
+            <span class="cat-tag">${img.category_name || 'Uncategorized'}</span>
+          </div>
+        `;
+        card.addEventListener('click', () => openLightbox(idx));
+        grid.appendChild(card);
+      });
+    }
+
+    // ─── FILTER HANDLER ───
+    function filterGallery(catId) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById(catId === 'all' ? 'filter-all' : `filter-${catId}`);
+      if (btn) btn.classList.add('active');
+      renderGallery(catId);
+    }
+
+    document.getElementById('filter-all').addEventListener('click', () => filterGallery('all'));
+
+    // ─── DOWNLOAD HANDLER ───
+    function downloadImage(event, btn) {
+      event.stopPropagation();
+      const title = btn.dataset.imgTitle;
+      const dataUrl = btn.dataset.imgData;
+      let safeTitle = (title && title.trim() !== '') ? title.trim().replace(/[^a-zA-Z0-9_-]/g, '_') : 'School_Photo';
+      let fileName = `Zenith_Convent_School_(${safeTitle}).jpg`;
+
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = fileName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // ─── EMPTY STATE ───
+    function showEmpty(show) {
+      document.getElementById('galleryEmpty').classList.toggle('show', show);
+    }
+
+    // ─── LIGHTBOX ───
+    function openLightbox(idx) {
+      lightboxIndex = idx;
+      updateLightbox();
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function updateLightbox() {
+      const img = filteredImages[lightboxIndex];
+      if (!img) return;
+      document.getElementById('lightboxImg').src = img.image_data;
+      document.getElementById('lightboxTitle').textContent = img.title || 'School Photo';
+      document.getElementById('lightboxCat').textContent = img.category_name || 'Uncategorized';
+      document.getElementById('lightboxPrev').style.opacity = lightboxIndex === 0 ? '0.3' : '1';
+      document.getElementById('lightboxNext').style.opacity = lightboxIndex === filteredImages.length - 1 ? '0.3' : '1';
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox').addEventListener('click', e => { if (e.target === e.currentTarget) closeLightbox(); });
+
+    document.getElementById('lightboxPrev').addEventListener('click', () => {
+      if (lightboxIndex > 0) { lightboxIndex--; updateLightbox(); }
+    });
+    document.getElementById('lightboxNext').addEventListener('click', () => {
+      if (lightboxIndex < filteredImages.length - 1) { lightboxIndex++; updateLightbox(); }
+    });
+
+    document.addEventListener('keydown', e => {
+      if (!document.getElementById('lightbox').classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft' && lightboxIndex > 0) { lightboxIndex--; updateLightbox(); }
+      if (e.key === 'ArrowRight' && lightboxIndex < filteredImages.length - 1) { lightboxIndex++; updateLightbox(); }
+    });
+
+    // ─── INIT ───
+    (async () => {
+      await fetchCategories();
+      await fetchImages();
+      initScrollBehavior();
+    })();
+
+    // ─── SCROLL BEHAVIOR (Hide/Show Filter Tabs) ───
+    function initScrollBehavior() {
+      let lastScroll = 0;
+      const filterBar = document.getElementById('filterBar');
+      if (!filterBar) return;
+      
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        
+        // Don't hide if menu is open
+        if (document.getElementById('mobileMenu').classList.contains('open')) return;
+
+        if (currentScroll <= 150) {
+          filterBar.classList.remove('filter-hidden');
+          return;
+        }
+
+        if (currentScroll > lastScroll && !filterBar.classList.contains('filter-hidden')) {
+          // Scrolling down
+          filterBar.classList.add('filter-hidden');
+        } else if (currentScroll < lastScroll && filterBar.classList.contains('filter-hidden')) {
+          // Scrolling up
+          filterBar.classList.remove('filter-hidden');
+        }
+        lastScroll = currentScroll;
+      });
+    }
+  </script>
+
+</body>
+</html>

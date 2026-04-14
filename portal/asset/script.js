@@ -51,88 +51,126 @@ window.addEventListener('scroll', () => {
 });
 
 // ─── RIPPLE ON SUBMIT ───
-document.getElementById('submitBtn').addEventListener('click', function (e) {
-  const ripple = document.createElement('span');
-  ripple.className = 'ripple';
-  const rect = this.getBoundingClientRect();
-  const size = Math.max(rect.width, rect.height);
-  ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px`;
-  this.appendChild(ripple);
-  setTimeout(() => ripple.remove(), 700);
-});
+const submitBtn = document.getElementById('submitBtn');
+if (submitBtn) {
+  submitBtn.addEventListener('click', function (e) {
+    const ripple = document.createElement('span');
+    ripple.className = 'ripple';
+    const rect = this.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size / 2}px;top:${e.clientY - rect.top - size / 2}px`;
+    this.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 700);
+  });
+}
 
 // ─── FORM SUBMISSION ───
-document.getElementById('admissionForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+const admissionForm = document.getElementById('admissionForm');
+if (admissionForm) {
+  admissionForm.addEventListener('submit', function (e) {
+    e.preventDefault();
 
-  const fields = ['studentName', 'parentName', 'phone', 'email'];
-  let valid = true;
+    const fields = ['studentName', 'parentName', 'phone', 'email'];
+    let valid = true;
 
-  fields.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) {
-      el.style.borderColor = '#ef4444';
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && !el.value.trim()) {
+        el.style.borderColor = '#ef4444';
+        valid = false;
+        setTimeout(() => el.style.borderColor = '', 2000);
+      }
+    });
+
+    const cls = document.getElementById('classApplying');
+    if (cls && !cls.value) {
+      cls.style.borderColor = '#ef4444';
       valid = false;
-      setTimeout(() => el.style.borderColor = '', 2000);
+      setTimeout(() => cls.style.borderColor = '', 2000);
     }
+
+    if (!valid) return;
+
+    const btn = document.getElementById('submitBtn');
+    if (btn) {
+      btn.textContent = 'Submitting…';
+      btn.disabled = true;
+    }
+
+    setTimeout(() => {
+      if (btn) {
+        btn.textContent = 'Submit Application 🎓';
+        btn.disabled = false;
+      }
+
+      submitAdmissionToDB();
+
+      document.getElementById('admissionForm').reset();
+      const successPopup = document.getElementById('successPopup');
+      if (successPopup) successPopup.classList.add('show');
+
+      // decrement seat count for urgency
+      const sc = document.getElementById('seatCount');
+      if (sc) {
+        const cur = parseInt(sc.textContent);
+        if (cur > 1) sc.textContent = cur - 1;
+      }
+    }, 1400);
   });
-
-  const cls = document.getElementById('classApplying');
-  if (!cls.value) {
-    cls.style.borderColor = '#ef4444';
-    valid = false;
-    setTimeout(() => cls.style.borderColor = '', 2000);
-  }
-
-  if (!valid) return;
-
-  const btn = document.getElementById('submitBtn');
-  btn.textContent = 'Submitting…';
-  btn.disabled = true;
-
-  setTimeout(() => {
-    btn.textContent = 'Submit Application 🎓';
-    btn.disabled = false;
-
-    submitAdmissionToDB();
-
-    document.getElementById('admissionForm').reset();
-    document.getElementById('successPopup').classList.add('show');
-
-    // decrement seat count for urgency
-    const sc = document.getElementById('seatCount');
-    const cur = parseInt(sc.textContent);
-    if (cur > 1) sc.textContent = cur - 1;
-  }, 1400);
-});
+}
 
 // ─── SELECT STYLE FIX ───
-document.getElementById('classApplying').addEventListener('change', function () {
-  this.classList.add('filled');
-});
+const classApplying = document.getElementById('classApplying');
+if (classApplying) {
+  classApplying.addEventListener('change', function () {
+    this.classList.add('filled');
+  });
+}
 
 // ─── SEAT COUNTER ANIMATION ───
-function animateCounter() {
+
+async function fetchTotalSeats() {
+  try {
+    const res = await fetch('/api/seats');
+    const data = await res.json();
+    return Object.values(data).reduce((sum, v) => sum + (parseInt(v) || 0), 0);
+  } catch (e) {
+    return 24; // fallback default
+  }
+}
+
+function animateCounter(target) {
   const el = document.getElementById('seatCount');
-  let count = 30, target = 24;
+  if (!el) return;
+  const start = Math.min(target + 8, target + Math.floor(target * 0.15));
+  let count = start;
+  el.textContent = count;
   const interval = setInterval(() => {
-    if (count <= target) { clearInterval(interval); return; }
+    if (count <= target) { clearInterval(interval); el.textContent = target; return; }
     count--;
     el.textContent = count;
-  }, 80);
+  }, 60);
 }
+
+let urgencyObserverFired = false;
 const urgencyObserver = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting) {
-    animateCounter();
+  if (entries[0].isIntersecting && !urgencyObserverFired) {
+    urgencyObserverFired = true;
     urgencyObserver.disconnect();
+    fetchTotalSeats().then(total => animateCounter(total));
   }
-}, { threshold: 0.5 });
-urgencyObserver.observe(document.querySelector('.urgency'));
+}, { threshold: 0.4 });
+const urgencyEl = document.querySelector('.urgency');
+if (urgencyEl) urgencyObserver.observe(urgencyEl);
+
 
 // ─── CLOSE POPUP ON OUTSIDE CLICK ───
-document.getElementById('successPopup').addEventListener('click', function (e) {
-  if (e.target === this) this.classList.remove('show');
-});
+const successPopupEl = document.getElementById('successPopup');
+if (successPopupEl) {
+  successPopupEl.addEventListener('click', function (e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+}
 
 // ─── SUBMIT TO DATABASE ───
 async function submitAdmissionToDB() {
@@ -242,8 +280,95 @@ window.addEventListener('DOMContentLoaded', async () => {
       if (banner) banner.innerHTML = '🎓 <strong>' + contentData.admissions_banner + '</strong>';
       if (headline) headline.innerHTML = contentData.hero_headline;
       if (subtitle) subtitle.innerHTML = contentData.hero_subtitle;
+      if (contentData.academic_year) {
+        document.querySelectorAll('.dyn-academic-year').forEach(el => {
+          el.textContent = contentData.academic_year;
+        });
+      }
     }
   } catch (e) {
     console.log("Failed to load dynamic content", e);
+  }
+
+  // Update Copyright Year Dynamically
+  document.querySelectorAll('.dyn-copyright-year').forEach(el => {
+    el.textContent = new Date().getFullYear();
+  });
+});
+
+// ─── ADMISSION STATUS: SHOW/HIDE BASED ON ADMIN SETTING ───
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const res = await fetch('/api/admission-status');
+    const data = await res.json();
+    const isOpen = data.admission_open !== false;
+
+    if (!isOpen) {
+      // ── Suppress welcome popup (also cancels it if timer already fired) ──
+      const welcomePopup = document.getElementById('welcomePopup');
+      if (welcomePopup) {
+        welcomePopup.style.display = 'none';
+        welcomePopup.classList.remove('show');
+      }
+
+      // ── Hide sticky bottom bar ──
+      const stickyBar = document.getElementById('stickyBar');
+      if (stickyBar) stickyBar.style.display = 'none';
+
+      // ── Hide hero "Apply Now" CTA button ──
+      const heroApplyBtn = document.querySelector('.hero-btns .btn-primary');
+      if (heroApplyBtn) heroApplyBtn.style.display = 'none';
+
+      // ── Hide navbar Apply Now CTA ──
+      // const navCtaList = document.querySelectorAll('.nav-cta[href="admission.html"]');
+      // navCtaList.forEach(el => el.style.display = 'none');
+
+      // ── Hide mobile menu Apply Now ──
+      // const mobileCtaList = document.querySelectorAll('.mobile-menu-cta[href="admission.html"]');
+      // mobileCtaList.forEach(el => el.style.display = 'none');
+
+      // ── Replace urgency section with "closed" message ──
+      const urgencySection = document.querySelector('.urgency');
+      if (urgencySection) {
+        urgencySection.innerHTML = `
+          <div class="urgency-badge" style="background:rgba(231,76,60,0.15);color:#e74c3c;border:1px solid rgba(231,76,60,0.3);">
+            🔒 Admissions Closed
+          </div>
+          <h2 style="color:white;">Admissions<br><span style="color:#e74c3c;">Are Currently Closed.</span></h2>
+          <p style="color:rgba(255,255,255,0.72);">We are not accepting new applications for the current session at this time. Please check back later or contact the school office for more information.</p>
+          <br><br>
+          <a href="#contact" class="btn-primary" style="font-size:1.08rem;padding:16px 44px;background:rgba(255,255,255,0.12);color:white;box-shadow:none;border:1.5px solid rgba(255,255,255,0.3);">
+            Contact School Office
+          </a>`;
+      }
+
+      // ── Replace admission form section with closed notice ──
+      const formSection = document.getElementById('form');
+      if (formSection) {
+        formSection.innerHTML = `
+          <div style="text-align:center;padding:60px 20px;max-width:600px;margin:0 auto;">
+            <div style="font-size:4rem;margin-bottom:20px;">🔒</div>
+            <h2 class="section-title" style="margin-bottom:16px;">Admissions <span style="color:#e74c3c;">Closed</span></h2>
+            <p class="section-sub" style="margin:0 auto 32px;text-align:center;">
+              Applications for the current session are currently not being accepted.
+              Please contact the school office to be notified when admissions reopen.
+            </p>
+            <a href="#contact" class="btn-primary" style="display:inline-block;">
+              Contact Us for Updates
+            </a>
+          </div>`;
+      }
+
+      // ── Update hero badge text ──
+      const heroBadge = document.querySelector('.hero-badge');
+      if (heroBadge) {
+        heroBadge.style.background = 'rgba(231,76,60,0.15)';
+        heroBadge.style.borderColor = 'rgba(231,76,60,0.4)';
+        heroBadge.style.color = '#e74c3c';
+        heroBadge.innerHTML = '<span class="badge-dot" style="background:#e74c3c;"></span> Admissions Currently Closed';
+      }
+    }
+  } catch (e) {
+    console.log("Could not load admission status", e);
   }
 });

@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kilkariyan Playway School — Where Learning Begins with Joy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="kilkariyan/style.css" />
+  <style>
+    /* ── Entry screen only — variables & reset ─────────────────────────── */
+    :root {
+      --font-head: 'Fredoka One', cursive;
+      --font-body: 'Nunito', sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      overflow: hidden;
+      background: #60B8F0;
+    }
+
+    /* Full-screen overlay */
+    #entry {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(160deg, #FFF0F9 0%, #EEF4FF 45%, #FFFDE7 100%);
+      transition: opacity 0.65s ease;
+    }
+
+    /* Subtle polka-dot texture on the background */
+    #entry::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(124, 58, 237, 0.08) 1.5px, transparent 1.5px);
+      background-size: 34px 34px;
+    }
+
+    /* ── Skip button ─────────────────────────────────────────────────── */
+    #skip-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 30;
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid rgba(124, 58, 237, 0.22);
+      border-radius: 999px;
+      padding: 9px 22px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 800;
+      color: #6B7280;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    #skip-btn:hover {
+      background: #fff;
+      color: #374151;
+      transform: scale(1.05);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    /* ── Floating decorative emojis in the background ────────────────── */
+    .float-ele {
+      position: absolute;
+      pointer-events: none;
+      opacity: 0.75;
+      animation: floatDance var(--fdur, 4s) ease-in-out var(--fdelay, 0s) infinite;
+    }
+
+    @keyframes floatDance {
+
+      0%,
+      100% {
+        transform: translateY(0) rotate(-5deg) scale(1);
+      }
+
+      40% {
+        transform: translateY(-18px) rotate(5deg) scale(1.06);
+      }
+
+      70% {
+        transform: translateY(-8px) rotate(-2deg) scale(0.96);
+      }
+    }
+
+    /* ── Centre scene wrapper ─────────────────────────────────────────── */
+    #book-scene {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(14px, 3.5vh, 28px);
+      z-index: 10;
+    }
+
+    /* School name pill above the book */
+    #loader-badge {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 999px;
+      padding: 10px 28px;
+      box-shadow: 0 4px 22px rgba(124, 58, 237, 0.14);
+      border: 2px solid rgba(124, 58, 237, 0.2);
+      font-family: var(--font-head);
+      font-size: clamp(14px, 3.2vw, 19px);
+      color: #7C3AED;
+      letter-spacing: 0.3px;
+      animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: scale(0.55) translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* ── 3-D book perspective container ─────────────────────────────── */
+    #book-container {
+      perspective: 950px;
+      width: clamp(155px, 28vw, 215px);
+      height: clamp(185px, 34vw, 258px);
+      position: relative;
+      animation: bookEntrance 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+    }
+
+    @keyframes bookEntrance {
+      from {
+        opacity: 0;
+        transform: scale(0.45) translateY(28px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    /* Inner book — keeps children in 3-D space */
+    #book {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+    }
+
+    /* ── Back cover (always visible beneath pages) ───────────────────── */
+    .book-back {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, #B8E0FF, #D5F5E3);
+      border-radius: 5px 18px 18px 5px;
+      border: 3px solid #90CAF9;
+      box-shadow: 6px 8px 22px rgba(0, 0, 0, 0.14), inset -3px 0 9px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Spine stripe on back cover */
+    .book-back::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 15px;
+      background: linear-gradient(180deg, #90CAF9, #64B5F6);
+      border-radius: 5px 0 0 5px;
+      border-right: 2px solid rgba(255, 255, 255, 0.45);
+    }
+
+    /* ── Page stack (sits between back cover and front cover) ─────── */
+    .book-pages {
+      position: absolute;
+      left: 12px;
+      top: 6px;
+      width: calc(100% - 20px);
+      height: calc(100% - 12px);
+      overflow: hidden;
+      border-radius: 2px 12px 12px 2px;
+      background: #FFFEF5;
+    }
+
+    .page-flip {
+      position: absolute;
+      inset: 0;
+      transform-origin: left center;
+      border-radius: 2px 12px 12px 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: clamp(6px, 1.4vh, 10px);
+      padding: 14px;
+      opacity: 0;
+    }
+
+    /* Page 1 — Alphabet / reading theme */
+    .page-flip:nth-child(1) {
+      background: linear-gradient(145deg, #FFF9C4, #FFF0A0);
+      animation: flipPageIn 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.0s forwards;
+    }
+
+    /* Page 2 — Numbers / maths theme */
+    .page-flip:nth-child(2) {
+      background: linear-gradient(145deg, #E8F5E9, #DCEDC8);
+      animation: flipPageIn 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) 1.75s forwards;
+    }
+
+    /* Page 3 — Art / creativity theme */
+    .page-flip:nth-child(3) {
+      background: linear-gradient(145deg, #FCE4EC, #F8BBD0);
+      animation: flipPageIn 0.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) 2.45s forwards;
+    }
+
+    /* Page slides in from the left like a real page flip */
+    @keyframes flipPageIn {
+      0% {
+        opacity: 0;
+        transform: rotateY(-88deg);
+      }
+
+      55% {
+        transform: rotateY(6deg);
+      }
+
+      100% {
+        opacity: 1;
+        transform: rotateY(0deg);
+      }
+    }
+
+    /* Content inside each page */
+    .page-emoji {
+      font-size: clamp(24px, 7vw, 38px);
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
+    }
+
+    .page-text {
+      font-family: var(--font-head);
+      font-size: clamp(10px, 2.4vw, 14px);
+      color: #555;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* Colourful dot row decoration inside pages */
+    .page-dots {
+      display: flex;
+      gap: 5px;
+      margin-top: 3px;
+    }
+
+    .page-dots span {
+      display: inline-block;
+      width: clamp(5px, 1.1vw, 8px);
+      height: clamp(5px, 1.1vw, 8px);
+      border-radius: 50%;
+    }
+
+    /* ── Front cover — the main animated element ───────────────────── */
+    .book-cover {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(150deg, #B794F4 0%, #7C3AED 45%, #5B21B6 100%);
+      border-radius: 5px 18px 18px 5px;
+      transform-origin: left center;
+      animation: openCover 1.1s cubic-bezier(0.645, 0.045, 0.355, 1.000) 0.45s forwards;
+      transform: rotateY(0deg);
+      backface-visibility: hidden;
+      z-index: 10;
+      box-shadow: 5px 0 18px rgba(124, 58, 237, 0.4), inset -3px 0 12px rgba(0, 0, 0, 0.18);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    @keyframes openCover {
+      0% {
+        transform: rotateY(0deg);
+      }
+
+      100% {
+        transform: rotateY(-165deg);
+      }
+    }
+
+    /* Left-edge spine stripe on the cover */
+    .book-cover::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 15px;
+      background: linear-gradient(180deg, #4C1D95, #3B0764);
+      border-radius: 5px 0 0 5px;
+    }
+
+    /* Radial highlight on cover face */
+    .book-cover::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(ellipse at 42% 32%, rgba(255, 255, 255, 0.18) 0%, transparent 62%);
+    }
+
+    /* Content on the cover */
+    .cover-icon {
+      font-size: clamp(30px, 9vw, 50px);
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.32));
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-title {
+      font-family: var(--font-head);
+      font-size: clamp(11px, 2.7vw, 16px);
+      color: rgba(255, 255, 255, 0.96);
+      text-align: center;
+      line-height: 1.35;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.28);
+    }
+
+    .cover-stars {
+      display: flex;
+      gap: 5px;
+      position: relative;
+      z-index: 1;
+      font-size: clamp(10px, 2vw, 15px);
+    }
+
+    /* ── Loading label and bouncing dots below the book ─────────────── */
+    #loader-text {
+      font-family: var(--font-head);
+      font-size: clamp(13px, 3.2vw, 19px);
+      color: #7C3AED;
+      text-align: center;
+      letter-spacing: 0.2px;
+      animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
+    }
+
+    #loader-dots {
+      display: flex;
+      gap: clamp(6px, 1.5vw, 10px);
+      justify-content: center;
+      margin-top: 5px;
+    }
+
+    .ldot {
+      width: clamp(7px, 1.6vw, 11px);
+      height: clamp(7px, 1.6vw, 11px);
+      border-radius: 50%;
+      animation: dotBounce 1.3s ease-in-out infinite;
+    }
+
+    .ldot:nth-child(1) {
+      background: #A78BFA;
+      animation-delay: 0s;
+    }
+
+    .ldot:nth-child(2) {
+      background: #EC4899;
+      animation-delay: 0.22s;
+    }
+
+    .ldot:nth-child(3) {
+      background: #F97316;
+      animation-delay: 0.44s;
+    }
+
+    .ldot:nth-child(4) {
+      background: #10B981;
+      animation-delay: 0.66s;
+    }
+
+    @keyframes dotBounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: 0.55;
+      }
+
+      50% {
+        transform: translateY(-9px);
+        opacity: 1;
+      }
+    }
+
+    /* ── Sparkle stars around the book ────────────────────────────────── */
+    .sparkle {
+      position: absolute;
+      pointer-events: none;
+      font-size: var(--ssz, 16px);
+      animation: sparklePulse var(--sdur, 2.2s) ease-in-out var(--sdelay, 0s) infinite;
+      opacity: 0;
+    }
+
+    @keyframes sparklePulse {
+
+      0%,
+      100% {
+        opacity: 0;
+        transform: scale(0.4) rotate(0deg);
+      }
+
+      50% {
+        opacity: 0.9;
+        transform: scale(1) rotate(180deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+     BOOK LOADING SCREEN
+     ══════════════════════════════════════════════════════════════════════ -->
+  <div id="entry">
+
+    <!-- Floating background decorations -->
+    <span class="float-ele" style="top:8%;left:7%;font-size:clamp(22px,4vw,34px);--fdur:3.8s;--fdelay:0s;">⭐</span>
+    <span class="float-ele"
+      style="top:14%;right:10%;font-size:clamp(18px,3.5vw,28px);--fdur:4.4s;--fdelay:0.6s;">✏️</span>
+    <span class="float-ele" style="top:72%;left:6%;font-size:clamp(20px,3.8vw,30px);--fdur:5s;--fdelay:0.3s;">🍎</span>
+    <span class="float-ele" style="top:78%;right:8%;font-size:clamp(22px,4vw,34px);--fdur:3.6s;--fdelay:0.9s;">🌈</span>
+    <span class="float-ele" style="top:48%;left:4%;font-size:clamp(16px,3vw,24px);--fdur:4.8s;--fdelay:1.2s;">🎨</span>
+    <span class="float-ele" style="top:40%;right:5%;font-size:clamp(16px,3vw,24px);--fdur:4.2s;--fdelay:0.4s;">🎵</span>
+    <span class="float-ele"
+      style="top:22%;left:22%;font-size:clamp(14px,2.5vw,20px);--fdur:5.2s;--fdelay:1.5s;">🌟</span>
+    <span class="float-ele"
+      style="top:60%;right:20%;font-size:clamp(14px,2.5vw,20px);--fdur:3.9s;--fdelay:0.8s;">💡</span>
+
+    <!-- Main book animation scene -->
+    <div id="book-scene">
+
+      <!-- School name badge above the book -->
+      <div id="loader-badge">🎈 Kilkariyan Playway School</div>
+
+      <!-- 3-D book container -->
+      <div id="book-container">
+        <div id="book">
+
+          <!-- Static back cover -->
+          <div class="book-back"></div>
+
+          <!-- Pages that reveal sequentially as cover opens -->
+          <div class="book-pages">
+
+            <!-- Page 1: Reading / phonics theme -->
+            <div class="page-flip">
+              <div class="page-emoji">📖</div>
+              <div class="page-text">A B C<br />Read & Explore!</div>
+              <div class="page-dots">
+                <span style="background:#A78BFA;"></span>
+                <span style="background:#EC4899;"></span>
+                <span style="background:#F97316;"></span>
+              </div>
+            </div>
+
+            <!-- Page 2: Numbers / maths theme -->
+            <div class="page-flip">
+              <div class="page-emoji">🔢</div>
+              <div class="page-text">1 2 3<br />Count & Discover!</div>
+              <div class="page-dots">
+                <span style="background:#10B981;"></span>
+                <span style="background:#06B6D4;"></span>
+                <span style="background:#EAB308;"></span>
+              </div>
+            </div>
+
+            <!-- Page 3: Art / creativity theme -->
+            <div class="page-flip">
+              <div class="page-emoji">🎨</div>
+              <div class="page-text">Create & Imagine!<br />Every day is fun!</div>
+              <div class="page-dots">
+                <span style="background:#EC4899;"></span>
+                <span style="background:#F97316;"></span>
+                <span style="background:#7C3AED;"></span>
+              </div>
+            </div>
+
+          </div><!-- /.book-pages -->
+
+          <!-- Front cover — animates open via CSS -->
+          <div class="book-cover">
+            <div class="cover-icon">📚</div>
+            <div class="cover-title">Kilkariyan<br />Playway School</div>
+            <div class="cover-stars">⭐ ✨ ⭐</div>
+          </div>
+
+        </div><!-- /#book -->
+      </div><!-- /#book-container -->
+
+      <!-- Label and loading dots below the book -->
+      <div id="loader-text">Opening the world of learning…</div>
+      <div id="loader-dots">
+        <div class="ldot"></div>
+        <div class="ldot"></div>
+        <div class="ldot"></div>
+        <div class="ldot"></div>
+      </div>
+
+    </div><!-- /#book-scene -->
+
+    <!-- CSS sparkles scattered around the book -->
+    <span class="sparkle" style="top:38%;left:28%;--ssz:20px;--sdur:2s;--sdelay:1.1s;">✨</span>
+    <span class="sparkle" style="top:42%;right:27%;--ssz:16px;--sdur:2.4s;--sdelay:1.5s;">⭐</span>
+    <span class="sparkle" style="top:28%;left:38%;--ssz:14px;--sdur:1.8s;--sdelay:0.8s;">✨</span>
+    <span class="sparkle" style="top:60%;left:35%;--ssz:18px;--sdur:2.2s;--sdelay:1.8s;">🌟</span>
+    <span class="sparkle" style="top:58%;right:34%;--ssz:15px;--sdur:2.6s;--sdelay:1.2s;">✨</span>
+    <span class="sparkle" style="top:32%;right:36%;--ssz:12px;--sdur:2s;--sdelay:2s;">⭐</span>
+
+    <!-- Skip button -->
+    <button id="skip-btn">Skip ⏭</button>
+
+  </div><!-- /#entry -->
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+     HOMEPAGE — Rebuilt with professional .kk-* classes
+     ══════════════════════════════════════════════════════════════════════ -->
+  <div id="homepage">
+
+    <!-- ─── Navigation ─────────────────────────────────────────────────── -->
+    <nav class="kk-nav" id="kk-nav">
+      <a href="#" class="kk-nav-logo">
+        <span class="kk-nav-icon">🎈</span>
+        <div>
+          <span class="kk-nav-name">Kilkariyan</span>
+          <span class="kk-nav-sub">Playway School</span>
+        </div>
+      </a>
+      <div class="kk-nav-links">
+        <a href="#features">Why Us</a>
+        <a href="#about">About</a>
+        <a href="#activities">Activities</a>
+        <a href="#testimonials">Reviews</a>
+        <a href="#contact">Contact</a>
+        <a href="admission.html" class="kk-nav-cta">🌟 Enroll Now</a>
+      </div>
+    </nav>
+
+    <!-- ─── Hero Section ───────────────────────────────────────────────── -->
+    <section class="kk-hero" id="kk-hero">
+      <div class="kk-hero-bg">
+        <span class="float-item fi-1">⭐</span>
+        <span class="float-item fi-2">🎨</span>
+        <span class="float-item fi-3">📚</span>
+        <span class="float-item fi-4">🌈</span>
+        <span class="float-item fi-5">🎵</span>
+        <span class="float-item fi-6">🎈</span>
+        <span class="float-item fi-7">✏️</span>
+        <span class="float-item fi-8">🌟</span>
+      </div>
+      <div class="kk-container">
+        <div class="kk-hero-content">
+          <div class="kk-hero-badge">🎈 Admissions Open 2025–26</div>
+          <h1 class="kk-hero-title">Welcome to<br><span>Kilkariyan!</span></h1>
+          <p class="kk-hero-sub">Where Learning Begins with Joy ✨</p>
+          <p class="kk-hero-desc">At Kilkariyan Playway School, we nurture young minds with love, creativity and
+            play-based learning — a joyful initiative of Zenith Convent School, Gorakhpur.</p>
+          <div class="kk-hero-btns">
+            <a href="admission.html" class="kk-btn-primary kk-btn-large">🌟 Start the Journey</a>
+            <a href="#about" class="kk-btn-outline">Learn More →</a>
+          </div>
+        </div>
+      </div>
+      <div class="kk-hero-right">
+        <div class="hero-scene">
+          <span class="hero-sun">☀️</span>
+          <span class="hero-tree">🌳</span>
+          <span class="hero-kids">👧🧒👦</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Scrolling Marquee Ribbon ───────────────────────────────────── -->
+    <div class="kk-marquee">
+      <div class="kk-marquee-inner">
+        <span>✨ Admissions Open</span><span class="kk-marquee-dot">•</span>
+        <span>🎨 Arts &amp; Crafts</span><span class="kk-marquee-dot">•</span>
+        <span>⚽ Outdoor Play</span><span class="kk-marquee-dot">•</span>
+        <span>🎵 Music &amp; Dance</span><span class="kk-marquee-dot">•</span>
+        <span>📚 Phonics &amp; Reading</span><span class="kk-marquee-dot">•</span>
+        <span>🌈 Fun Learning</span><span class="kk-marquee-dot">•</span>
+        <span>🧩 STEM Activities</span><span class="kk-marquee-dot">•</span>
+        <span>🤝 Safe Environment</span><span class="kk-marquee-dot">•</span>
+        <!-- duplicate for seamless loop -->
+        <span>✨ Admissions Open</span><span class="kk-marquee-dot">•</span>
+        <span>🎨 Arts &amp; Crafts</span><span class="kk-marquee-dot">•</span>
+        <span>⚽ Outdoor Play</span><span class="kk-marquee-dot">•</span>
+        <span>🎵 Music &amp; Dance</span><span class="kk-marquee-dot">•</span>
+        <span>📚 Phonics &amp; Reading</span><span class="kk-marquee-dot">•</span>
+        <span>🌈 Fun Learning</span><span class="kk-marquee-dot">•</span>
+        <span>🧩 STEM Activities</span><span class="kk-marquee-dot">•</span>
+        <span>🤝 Safe Environment</span><span class="kk-marquee-dot">•</span>
+      </div>
+    </div>
+
+    <!-- ─── Wave: Marquee → Features ───────────────────────────────────── -->
+    <div class="kk-wave kk-wave-white">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,40 C240,90 480,0 720,50 C960,100 1200,10 1440,40 L1440,100 L0,100 Z" fill="currentColor" />
+      </svg>
+    </div>
+
+    <!-- ─── Features Section ───────────────────────────────────────────── -->
+    <section class="kk-about" id="features">
+      <div class="kk-container">
+        <div class="kk-section-header">
+          <span class="kk-label">✨ Why Choose Us</span>
+          <h2>Why Choose <span>Kilkariyan?</span></h2>
+          <p>We believe every child deserves the very best start in life — filled with wonder, warmth and learning.</p>
+        </div>
+        <div class="kk-features-grid">
+          <div class="kk-feature-card card-yellow">
+            <span class="kk-feature-icon">🎨</span>
+            <h3>Creative Learning</h3>
+            <p>Art, craft, storytelling and imaginative play spark creativity in every child every day.</p>
+          </div>
+          <div class="kk-feature-card card-pink">
+            <span class="kk-feature-icon">🤝</span>
+            <h3>Safe &amp; Nurturing</h3>
+            <p>A warm, loving environment where every child feels safe, seen and celebrated.</p>
+          </div>
+          <div class="kk-feature-card card-green">
+            <span class="kk-feature-icon">🌱</span>
+            <h3>Play-Based Approach</h3>
+            <p>Research-backed play-based learning that makes education joyful and deeply effective.</p>
+          </div>
+          <div class="kk-feature-card card-blue">
+            <span class="kk-feature-icon">🏆</span>
+            <h3>Expert Educators</h3>
+            <p>Trained, caring teachers who guide each child's unique journey with patience and love.</p>
+          </div>
+          <div class="kk-feature-card card-orange">
+            <span class="kk-feature-icon">🌍</span>
+            <h3>Holistic Development</h3>
+            <p>Mind, body, heart and spirit — we nurture the whole child, not just academics.</p>
+          </div>
+          <div class="kk-feature-card card-purple">
+            <span class="kk-feature-icon">👨‍👩‍👧</span>
+            <h3>Family Partnership</h3>
+            <p>We work closely with families because a child thrives when home and school walk together.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Wave: Features → About ─────────────────────────────────────── -->
+    <div class="kk-wave" style="background:#fff;color:#5C21A8;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,60 C180,10 360,90 720,40 C1080,0 1260,80 1440,30 L1440,100 L0,100 Z" fill="currentColor" />
+      </svg>
+    </div>
+
+    <!-- ─── About Section ──────────────────────────────────────────────── -->
+    <section class="kk-about-desc" id="about">
+      <div class="kk-container">
+        <div class="kk-about-inner">
+          <div class="kk-about-text">
+            <h2>A Joyful Space Where Tiny Dreams Take Flight 🌟</h2>
+            <p><strong>Kilkariyan Playway School</strong> is a joyful learning space under the banner of Zenith Convent
+              School, Nandanagar, Gorakhpur — where young minds explore, create, and grow in an atmosphere filled with
+              curiosity, laughter, and discovery.</p>
+            <p>We believe that <strong>early childhood education should be a celebration of imagination</strong>. Our
+              play-based curriculum is thoughtfully designed to nurture every child's natural love of learning — through
+              stories, songs, games, and hands-on activities that build confidence, creativity, and essential life
+              skills.</p>
+            <div class="kk-stats">
+              <div class="kk-stat">
+                <span class="kk-stat-n">500+</span>
+                <span class="kk-stat-l">Happy Children</span>
+              </div>
+              <div class="kk-stat">
+                <span class="kk-stat-n">15+</span>
+                <span class="kk-stat-l">Years</span>
+              </div>
+              <div class="kk-stat">
+                <span class="kk-stat-n">98%</span>
+                <span class="kk-stat-l">Satisfaction</span>
+              </div>
+            </div>
+            <a href="admission.html" class="kk-btn-primary">Begin Their Journey →</a>
+          </div>
+          <div class="kk-about-card">
+            <div class="kk-emoji-grid">
+              <span>🎨</span><span>📚</span><span>🎵</span>
+              <span>⚽</span><span>🧩</span><span>🌿</span>
+              <span>🎭</span><span>🔢</span><span>🤝</span>
+            </div>
+            <blockquote>"At Kilkariyan, safety and emotional well-being come first. Our warm teachers ensure every
+              child feels seen, heard, and celebrated."</blockquote>
+            <cite>— Kilkariyan Philosophy</cite>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Wave: About → Activities ───────────────────────────────────── -->
+    <div class="kk-wave" style="background:#5C21A8;color:var(--creme);">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,30 C360,80 720,10 1080,60 C1260,80 1380,30 1440,50 L1440,100 L0,100 Z" fill="currentColor" />
+      </svg>
+    </div>
+
+    <!-- ─── Activities Section ─────────────────────────────────────────── -->
+    <section class="kk-activities" id="activities">
+      <div class="kk-container">
+        <div class="kk-section-header">
+          <span class="kk-label">🎯 Our Activities</span>
+          <h2>A World of <span>Activities</span></h2>
+          <p>A rich variety of activities to develop every dimension of your child's potential.</p>
+        </div>
+        <div class="kk-act-grid">
+          <div class="kk-act-item" style="--c1:#7c3aed;--c2:#6d28d9;">
+            <span class="kk-act-icon">📚</span>
+            <h4>Phonics &amp; Reading</h4>
+            <p>Early literacy with fun phonics</p>
+          </div>
+          <div class="kk-act-item" style="--c1:#ec4899;--c2:#db2777;">
+            <span class="kk-act-icon">🎵</span>
+            <h4>Music &amp; Rhymes</h4>
+            <p>Songs and rhythms for language</p>
+          </div>
+          <div class="kk-act-item" style="--c1:#f97316;--c2:#ea580c;">
+            <span class="kk-act-icon">🖌️</span>
+            <h4>Art &amp; Craft</h4>
+            <p>Creativity through hands-on art</p>
+          </div>
+          <div class="kk-act-item" style="--c1:#10b981;--c2:#059669;">
+            <span class="kk-act-icon">⚽</span>
+            <h4>Outdoor Play</h4>
+            <p>Sports and active outdoor fun</p>
+          </div>
+          <div class="kk-act-item" style="--c1:#2563eb;--c2:#1d4ed8;">
+            <span class="kk-act-icon">🔢</span>
+            <h4>Number Fun</h4>
+            <p>Maths through games and puzzles</p>
+          </div>
+          <div class="kk-act-item" style="--c1:#06b6d4;--c2:#0891b2;">
+            <span class="kk-act-icon">🌿</span>
+            <h4>Nature Walks</h4>
+            <p>Exploring the world around us</p>
+          </div>
+          <div class="kk-act-item" style="--c1:#eab308;--c2:#ca8a04;">
+            <span class="kk-act-icon">🎭</span>
+            <h4>Drama &amp; Role Play</h4>
+            <p>Building confidence on stage</p>
+          </div>
+          <div class="kk-act-item" style="--c1:#ef4444;--c2:#dc2626;">
+            <span class="kk-act-icon">🧩</span>
+            <h4>Puzzles &amp; STEM</h4>
+            <p>Problem solving and curiosity</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Stats Bar ──────────────────────────────────────────────────── -->
+    <section class="kk-stats-bar">
+      <div class="kk-confetti">
+        <i style="top:15%;left:8%;--cc:#FFD93D;--sz:10px;--dur:8s;--del:0s;"></i>
+        <i style="top:25%;left:22%;--cc:#FF6BB5;--sz:6px;--dur:11s;--del:-3s;"></i>
+        <i style="top:40%;left:45%;--cc:#6BCB77;--sz:8px;--dur:9s;--del:-1.5s;"></i>
+        <i style="top:10%;right:15%;--cc:#4D96FF;--sz:12px;--dur:10s;--del:-5s;"></i>
+        <i style="top:60%;right:30%;--cc:#FF9500;--sz:7px;--dur:13s;--del:-2s;--br:2px;"></i>
+        <i style="top:50%;left:70%;--cc:#BB86FC;--sz:9px;--dur:7s;--del:-4s;"></i>
+      </div>
+      <div class="kk-stats-grid">
+        <div class="kk-stat-item">
+          <div class="kk-stat-num">500+</div>
+          <div class="kk-stat-label">Happy Children</div>
+        </div>
+        <div class="kk-stat-item">
+          <div class="kk-stat-num">15+</div>
+          <div class="kk-stat-label">Years of Excellence</div>
+        </div>
+        <div class="kk-stat-item">
+          <div class="kk-stat-num">98%</div>
+          <div class="kk-stat-label">Parent Satisfaction</div>
+        </div>
+        <div class="kk-stat-item">
+          <div class="kk-stat-num">20+</div>
+          <div class="kk-stat-label">Expert Teachers</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Wave: Stats → Testimonials ─────────────────────────────────── -->
+    <div class="kk-wave" style="background:linear-gradient(135deg,#7C3AED,#2563EB);color:var(--creme);">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,50 C360,0 720,90 1080,30 C1260,10 1380,60 1440,40 L1440,100 L0,100 Z" fill="currentColor" />
+      </svg>
+    </div>
+
+    <!-- ─── Testimonials Section ───────────────────────────────────────── -->
+    <section class="kk-testimonials" id="testimonials">
+      <div class="kk-container">
+        <div class="kk-section-header">
+          <span class="kk-label">💬 Parent Reviews</span>
+          <h2>What Parents <span>Say</span></h2>
+          <p>Hear from the families who trust us with their most precious ones.</p>
+        </div>
+        <div class="kk-test-grid">
+          <div class="kk-test-card" style="--tc:#FF7043;">
+            <div class="kk-test-stars">⭐⭐⭐⭐⭐</div>
+            <p>"My daughter absolutely loves going to school now. She comes home singing, painting and laughing every
+              day. Kilkariyan has truly transformed her love for learning!"</p>
+            <div class="kk-test-author">Priya Sharma</div>
+            <div class="kk-test-role">Parent of a 4-year-old student</div>
+          </div>
+          <div class="kk-test-card" style="--tc:#A855F7;">
+            <div class="kk-test-stars">⭐⭐⭐⭐⭐</div>
+            <p>"The teachers here are so warm and caring. My son was shy when he joined, but within a month he was
+              performing on stage. The transformation is unbelievable!"</p>
+            <div class="kk-test-author">Rajesh Gupta</div>
+            <div class="kk-test-role">Parent of a 5-year-old student</div>
+          </div>
+          <div class="kk-test-card" style="--tc:#06B6D4;">
+            <div class="kk-test-stars">⭐⭐⭐⭐⭐</div>
+            <p>"Best decision we ever made. The play-based approach here is exactly what young children need. Our kids
+              are happy, creative and confident. Highly recommended!"</p>
+            <div class="kk-test-author">Anita Verma</div>
+            <div class="kk-test-role">Parent of twin students</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Wave: Testimonials → CTA ───────────────────────────────────── -->
+    <div class="kk-wave" style="background:var(--creme);color:#FF6B35;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,70 C240,20 480,80 720,30 C960,0 1200,50 1440,20 L1440,100 L0,100 Z" fill="currentColor" />
+      </svg>
+    </div>
+
+    <!-- ─── CTA Section ────────────────────────────────────────────────── -->
+    <section class="kk-cta">
+      <div class="kk-cta-deco">
+        <div class="kk-confetti">
+          <i style="top:10%;left:5%;--cc:#fff;--sz:10px;--dur:9s;--del:0s;"></i>
+          <i style="top:30%;left:20%;--cc:rgba(255,255,255,0.8);--sz:6px;--dur:12s;--del:-2s;"></i>
+          <i style="top:50%;right:10%;--cc:#fff;--sz:8px;--dur:10s;--del:-4s;"></i>
+          <i style="top:20%;right:25%;--cc:rgba(255,255,255,0.6);--sz:12px;--dur:7s;--del:-1s;--br:2px;"></i>
+          <i style="top:60%;left:40%;--cc:#fff;--sz:7px;--dur:11s;--del:-3s;"></i>
+        </div>
+      </div>
+      <div class="kk-container" style="position:relative;">
+        <h2>Come Join Our Family! <span>🎈</span></h2>
+        <p class="kk-cta-sub">Give your child the best start in life — admissions are now open.</p>
+        <a href="admission.html" class="kk-btn-primary kk-btn-large">🌟 Enroll Now</a>
+        <p class="kk-cta-note">Visit us at Zenith Convent School, Nandanagar, Gorakhpur · Mon–Sat 8AM – 2PM</p>
+      </div>
+    </section>
+
+    <!-- ─── Wave: CTA → Contact ────────────────────────────────────────── -->
+    <div class="kk-wave" style="background:linear-gradient(135deg,#FF6B35 0%,#FF9A3C 50%,#FFD93D 100%);color:#fff;">
+      <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+        <path d="M0,40 C360,90 720,0 1080,60 C1260,80 1380,20 1440,50 L1440,100 L0,100 Z" fill="currentColor" />
+      </svg>
+    </div>
+
+    <!-- ─── Contact Section ────────────────────────────────────────────── -->
+    <section class="kk-contact" id="contact">
+      <div class="kk-container">
+        <div class="kk-section-header">
+          <span class="kk-label">📞 Get In Touch</span>
+          <h2>Contact <span>Us</span></h2>
+          <p>We'd love to hear from you! Reach out for admissions, visits, or any questions.</p>
+        </div>
+        <div class="kk-contact-grid">
+          <div class="kk-contact-card">
+            <div class="kk-contact-icon">📍</div>
+            <h4>Our Location</h4>
+            <p>Zenith Convent School</p>
+            <p>Nandanagar, Gorakhpur, UP</p>
+          </div>
+          <div class="kk-contact-card">
+            <div class="kk-contact-icon">🕘</div>
+            <h4>School Hours</h4>
+            <p>Monday – Saturday</p>
+            <p>8:00 AM – 2:00 PM</p>
+          </div>
+          <div class="kk-contact-card">
+            <div class="kk-contact-icon">📞</div>
+            <h4>Call Us</h4>
+            <p>Enquire about admissions</p>
+            <a href="tel:+919876543210">Call Now →</a>
+          </div>
+          <div class="kk-contact-card">
+            <div class="kk-contact-icon">🏫</div>
+            <h4>Visit Campus</h4>
+            <p>Schedule a campus tour</p>
+            <a href="admission.html">Book a Visit →</a>
+          </div>
+        </div>
+        <div class="kk-back-zcs">
+          <p>🏫 Kilkariyan is a proud initiative of <strong>Zenith Convent School</strong></p>
+          <a href="index.html" class="kk-back-btn">🌐 Visit Zenith Convent School</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Footer ─────────────────────────────────────────────────────── -->
+    <footer class="kk-footer">
+      <div class="kk-footer-inner">
+        <div class="kk-footer-logo">🎈 Kilkariyan Playway School</div>
+        <p>A joyful initiative of Zenith Convent School, Nandanagar, Gorakhpur, Uttar Pradesh</p>
+        <p class="kk-footer-small">Made with ❤️ for little learners · © 2025 Kilkariyan Playway School. All rights
+          reserved.</p>
+      </div>
+    </footer>
+
+  </div><!-- /#homepage -->
+
+  <!-- ══════════════════════════════════════════════════════════════════════
+     JAVASCRIPT
+     • doTransition()  — fades #entry out, expands #homepage in.
+     • startHomepage() — scroll-reveal, card hover tones.
+     • Auto-triggers after ANIM_DURATION ms; skip button also calls it.
+     ══════════════════════════════════════════════════════════════════════ -->
+  <script>
+    /* ── Constants ───────────────────────────────────────────────────── */
+    const ANIM_DURATION = 3600;
+
+    /* ── State guard ────────────────────────────────────────────────── */
+    let transitioning = false;
+
+    /* ══ AUDIO ══════════════════════════════════════════════════════════ */
+    let AC = null;
+    function getAC() {
+      if (!AC) AC = new (window.AudioContext || window.webkitAudioContext)();
+      if (AC.state === 'suspended') AC.resume();
+      return AC;
+    }
+    function playTone(freqs, type = 'sine', vol = 0.18, dur = 0.3) {
+      try {
+        const ctx = getAC();
+        freqs.forEach((f, i) => {
+          const o = ctx.createOscillator(), g = ctx.createGain();
+          o.connect(g); g.connect(ctx.destination);
+          o.type = type; o.frequency.value = f;
+          const t0 = ctx.currentTime + i * 0.09;
+          g.gain.setValueAtTime(0, t0);
+          g.gain.linearRampToValueAtTime(vol, t0 + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
+          o.start(t0); o.stop(t0 + dur + 0.05);
+        });
+      } catch (e) { }
+    }
+
+    /* ── Transition: loading screen → homepage ──────────────────────── */
+    function doTransition() {
+      if (transitioning) return;
+      transitioning = true;
+
+      const entry = document.getElementById('entry');
+      const hp = document.getElementById('homepage');
+
+      /* 1. Fade out the loading screen */
+      entry.style.transition = 'opacity 0.55s ease';
+      entry.style.opacity = '0';
+
+      /* 2. Scale + fade the homepage in from the centre */
+      hp.style.transition = 'transform 0.65s cubic-bezier(0.4,0,0.2,1), opacity 0.55s ease, border-radius 0.7s ease';
+      hp.style.transformOrigin = 'center center';
+      hp.style.transform = 'scale(1)';
+      hp.style.opacity = '1';
+      hp.style.borderRadius = '0%';
+      hp.style.pointerEvents = 'auto';
+
+      /* 3. After transition, remove entry and unlock scrolling */
+      setTimeout(() => {
+        entry.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        document.body.style.overflowX = 'hidden';
+        startHomepage();
+      }, 700);
+    }
+
+    /* ── Auto-trigger after animation completes ─────────────────────── */
+    const autoTimer = setTimeout(doTransition, ANIM_DURATION);
+
+    /* ── Skip button ────────────────────────────────────────────────── */
+    document.getElementById('skip-btn').addEventListener('click', () => {
+      clearTimeout(autoTimer);
+      doTransition();
+    });
+
+    /* ── Homepage initialisation ────────────────────────────────────── */
+    function startHomepage() {
+
+      /* Card hover tones */
+      document.querySelectorAll('.kk-feature-card, .kk-act-item, .kk-contact-card').forEach(el => {
+        el.addEventListener('mouseenter', () => playTone([440 + Math.random() * 120], 'sine', 0.05, 0.15));
+      });
+
+      /* Scroll-reveal animation */
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+      document.querySelectorAll(
+        '.kk-feature-card, .kk-act-item, .kk-stat-item, .kk-contact-card, .kk-test-card, .kk-section-header'
+      ).forEach(el => {
+        el.classList.add('reveal-on-scroll');
+        observer.observe(el);
+      });
+
+      /* Smooth nav scroll for anchor links */
+      document.querySelectorAll('.kk-nav-links a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const target = document.querySelector(a.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

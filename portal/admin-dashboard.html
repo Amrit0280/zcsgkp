@@ -58,6 +58,10 @@
           <span class="nav-icon">⚙️</span>
           <span class="nav-label">Settings</span>
         </a>
+        <a class="nav-item" data-tab="gallery">
+          <span class="nav-icon">🖼️</span>
+          <span class="nav-label">Gallery</span>
+        </a>
       </nav>
 
       <div class="sidebar-footer">
@@ -233,7 +237,11 @@
               </div>
               <div class="form-group">
                 <label>Admission Status Banner</label>
-                <input type="text" id="editAdmissionsBanner" placeholder="Admissions 2026–27 are open.">
+                <input type="text" id="editAdmissionsBanner" placeholder="Admissions are open.">
+              </div>
+              <div class="form-group">
+                <label>Current Academic Year</label>
+                <input type="text" id="editAcademicYear" placeholder="e.g. 2026–27" title="This updates the displayed years automatically.">
               </div>
               <button type="button" class="btn-primary" id="saveContentBtn" onclick="saveContent(event)">
                 💾 Save Content Changes
@@ -269,6 +277,74 @@
               🗑️ Clear All Admissions
             </button>
           </div>
+        </div>
+
+        <!-- ─── GALLERY MANAGEMENT TAB ─── -->
+        <div class="tab-pane" id="tab-gallery">
+
+          <!-- Category Management -->
+          <div class="section-box">
+            <h3>🏷️ Manage Categories</h3>
+            <p class="section-desc">Add or remove gallery filter categories. Removing a category will not delete its photos, but they will appear as "Uncategorized".</p>
+
+            <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px;">
+              <input type="text" id="newCatName" placeholder="Category name (e.g. Science Fair)" style="flex:1;min-width:200px;">
+              <button class="btn-primary" onclick="addGalleryCategory()" id="addCatBtn" style="white-space:nowrap;">➕ Add Category</button>
+            </div>
+            <div class="notice-list" id="catList">
+              <div class="skeleton-row"></div><div class="skeleton-row"></div>
+            </div>
+          </div>
+
+          <!-- Image Upload -->
+          <div class="section-box">
+            <h3>📤 Upload Image</h3>
+            <p class="section-desc">Select an image from your device. It will be compressed and uploaded to the gallery. Keep files under 5MB for best performance.</p>
+            <div class="admin-form" id="uploadForm">
+              <div class="form-group">
+                <label>Image Title <span style="color:#888;font-weight:400;">(optional)</span></label>
+                <input type="text" id="imgTitle" placeholder="E.g. Annual Sports Meet 2025">
+              </div>
+              <div class="form-group">
+                <label>Category</label>
+                <select id="imgCategory">
+                  <option value="">— Select Category —</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Select Image <span style="color:#e74c3c;">*</span></label>
+                <div id="dropZone" style="border:2px dashed rgba(13,27,62,0.25);border-radius:14px;padding:40px 20px;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(13,27,62,0.02);">
+                  <div style="font-size:2.5rem;margin-bottom:10px;">🖼️</div>
+                  <p style="color:#666;font-size:0.9rem;margin-bottom:8px;">Drag &amp; drop images here, or click to browse</p>
+                  <p style="color:#aaa;font-size:0.78rem;">JPG, PNG, WEBP · Compressed automatically · Select multiple files at once</p>
+                  <input type="file" id="imgFile" accept="image/*" multiple style="display:none;">
+                </div>
+                <div id="imgPreviewWrap" style="display:none;margin-top:16px;">
+                  <div id="imgPreviewGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;"></div>
+                  <button onclick="clearImagePreview()" style="margin-top:10px;background:transparent;border:1px solid #ccc;border-radius:8px;padding:6px 16px;cursor:pointer;font-size:0.8rem;color:#666;">✕ Clear all</button>
+                </div>
+              </div>
+              <button class="btn-primary" id="uploadBtn" onclick="uploadGalleryImage()">📤 Upload to Gallery</button>
+              <div id="uploadMsg" style="margin-top:12px;font-size:0.88rem;"></div>
+            </div>
+          </div>
+
+          <!-- Image Library -->
+          <div class="section-box">
+            <h3>📚 Manage Images</h3>
+            <p class="section-desc">All uploaded gallery images. Click the ✎ icon to edit title/category, or 🗑️ to delete permanently.</p>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;">
+              <select id="libFilter" onchange="renderAdminLibrary()" style="flex:1;min-width:160px;">
+                <option value="all">All Categories</option>
+              </select>
+              <button class="btn-secondary-admin" onclick="loadGalleryAdmin()">🔄 Refresh</button>
+            </div>
+
+            <div id="adminGalleryGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;"></div>
+            <div id="adminGalleryEmpty" style="display:none;text-align:center;padding:40px 20px;color:#888;">No images yet. Upload the first one above!</div>
+          </div>
+
         </div>
 
       </section>

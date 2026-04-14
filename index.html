@@ -21,15 +21,29 @@
       <div class="name">Zenith Convent School<span>Sainik Kunj, Gorakhpur</span></div>
     </a>
     <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#process">Admission</a></li>
-      <li><a href="#fees">Fee Structure</a></li>
+      <li class="dropdown">
+        <a href="#about" class="dropbtn">About us ▾</a>
+        <div class="dropdown-content">
+          <a href="#about">Why Zenith</a>
+          <a href="portal/asset/principal-desk.html">Principal's Desk</a>
+          <a href="Tabs/toppers.html">Topper Students</a>
+          <a href="Tabs/faculty.html">Our Faculty</a>
+          <a href="Tabs/rules-regulations.html">Rules &amp; Regulations</a>
+          <a href="#process">Admission Process</a>
+          <a href="#fees">Fee Structure</a>
+        </div>
+      </li>
+      <li><a href="admission.html">Admission</a></li>
+      <li><a href="Tabs/gallery.html">Gallery</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-affiliation">
       Affiliation No. 2130701 <span style="color: #e74c3c; font-weight: 700;">(UPTO 31 March 2030)</span>
     </div>
-    <a href="#form" class="nav-cta">Apply Now →</a>
+    <div class="nav-extra" style="display:flex; gap:12px;">
+      <a href="kilkariyan.html" class="nav-cta" style="background: linear-gradient(135deg, #EC4899, #F97316); box-shadow: 0 4px 18px rgba(236,72,153,0.4); border:none;">Kilkariyan 🎈</a>
+      <a href="admission.html" class="nav-cta">Apply Now →</a>
+    </div>
     <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -39,18 +53,30 @@
   <div class="mobile-menu" id="mobileMenu">
     <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Close menu">&times;</button>
     <nav class="mobile-menu-nav">
-      <a href="#about">About</a>
-      <a href="#process">Admission</a>
-      <a href="#fees">Fee Structure</a>
+      <details class="mobile-dropdown">
+        <summary class="mobile-dropbtn">About us ▾</summary>
+        <div class="mobile-dropdown-content">
+          <a href="#about">Why Zenith</a>
+          <a href="portal/asset/principal-desk.html">Principal's Desk</a>
+          <a href="Tabs/toppers.html">Topper Students</a>
+          <a href="Tabs/faculty.html">Our Faculty</a>
+          <a href="Tabs/rules-regulations.html">Rules &amp; Regulations</a>
+          <a href="#process">Admission Process</a>
+          <a href="#fees">Fee Structure</a>
+        </div>
+      </details>
+      <a href="admission.html">Admission</a>
+      <a href="Tabs/gallery.html">📷 Gallery</a>
       <a href="#contact">Contact</a>
-      <a href="#form" class="mobile-menu-cta">Apply Now →</a>
+      <a href="kilkariyan.html" class="mobile-menu-cta" style="background: linear-gradient(135deg, #EC4899, #F97316) !important; box-shadow: 0 8px 30px rgba(236,72,153,0.4);">Kilkariyan 🎈</a>
+      <a href="admission.html" class="mobile-menu-cta">Apply Now →</a>
     </nav>
   </div>
 
   <!-- STICKY BAR -->
   <div class="sticky-bar" id="stickyBar">
     <p id="dynBannerText">🎓 <strong>Admissions 2026–27 are open.</strong> Limited seats available for all classes.</p>
-    <a href="#form">Apply Now →</a>
+    <a href="admission.html">Apply Now →</a>
   </div>
 
   <!-- HERO -->
@@ -85,7 +111,7 @@
       <span class="float-icon">🎨</span>
     </div>
     <div class="hero-content">
-      <div class="hero-badge"><span class="badge-dot"></span> Admissions Open 2026–27</div>
+      <div class="hero-badge"><span class="badge-dot"></span> Admissions Open <span class="dyn-academic-year">2026–27</span></div>
       <h1 id="dynHeroHeadline">
         Shape Your Child's<br>
         <span class="italic gold">Future</span> with
@@ -96,8 +122,7 @@
         through discipline, values, and innovation.
       </p>
       <div class="hero-btns">
-        <a href="#form" class="btn-primary">Apply Now — 2026–27</a>
-        <a href="#fees" class="btn-outline">📄 Download Prospectus</a>
+        <a href="admission.html" class="btn-primary">Apply Now — <span class="dyn-academic-year">2026–27</span></a>
       </div>
     </div>
     <div class="hero-scroll">
@@ -376,7 +401,7 @@
     </div>
     <div class="fee-table-wrap reveal">
       <div class="fee-table-header">
-        <h3>Annual Fee Overview 2026–27</h3>
+        <h3>Annual Fee Overview <span class="dyn-academic-year">2026–27</span></h3>
         <span>Session: Apr–Mar</span>
       </div>
       <div class="fee-row"><span class="class">LKG – UKG</span><span class="amount">₹ 34,000 <span class="term">/
@@ -401,87 +426,19 @@
     </div>
   </section>
 
-  <!-- ADMISSION FORM -->
-  <section class="admission-form-section" id="form">
-    <div class="form-grid">
-      <div class="form-info">
-        <div class="section-label" style="color:rgba(244,196,48,0.8)">Start Here</div>
-        <h2 class="section-title">Apply for Admission <span>2026–27</span></h2>
-        <p class="section-sub">Fill in the form and our admissions team will contact you within 24 hours. Seats are
-          limited — don't wait.</p>
-        <div class="form-highlights">
-          <div class="form-highlight">No registration fee for online applications</div>
-          <div class="form-highlight">Acknowledgement sent within 24 hours</div>
-          <div class="form-highlight">Flexible school tour scheduling</div>
-          <div class="form-highlight">Need-based scholarship programs available</div>
-        </div>
-      </div>
-      <div class="form-card">
-        <h3>Admission Application</h3>
-        <form id="admissionForm" novalidate>
-          <div class="form-row">
-            <div class="field-group">
-              <span class="field-icon">👤</span>
-              <input type="text" id="studentName" placeholder="Student's Full Name" required>
-            </div>
-            <div class="field-group">
-              <span class="field-icon">👨‍👩‍👦</span>
-              <input type="text" id="parentName" placeholder="Parent / Guardian Name" required>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="field-group">
-              <span class="field-icon">🎒</span>
-              <select id="classApplying" required>
-                <option value="" disabled selected>Class Applying For</option>
-                <option value="nursery">Nursery</option>
-                <option value="lkg">LKG</option>
-                <option value="ukg">UKG</option>
-                <option value="1">Class I</option>
-                <option value="2">Class II</option>
-                <option value="3">Class III</option>
-                <option value="4">Class IV</option>
-                <option value="5">Class V</option>
-                <option value="6">Class VI</option>
-                <option value="7">Class VII</option>
-                <option value="8">Class VIII</option>
-                <option value="9">Class IX</option>
-                <option value="11">Class XI</option>
 
-              </select>
-            </div>
-            <div class="field-group">
-              <span class="field-icon">📱</span>
-              <input type="tel" id="phone" placeholder="WhatsApp / Phone Number" required>
-            </div>
-          </div>
-          <div class="field-group">
-            <span class="field-icon">✉️</span>
-            <input type="email" id="email" placeholder="Email Address" required>
-          </div>
-          <div class="field-group textarea-field">
-            <span class="field-icon">💬</span>
-            <textarea id="message" placeholder="Any message or question? (Optional)"></textarea>
-          </div>
-          <button type="submit" class="btn-submit" id="submitBtn">
-            Submit Application 🎓
-          </button>
-        </form>
-      </div>
-    </div>
-  </section>
 
   <!-- URGENCY -->
   <section class="urgency">
     <div class="urgency-badge">⚠️ Limited Seats Remaining</div>
     <h2>Only a Few Seats Left.<br><span>Apply Before They're Gone.</span></h2>
-    <p>Every year hundreds of families trust Zenith for their child's education. Don't miss the 2026–27 batch.</p>
+    <p>Every year hundreds of families trust Zenith for their child's education. Don't miss the <span class="dyn-academic-year">2026–27</span> batch.</p>
     <div class="seats-counter">
       <span>🪑 Seats Remaining:</span>
       <span class="num" id="seatCount">24</span>
     </div>
     <br><br>
-    <a href="#form" class="btn-primary" style="font-size:1.08rem; padding:16px 44px">Secure My Child's Seat →</a>
+    <a href="admission.html" class="btn-primary" style="font-size:1.08rem; padding:16px 44px">Secure My Child's Seat →</a>
   </section>
 
   <!-- CONTACT -->
@@ -577,7 +534,7 @@
           <li><a href="#">Home</a></li>
           <li><a href="#about">About School</a></li>
           <li><a href="#process">Admission Process</a></li>
-          <li><a href="#fees">Fee Structure</a></li>
+          <li><a href="admission.html">Admission</a></li>
           <li><a href="#contact">Contact Us</a></li>
         </ul>
       </div>
@@ -594,7 +551,7 @@
     </div>
     <hr class="footer-divider">
     <div class="footer-bottom">
-      <p>© 2026 Zenith Convent School, Gorakhpur. All rights reserved.</p>
+      <p>© <span class="dyn-copyright-year">2026</span> Zenith Convent School, Gorakhpur. All rights reserved.</p>
       <p>Made with <span>♥</span> for excellence in education.</p>
     </div>
   </footer>
@@ -625,23 +582,13 @@
       </div>
       <div class="welcome-header">
         <h2>Admissions Open</h2>
-        <p>For Session 2026–2027</p>
+        <p>For Session <span class="dyn-academic-year">2026–27</span></p>
       </div>
-      <a href="#form" class="btn-primary welcome-btn" id="welcomeApplyBtn">Apply Now →</a>
+      <a href="admission.html" class="btn-primary welcome-btn" id="welcomeApplyBtn">Apply Now →</a>
     </div>
   </div>
 
-  <!-- SUCCESS POPUP -->
-  <div class="success-popup" id="successPopup">
-    <div class="popup-card">
-      <div class="popup-icon">✓</div>
-      <h3>Application Submitted!</h3>
-      <p>Thank you! Our admissions team will contact you within 24 hours. Please check your email for the
-        acknowledgement.</p>
-      <button class="popup-close"
-        onclick="document.getElementById('successPopup').classList.remove('show')">Close</button>
-    </div>
-  </div>
+
 
   <script src="portal/asset/script.js?v=2"></script>
 
