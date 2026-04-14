@@ -96,32 +96,49 @@ def init_db():
     if not IS_POSTGRES: return
     conn = get_db_connection()
     with conn.cursor() as cur:
-        cur.execute("SELECT to_regclass('public.admins');")
-        if not cur.fetchone()[0]:
-            cur.execute('''
-                CREATE TABLE admins (id SERIAL PRIMARY KEY, admin_id VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL);
-                INSERT INTO admins (admin_id, password) VALUES ('admin', 'admin123');
-                CREATE TABLE website_content (id SERIAL PRIMARY KEY, hero_headline TEXT, hero_subtitle TEXT, admissions_banner TEXT, admission_open BOOLEAN DEFAULT TRUE, academic_year VARCHAR(50) DEFAULT '2026–27');
-                INSERT INTO website_content (hero_headline, hero_subtitle, admissions_banner, admission_open, academic_year) 
+        # Create each table individually with IF NOT EXISTS for idempotent initialization
+        cur.execute('''CREATE TABLE IF NOT EXISTS admins (
+            id SERIAL PRIMARY KEY, admin_id VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL
+        );''')
+        # Seed admin if empty
+        cur.execute("SELECT COUNT(*) FROM admins;")
+        if cur.fetchone()[0] == 0:
+            cur.execute("INSERT INTO admins (admin_id, password) VALUES ('admin', 'admin123');")
+
+        cur.execute('''CREATE TABLE IF NOT EXISTS website_content (
+            id SERIAL PRIMARY KEY, hero_headline TEXT, hero_subtitle TEXT, admissions_banner TEXT,
+            admission_open BOOLEAN DEFAULT TRUE, academic_year VARCHAR(50) DEFAULT '2026–27'
+        );''')
+        # Seed website content if empty
+        cur.execute("SELECT COUNT(*) FROM website_content;")
+        if cur.fetchone()[0] == 0:
+            cur.execute('''INSERT INTO website_content (hero_headline, hero_subtitle, admissions_banner, admission_open, academic_year) 
                 VALUES ('Shape Your Child''s<br><span class="italic gold">Future</span> with<span class="gold"> Excellence</span>', 
                         'Zenith Convent School offers a CBSE-affiliated, nurturing academic environment that develops tomorrow''s leaders through discipline, values, and innovation.',
-                        'Admissions 2026–27 are open.', TRUE, '2026–27');
-                CREATE TABLE admissions (
-                    id SERIAL PRIMARY KEY, student_name VARCHAR(255), parent_name VARCHAR(255), class_applying VARCHAR(50), 
-                    phone VARCHAR(50), email VARCHAR(255), message TEXT, submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                );
-                CREATE TABLE notices (
-                    id SERIAL PRIMARY KEY, title VARCHAR(255), content TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                );
-                CREATE TABLE gallery_categories (
-                    id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL UNIQUE, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                );
-                INSERT INTO gallery_categories (name) VALUES ('Infrastructure'),('Annual Events'),('Farewell'),('Sports Day'),('Facilities'),('Other Events');
-                CREATE TABLE gallery_images (
-                    id SERIAL PRIMARY KEY, title VARCHAR(255), category_id INTEGER REFERENCES gallery_categories(id) ON DELETE SET NULL,
-                    image_data TEXT NOT NULL, uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                );
-            ''')
+                        'Admissions 2026–27 are open.', TRUE, '2026–27');''')
+
+        cur.execute('''CREATE TABLE IF NOT EXISTS admissions (
+            id SERIAL PRIMARY KEY, student_name VARCHAR(255), parent_name VARCHAR(255), class_applying VARCHAR(50), 
+            phone VARCHAR(50), email VARCHAR(255), message TEXT, submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );''')
+
+        cur.execute('''CREATE TABLE IF NOT EXISTS notices (
+            id SERIAL PRIMARY KEY, title VARCHAR(255), content TEXT, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );''')
+
+        cur.execute('''CREATE TABLE IF NOT EXISTS gallery_categories (
+            id SERIAL PRIMARY KEY, name VARCHAR(255) NOT NULL UNIQUE, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );''')
+        # Seed gallery categories if empty
+        cur.execute("SELECT COUNT(*) FROM gallery_categories;")
+        if cur.fetchone()[0] == 0:
+            cur.execute("INSERT INTO gallery_categories (name) VALUES ('Infrastructure'),('Annual Events'),('Farewell'),('Sports Day'),('Facilities'),('Other Events');")
+
+        cur.execute('''CREATE TABLE IF NOT EXISTS gallery_images (
+            id SERIAL PRIMARY KEY, title VARCHAR(255), category_id INTEGER REFERENCES gallery_categories(id) ON DELETE SET NULL,
+            image_data TEXT NOT NULL, uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );''')
+
         # Safe migration for existing DB
         try:
             cur.execute("ALTER TABLE website_content ADD COLUMN academic_year VARCHAR(50) DEFAULT '2026–27';")
