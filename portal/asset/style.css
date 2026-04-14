@@ -628,6 +628,14 @@
     max-width: 560px;
   }
 
+  /* ─── NOTICE BOARD ─── */
+  .notice-board {
+    background:
+      linear-gradient(rgba(244, 246, 248, 0.96), rgba(244, 246, 248, 0.96)),
+      url('Images/Slide-Show/6.jpeg') center/cover no-repeat;
+    position: relative;
+  }
+
   /* ─── PRINCIPAL DESK ─── */
   .principal-section {
     background: url('Images/images.jpeg') center/cover no-repeat;
@@ -738,7 +746,9 @@
 
   /* ─── WHY CHOOSE ─── */
   .why {
-    background: var(--off-white);
+    background:
+      linear-gradient(rgba(248,249,250,0.92), rgba(248,249,250,0.92)),
+      url('Images/Slide-Show/17.jpg') center/cover no-repeat;
     position: relative;
     overflow: hidden;
   }
@@ -839,7 +849,10 @@
 
   /* ─── PROCESS ─── */
   .process {
-    background: white;
+    background:
+      linear-gradient(rgba(255,255,255,0.93), rgba(255,255,255,0.93)),
+      url('Images/Slide-Show/14.jpg') center/cover no-repeat;
+    position: relative;
   }
 
   .steps-container {
@@ -930,7 +943,10 @@
 
   /* ─── FEE STRUCTURE ─── */
   .fees {
-    background: var(--off-white);
+    background:
+      linear-gradient(rgba(248,249,250,0.94), rgba(248,249,250,0.94)),
+      url('Images/Slide-Show/10.jpg') center/cover no-repeat;
+    position: relative;
   }
 
   .fee-table-wrap {
@@ -1414,8 +1430,8 @@
   /* ─── URGENCY ─── */
   .urgency {
     background:
-      linear-gradient(rgba(10, 61, 98, 0.88), rgba(10, 61, 98, 0.88)),
-      url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=1600&q=80') center/cover no-repeat fixed;
+      linear-gradient(rgba(10, 61, 98, 0.85), rgba(10, 61, 98, 0.85)),
+      url('Images/Slide-Show/5.jpg') center/cover no-repeat fixed;
     text-align: center;
     padding: 100px 5%;
   }
@@ -1473,7 +1489,10 @@
 
   /* ─── CONTACT ─── */
   .contact {
-    background: var(--off-white);
+    background:
+      linear-gradient(rgba(248,249,250,0.93), rgba(248,249,250,0.93)),
+      url('Images/Slide-Show/9.jpg') center/cover no-repeat;
+    position: relative;
   }
 
   .contact-grid {
