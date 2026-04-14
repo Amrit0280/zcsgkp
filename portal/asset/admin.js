@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showToast('Notice Published!', 'success');
       } else alert(data.message);
     } catch (err) { alert('Error connecting to server.'); }
-    btn.textContent = '📤 Publish Notice';
+    btn.textContent = 'Publish Notice';
   };
 
 
@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.success) showToast('Content saved!', 'success');
       else alert('Failed to save content.');
     } catch(err) { alert('Error saving content.'); }
-    btn.textContent = '💾 Save Content Changes';
+    btn.textContent = 'Save Content Changes';
   };
 
 
@@ -453,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const msg = document.getElementById('seatSaveMsg');
         if (msg) {
           msg.className = 'seat-save-msg success';
-          msg.textContent = '✅ Seat counts saved to server!';
+          msg.textContent = 'Seat counts saved to server!';
           setTimeout(() => { msg.className = 'seat-save-msg'; }, 3000);
         }
         updateGrandTotal();
@@ -475,7 +475,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const msg = document.getElementById('seatSaveMsg');
     if (msg) {
       msg.className = 'seat-save-msg success';
-      msg.textContent = '↺ Seats reset to default values.';
+      msg.textContent = 'Seats reset to default values.';
       setTimeout(() => { msg.className = 'seat-save-msg'; }, 3000);
     }
   };
@@ -509,7 +509,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
       if (data.success) {
         updateToggleStatus(toggle.checked);
-        showToast(toggle.checked ? '✅ Admissions marked as Open on website!' : '🔴 Admissions marked as Closed on website!', 'success');
+        showToast(toggle.checked ? 'Admissions marked as Open on website!' : 'Admissions marked as Closed on website!', 'success');
       } else {
         showToast('Failed to update admission status.', 'error');
       }
@@ -855,7 +855,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btn    = document.getElementById('uploadBtn');
 
     if (!selectedFiles.length) {
-      if (msgEl) { msgEl.style.color = '#e74c3c'; msgEl.textContent = '⚠️ Please select at least one image first.'; }
+      if (msgEl) { msgEl.style.color = '#e74c3c'; msgEl.textContent = 'Please select at least one image first.'; }
       return;
     }
 
@@ -888,10 +888,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (msgEl) {
       if (failCount === 0) {
         msgEl.style.color = '#27ae60';
-        msgEl.textContent = `✅ ${successCount} image${successCount !== 1 ? 's' : ''} uploaded successfully!`;
+        msgEl.textContent = `${successCount} image${successCount !== 1 ? 's' : ''} uploaded successfully!`;
       } else {
         msgEl.style.color = '#e67e22';
-        msgEl.textContent = `⚠️ ${successCount} uploaded, ${failCount} failed.`;
+        msgEl.textContent = `${successCount} uploaded, ${failCount} failed.`;
       }
       setTimeout(() => { if (msgEl) msgEl.textContent = ''; }, 5000);
     }
@@ -904,7 +904,7 @@ document.addEventListener('DOMContentLoaded', () => {
       await loadGalleryImages();
     }
 
-    btn.textContent = '📤 Upload to Gallery';
+    btn.textContent = 'Upload to Gallery';
     btn.disabled    = false;
   };
 
@@ -918,7 +918,10 @@ document.addEventListener('DOMContentLoaded', () => {
       modal.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;padding:20px;';
       modal.innerHTML = `
         <div style="background:#fff;border-radius:20px;padding:32px;max-width:460px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.3);">
-          <h3 style="margin-bottom:20px;color:#0d1b3e;">✎ Edit Image Details</h3>
+          <h3 style="margin-bottom:20px;color:#0d1b3e;display:flex;align-items:center;gap:10px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+            Edit Image Details
+          </h3>
           <div class="form-group">
             <label>Title</label>
             <input type="text" id="editImgTitle" placeholder="Image title">
@@ -928,7 +931,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <select id="editImgCat"><option value="">— Uncategorized —</option></select>
           </div>
           <div style="display:flex;gap:12px;margin-top:20px;">
-            <button class="btn-primary" id="editImgSaveBtn" style="flex:1;">💾 Save Changes</button>
+            <button class="btn-primary" id="editImgSaveBtn" style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+              Save Changes
+            </button>
             <button class="btn-secondary-admin" onclick="document.getElementById('editImgModal').remove()" style="flex:1;">Cancel</button>
           </div>
         </div>`;
@@ -961,7 +967,7 @@ document.addEventListener('DOMContentLoaded', () => {
           showToast('Image updated!', 'success');
         } else alert(data.message);
       } catch(e) { alert('Error saving changes.'); }
-      this.textContent = '💾 Save Changes';
+      this.textContent = 'Save Changes';
     };
 
     modal.style.display = 'flex';
@@ -987,7 +993,7 @@ async function clearAllAdmissions() {
 
     if (data.success) {
       msg.style.color = '#16a34a';
-      msg.textContent = '✅ All admission records have been cleared.';
+      msg.textContent = 'All admission records have been cleared.';
       // Refresh admission count on dashboard
       const countEl = document.getElementById('admissionCount');
       if (countEl) countEl.textContent = '0';
@@ -1003,5 +1009,5 @@ async function clearAllAdmissions() {
   }
 
   btn.disabled = false;
-  btn.textContent = '🗑️ Clear All Admissions';
+  btn.textContent = 'Clear All Admissions';
 }

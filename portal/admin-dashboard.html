@@ -18,10 +18,14 @@
       <span></span><span></span><span></span>
     </button>
     <div class="mobile-brand">
-      <div class="s-emblem-sm">Z</div>
+      <div class="s-emblem-sm" style="background:transparent; border-radius:0;">
+        <img src="asset/Images/zenithlogo.png" alt="ZCS" style="width:100%; height:100%; object-fit:contain;">
+      </div>
       <span>ZCS Admin</span>
     </div>
-    <div class="admin-avatar-sm">👩‍🏫</div>
+    <div class="admin-avatar-sm" style="color: white; background: rgba(255,255,255,0.1);">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+    </div>
   </div>
 
   <!-- SIDEBAR OVERLAY (mobile) -->
@@ -31,7 +35,9 @@
     <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-header">
-        <div class="s-emblem">Z</div>
+        <div class="s-emblem" style="background:transparent; box-shadow:none;">
+          <img src="asset/Images/zenithlogo.png" alt="ZCS" style="width:100%; height:100%; object-fit:contain;">
+        </div>
         <div class="s-title">Zenith Convent<span>Admin Portal</span></div>
         <!-- Close button for mobile -->
         <button class="sidebar-close" id="sidebarClose" aria-label="Close sidebar">&times;</button>
@@ -39,37 +45,37 @@
 
       <nav class="sidebar-nav">
         <a class="nav-item active" data-tab="dashboard">
-          <span class="nav-icon">📊</span>
+          <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span>
           <span class="nav-label">Dashboard</span>
         </a>
         <a class="nav-item" data-tab="seats">
-          <span class="nav-icon">🪑</span>
+          <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6V2h10v4"></path><path d="M19 18V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v12"></path><path d="M4 18h16"></path><path d="M15 22v-4H9v4"></path></svg></span>
           <span class="nav-label">Seat Management</span>
         </a>
         <a class="nav-item" data-tab="notices">
-          <span class="nav-icon">📢</span>
+          <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></span>
           <span class="nav-label">Manage Notices</span>
         </a>
         <a class="nav-item" data-tab="content">
-          <span class="nav-icon">📝</span>
+          <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></span>
           <span class="nav-label">Edit Content</span>
         </a>
         <a class="nav-item" data-tab="settings">
-          <span class="nav-icon">⚙️</span>
+          <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></span>
           <span class="nav-label">Settings</span>
         </a>
         <a class="nav-item" data-tab="gallery">
-          <span class="nav-icon">🖼️</span>
+          <span class="nav-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg></span>
           <span class="nav-label">Gallery</span>
         </a>
       </nav>
 
       <div class="sidebar-footer">
         <a href="../index.html" class="view-site-btn">
-          <span>🌐</span> <span class="nav-label">View Website</span>
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg></span> <span class="nav-label">View Website</span>
         </a>
         <button class="logout-btn" id="logoutBtn">
-          <span>🚪</span> <span class="nav-label">Logout</span>
+          <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></span> <span class="nav-label">Logout</span>
         </button>
       </div>
     </aside>
@@ -78,7 +84,9 @@
     <main class="main-content">
       <header class="topbar">
         <div class="topbar-left">
-          <button class="sidebar-toggle-desk" id="sidebarToggleDesk" aria-label="Toggle sidebar">☰</button>
+          <button class="sidebar-toggle-desk" id="sidebarToggleDesk" aria-label="Toggle sidebar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
           <div class="topbar-title" id="topbarTitle">Dashboard</div>
         </div>
         <div class="admin-profile">
@@ -86,7 +94,9 @@
             <div class="name">Dr. Seema Rai</div>
             <div class="role">Administrator</div>
           </div>
-          <div class="admin-avatar">👩‍🏫</div>
+          <div class="admin-avatar" style="background:#EAECEF; color: var(--admin-sidebar);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
         </div>
       </header>
 
@@ -96,7 +106,9 @@
         <div class="tab-pane active" id="tab-dashboard">
           <div class="stats-grid">
             <div class="stat-card">
-              <div class="stat-icon icon-blue">👥</div>
+              <div class="stat-icon icon-blue">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2980b9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
               <div class="stat-info">
                 <h4>Today's Visitors</h4>
                 <div class="num">1,248</div>
@@ -104,7 +116,9 @@
               </div>
             </div>
             <div class="stat-card">
-              <div class="stat-icon icon-gold">📝</div>
+              <div class="stat-icon icon-gold">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#d4a017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
               <div class="stat-info">
                 <h4>Admission Forms</h4>
                 <div class="num" id="admissionCount">--</div>
@@ -112,7 +126,9 @@
               </div>
             </div>
             <div class="stat-card">
-              <div class="stat-icon icon-green">🪑</div>
+              <div class="stat-icon icon-green">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 6V2h10v4"></path><path d="M19 18V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v12"></path><path d="M4 18h16"></path><path d="M15 22v-4H9v4"></path></svg>
+              </div>
               <div class="stat-info">
                 <h4>Total Seats</h4>
                 <div class="num" id="totalSeatsCount">--</div>
@@ -120,7 +136,9 @@
               </div>
             </div>
             <div class="stat-card">
-              <div class="stat-icon icon-red">📢</div>
+              <div class="stat-icon icon-red">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              </div>
               <div class="stat-info">
                 <h4>Active Notices</h4>
                 <div class="num" id="noticeCount">--</div>
@@ -142,7 +160,7 @@
         <!-- ─── SEAT MANAGEMENT TAB ─── -->
         <div class="tab-pane" id="tab-seats">
           <div class="section-box">
-            <h3>🪑 Class-wise Seat Management</h3>
+            <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-4px; margin-right:4px;"><path d="M7 6V2h10v4"></path><path d="M19 18V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v12"></path><path d="M4 18h16"></path><path d="M15 22v-4H9v4"></path></svg> Class-wise Seat Management</h3>
             <p class="section-desc">Set the number of available seats for each class. This controls the "Limited Seats" counter shown on the website's admission section.</p>
 
             <!-- Summary Bar -->
@@ -167,11 +185,13 @@
             </div>
 
             <div class="seat-actions">
-              <button class="btn-primary" id="saveSeatsBtn" onclick="saveSeats()">
-                💾 Save Seat Changes
+              <button class="btn-primary" id="saveSeatsBtn" onclick="saveSeats()" style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Save Seat Changes
               </button>
-              <button class="btn-secondary-admin" onclick="resetSeats()">
-                ↺ Reset to Default
+              <button class="btn-secondary-admin" onclick="resetSeats()" style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+                Reset to Default
               </button>
               <div class="seat-save-msg" id="seatSaveMsg"></div>
             </div>
@@ -196,7 +216,7 @@
         <!-- ─── NOTICES TAB ─── -->
         <div class="tab-pane" id="tab-notices">
           <div class="section-box">
-            <h3>📢 Post a New Notice</h3>
+            <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-4px; margin-right:4px;"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg> Post a New Notice</h3>
             <form class="admin-form" id="noticeForm">
               <div class="form-group">
                 <label>Notice Title</label>
@@ -206,14 +226,15 @@
                 <label>Notice Details</label>
                 <textarea id="noticeContent" placeholder="Write the notice content here..."></textarea>
               </div>
-              <button type="button" class="btn-primary" id="publishBtn" onclick="publishNotice(event)">
-                📤 Publish Notice
+              <button type="button" class="btn-primary" id="publishBtn" onclick="publishNotice(event)" style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                Publish Notice
               </button>
             </form>
           </div>
 
           <div class="section-box">
-            <h3>📋 Current Active Notices</h3>
+            <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-4px; margin-right:4px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Current Active Notices</h3>
             <div class="notice-list" id="noticeList">
               <div class="skeleton-row"></div>
               <div class="skeleton-row"></div>
@@ -224,7 +245,7 @@
         <!-- ─── CONTENT TAB ─── -->
         <div class="tab-pane" id="tab-content">
           <div class="section-box">
-            <h3>📝 Website Content Management</h3>
+            <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-4px; margin-right:4px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Website Content Management</h3>
             <p class="section-desc">Update key text sections on the main website. Changes require backend integration to persist permanently.</p>
             <form class="admin-form" id="contentForm">
               <div class="form-group">
@@ -243,8 +264,9 @@
                 <label>Current Academic Year</label>
                 <input type="text" id="editAcademicYear" placeholder="e.g. 2026–27" title="This updates the displayed years automatically.">
               </div>
-              <button type="button" class="btn-primary" id="saveContentBtn" onclick="saveContent(event)">
-                💾 Save Content Changes
+              <button type="button" class="btn-primary" id="saveContentBtn" onclick="saveContent(event)" style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Save Content Changes
               </button>
             </form>
           </div>
@@ -253,7 +275,7 @@
         <!-- ─── SETTINGS TAB ─── -->
         <div class="tab-pane" id="tab-settings">
           <div class="section-box">
-            <h3>🔐 Update Admin Credentials</h3>
+            <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-4px; margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg> Update Admin Credentials</h3>
             <p class="section-desc">Use this form to securely update your Admin ID and Password. You will be logged out after saving.</p>
             <form class="admin-form" id="settingsForm">
               <div class="form-group">
@@ -264,17 +286,19 @@
                 <label>New Password</label>
                 <input type="password" id="newPassword" placeholder="Enter new Password">
               </div>
-              <button type="button" class="btn-primary" onclick="updateCredentials(event)">
-                💾 Save New Credentials
+              <button type="button" class="btn-primary" onclick="updateCredentials(event)" style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                Save New Credentials
               </button>
             </form>
           </div>
 
           <div class="section-box">
-            <h3>⚠️ Danger Zone</h3>
+            <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-4px; margin-right:4px; color:var(--admin-danger);"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Danger Zone</h3>
             <p class="section-desc" style="color:var(--admin-danger);">These actions are irreversible. Proceed with caution.</p>
-            <button class="btn-danger" id="clearAdmissionsBtn" onclick="clearAllAdmissions()">
-              🗑️ Clear All Admissions
+            <button class="btn-danger" id="clearAdmissionsBtn" onclick="clearAllAdmissions()" style="display:inline-flex; align-items:center; gap:8px;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+              Clear All Admissions
             </button>
             <div id="clearAdmissionsMsg" style="margin-top:10px;font-size:0.88rem;"></div>
           </div>
@@ -285,12 +309,15 @@
 
           <!-- Category Management -->
           <div class="section-box">
-            <h3>🏷️ Manage Categories</h3>
+            <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-4px; margin-right:4px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Manage Categories</h3>
             <p class="section-desc">Add or remove gallery filter categories. Removing a category will not delete its photos, but they will appear as "Uncategorized".</p>
 
             <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:20px;">
               <input type="text" id="newCatName" placeholder="Category name (e.g. Science Fair)" style="flex:1;min-width:200px;">
-              <button class="btn-primary" onclick="addGalleryCategory()" id="addCatBtn" style="white-space:nowrap;">➕ Add Category</button>
+              <button class="btn-primary" onclick="addGalleryCategory()" id="addCatBtn" style="white-space:nowrap; display:inline-flex; align-items:center; gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Add Category
+              </button>
             </div>
             <div class="notice-list" id="catList">
               <div class="skeleton-row"></div><div class="skeleton-row"></div>
@@ -299,7 +326,7 @@
 
           <!-- Image Upload -->
           <div class="section-box">
-            <h3>📤 Upload Image</h3>
+            <h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:-4px; margin-right:4px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg> Upload Image</h3>
             <p class="section-desc">Select an image from your device. It will be compressed and uploaded to the gallery. Keep files under 5MB for best performance.</p>
             <div class="admin-form" id="uploadForm">
               <div class="form-group">
@@ -315,7 +342,9 @@
               <div class="form-group">
                 <label>Select Image <span style="color:#e74c3c;">*</span></label>
                 <div id="dropZone" style="border:2px dashed rgba(13,27,62,0.25);border-radius:14px;padding:40px 20px;text-align:center;cursor:pointer;transition:all 0.3s;background:rgba(13,27,62,0.02);">
-                  <div style="font-size:2.5rem;margin-bottom:10px;">🖼️</div>
+                  <div style="color:var(--admin-sidebar); margin-bottom:10px;">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                  </div>
                   <p style="color:#666;font-size:0.9rem;margin-bottom:8px;">Drag &amp; drop images here, or click to browse</p>
                   <p style="color:#aaa;font-size:0.78rem;">JPG, PNG, WEBP · Compressed automatically · Select multiple files at once</p>
                   <input type="file" id="imgFile" accept="image/*" multiple style="display:none;">
@@ -325,7 +354,10 @@
                   <button onclick="clearImagePreview()" style="margin-top:10px;background:transparent;border:1px solid #ccc;border-radius:8px;padding:6px 16px;cursor:pointer;font-size:0.8rem;color:#666;">✕ Clear all</button>
                 </div>
               </div>
-              <button class="btn-primary" id="uploadBtn" onclick="uploadGalleryImage()">📤 Upload to Gallery</button>
+              <button class="btn-primary" id="uploadBtn" onclick="uploadGalleryImage()" style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                Upload to Gallery
+              </button>
               <div id="uploadMsg" style="margin-top:12px;font-size:0.88rem;"></div>
             </div>
           </div>
@@ -339,7 +371,10 @@
               <select id="libFilter" onchange="renderAdminLibrary()" style="flex:1;min-width:160px;">
                 <option value="all">All Categories</option>
               </select>
-              <button class="btn-secondary-admin" onclick="loadGalleryAdmin()">🔄 Refresh</button>
+              <button class="btn-secondary-admin" onclick="loadGalleryAdmin()" style="display:inline-flex; align-items:center; gap:8px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                Refresh
+              </button>
             </div>
 
             <div id="adminGalleryGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;"></div>
