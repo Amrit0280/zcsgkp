@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Default seat data — editable by admin
   const DEFAULT_SEATS = {
-    'Nursery':  30,
+    'Playway':  30,
     'LKG':      30,
     'UKG':      30,
     'Class I':  40,

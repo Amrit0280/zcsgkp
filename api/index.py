@@ -358,7 +358,7 @@ def get_seats():
             pass
     # Return defaults if nothing saved yet
     defaults = {
-        'Nursery': 30, 'LKG': 30, 'UKG': 30,
+        'Playway': 30, 'LKG': 30, 'UKG': 30,
         'Class I': 40, 'Class II': 40, 'Class III': 40, 'Class IV': 40, 'Class V': 40,
         'Class VI': 40, 'Class VII': 40, 'Class VIII': 40,
         'Class IX': 35, 'Class X': 35, 'Class XI': 30, 'Class XII': 30
@@ -369,7 +369,7 @@ def get_seats():
 @app.route('/api/seats', methods=['PUT'])
 def save_seats():
     import json as _json
-    data = request.json   # expects { "Nursery": 15, "LKG": 20, ... }
+    data = request.json   # expects { "Playway": 15, "LKG": 20, ... }
     # Ensure column exists (migration-safe)
     try:
         db_query('ALTER TABLE website_content ADD COLUMN seat_data TEXT DEFAULT NULL', commit=True)
