@@ -139,13 +139,23 @@ def init_db():
             image_data TEXT NOT NULL, uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );''')
 
-        # Safe migration for existing DB
+        # Commit all table creations FIRST
+        conn.commit()
+
+        # Safe migration for existing DB (separate transaction so rollback doesn't undo tables)
         try:
             cur.execute("ALTER TABLE website_content ADD COLUMN academic_year VARCHAR(50) DEFAULT '2026–27';")
+            conn.commit()
+        except Exception:
+            conn.rollback()
+        
+        # Ensure seat_data column exists
+        try:
+            cur.execute("ALTER TABLE website_content ADD COLUMN seat_data TEXT DEFAULT NULL;")
+            conn.commit()
         except Exception:
             conn.rollback()
     
-    conn.commit()
     conn.close()
 
 try:
