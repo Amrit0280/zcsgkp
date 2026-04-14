@@ -372,3 +372,43 @@ window.addEventListener('DOMContentLoaded', async () => {
     console.log("Could not load admission status", e);
   }
 });
+
+// ─── FETCH HOMEPAGE GALLERY HIGHLIGHTS ───
+window.addEventListener('DOMContentLoaded', async () => {
+  const track = document.getElementById('homepageGalleryTrack');
+  if (!track) return;
+
+  try {
+    const res = await fetch('/api/gallery');
+    const images = await res.json();
+    
+    if (!images || images.length === 0) {
+      const section = document.getElementById('galleryHighlights');
+      if (section) section.style.display = 'none';
+      return;
+    }
+
+    // Shuffle and pick up to 8 random images
+    const shuffled = images.sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 8);
+
+    // Duplicate for seamless marquee effect
+    const marqueeItems = [...selected, ...selected];
+
+    let html = '';
+    marqueeItems.forEach(img => {
+      html += `
+        <div class="gallery-card">
+          <img src="${img.image_data}" alt="${img.title || 'Gallery Image'}" loading="lazy">
+          <div class="img-title">${img.title || (img.category_name || 'Zenith Gallery')}</div>
+        </div>
+      `;
+    });
+    
+    track.innerHTML = html;
+  } catch (e) {
+    console.error("Failed to load gallery highlights:", e);
+    const section = document.getElementById('galleryHighlights');
+    if (section) section.style.display = 'none';
+  }
+});
