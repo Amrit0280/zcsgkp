@@ -323,15 +323,23 @@ def get_admission_status():
 # 11. Update Admission Status (Admin)
 @app.route('/api/admission-status', methods=['PUT'])
 def update_admission_status():
-    data = request.json
-    is_open = bool(data.get('admission_open', True))
-    # Ensure the column exists in SQLite (migration-safe)
     try:
-        db_query('ALTER TABLE website_content ADD COLUMN admission_open INTEGER DEFAULT 1', commit=True)
-    except Exception:
-        pass  # column already exists — that's fine
-    db_query('UPDATE website_content SET admission_open = ? WHERE id = 1', (1 if is_open else 0,), commit=True)
-    return jsonify({"success": True, "admission_open": is_open}), 200
+        data = request.json
+        is_open = bool(data.get('admission_open', True))
+        if IS_POSTGRES:
+            # PostgreSQL uses TRUE/FALSE booleans; column guaranteed by init_db
+            db_query('UPDATE website_content SET admission_open = %s WHERE id = 1', (is_open,), commit=True)
+        else:
+            # SQLite: ensure column exists (safe migration for local dev), store as 1/0
+            try:
+                db_query('ALTER TABLE website_content ADD COLUMN admission_open INTEGER DEFAULT 1', commit=True)
+            except Exception:
+                pass  # column already exists — that's fine
+            db_query('UPDATE website_content SET admission_open = ? WHERE id = 1', (1 if is_open else 0,), commit=True)
+        return jsonify({"success": True, "admission_open": is_open}), 200
+    except Exception as e:
+        print("Update Admission Status Error:", e)
+        return jsonify({"success": False, "message": str(e)}), 500
 
 # 12. Get Seats Data
 @app.route('/api/seats', methods=['GET'])
