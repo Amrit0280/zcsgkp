@@ -968,3 +968,40 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
 }); // end DOMContentLoaded
+
+// ── Clear All Admissions (called from admin-dashboard.html Settings tab) ──
+async function clearAllAdmissions() {
+  if (!confirm('⚠️ This will permanently delete ALL admission applications.\n\nThis action cannot be undone. Are you sure?')) return;
+
+  const btn = document.getElementById('clearAdmissionsBtn');
+  const msg = document.getElementById('clearAdmissionsMsg');
+
+  btn.disabled = true;
+  btn.textContent = 'Clearing...';
+  msg.style.color = '#888';
+  msg.textContent = 'Please wait...';
+
+  try {
+    const res  = await fetch('/api/admissions', { method: 'DELETE' });
+    const data = await res.json();
+
+    if (data.success) {
+      msg.style.color = '#16a34a';
+      msg.textContent = '✅ All admission records have been cleared.';
+      // Refresh admission count on dashboard
+      const countEl = document.getElementById('admissionCount');
+      if (countEl) countEl.textContent = '0';
+      const listEl  = document.getElementById('admissionList');
+      if (listEl)  listEl.innerHTML = '<p style="color:#888;padding:16px 0;">No admission records found.</p>';
+    } else {
+      msg.style.color = '#dc2626';
+      msg.textContent = '❌ ' + (data.message || 'Failed to clear admissions.');
+    }
+  } catch (e) {
+    msg.style.color = '#dc2626';
+    msg.textContent = '❌ Network error. Make sure the server is running.';
+  }
+
+  btn.disabled = false;
+  btn.textContent = '🗑️ Clear All Admissions';
+}

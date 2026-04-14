@@ -243,6 +243,15 @@ def get_admissions():
     admissions = db_query('SELECT * FROM admissions ORDER BY submitted_at DESC', fetchall=True)
     return jsonify(admissions), 200
 
+# 3b. Clear ALL Admission Applications (Admin Use)
+@app.route('/api/admissions', methods=['DELETE'])
+def clear_all_admissions():
+    try:
+        db_query('DELETE FROM admissions', commit=True)
+        return jsonify({'success': True, 'message': 'All admission records cleared successfully.'}), 200
+    except Exception as e:
+        return jsonify({'success': False, 'message': str(e)}), 500
+
 # 4. Get all Notices
 @app.route('/api/notices', methods=['GET'])
 def get_notices():

@@ -273,9 +273,10 @@
           <div class="section-box">
             <h3>⚠️ Danger Zone</h3>
             <p class="section-desc" style="color:var(--admin-danger);">These actions are irreversible. Proceed with caution.</p>
-            <button class="btn-danger" onclick="if(confirm('Clear all admission applications? This cannot be undone.')) alert('Feature requires backend integration.')">
+            <button class="btn-danger" id="clearAdmissionsBtn" onclick="clearAllAdmissions()">
               🗑️ Clear All Admissions
             </button>
+            <div id="clearAdmissionsMsg" style="margin-top:10px;font-size:0.88rem;"></div>
           </div>
         </div>
 
