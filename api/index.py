@@ -622,8 +622,8 @@ def forgot_password():
         
         return jsonify(res_data), 200
     except Exception as e:
-        print('Forgot Password Error:', e)
-        return jsonify({'success': False, 'message': 'Failed to send verification code. Please contact the administrator.'}), 500
+        print('Forgot Password Error:', str(e))
+        return jsonify({'success': False, 'message': f'Error: {str(e)}'}), 400
 
 # 23. Verify OTP and Reset Password
 @app.route('/api/reset-password', methods=['POST'])
