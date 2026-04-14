@@ -186,6 +186,9 @@
         const data = await res.json();
         if (data.success) {
           showStep(2);
+          if (data.development_code) {
+             alert('Since SMTP email is not configured, your test verification code is: ' + data.development_code);
+          }
         } else {
           msg.textContent = data.message;
           msg.className = 'fp-msg error';
@@ -257,6 +260,9 @@
         const data = await res.json();
         msg.textContent = data.success ? '✅ New code sent!' : data.message;
         msg.className = data.success ? 'fp-msg success' : 'fp-msg error';
+        if (data.development_code) {
+          alert('Since SMTP email is not configured, your new test verification code is: ' + data.development_code);
+        }
       } catch (e) {
         msg.textContent = 'Failed to resend.';
         msg.className = 'fp-msg error';

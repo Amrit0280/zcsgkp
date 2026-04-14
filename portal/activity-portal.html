@@ -312,19 +312,26 @@
 <div id="home" class="screen active">
   <a href="../index.html" class="back-btn-home">← Home</a>
   <div class="home-logo">
-    <div class="logo-icon">🏫</div>
-    <h1>School Portal</h1>
+    <div class="logo-icon">
+      <img src="asset/Images/zenithlogo.png" alt="Zenith Convent School Logo" style="height: 85px; margin-bottom: 0.5rem; filter: drop-shadow(0 4px 15px rgba(0,0,0,0.15));">
+    </div>
+    <h2 style="font-size: 1.25rem; font-weight: 700; color: #f8fafc; margin-bottom: 0.2rem; letter-spacing: 0.5px; text-transform: uppercase;">Zenith Convent School</h2>
+    <h1 style="margin-top: 0; font-size: 2.2rem;">School Portal</h1>
     <p>Daily Class Activity Viewer</p>
   </div>
   <div class="home-cards">
     <div class="home-card admin-card" onclick="go('teacher-login')">
-      <div class="hc-icon">👩‍🏫</div>
+      <div class="hc-icon" style="color: #7c3aed;">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><polyline points="16 11 18 13 22 9"></polyline></svg>
+      </div>
       <h3>Teacher Login</h3>
       <p>Upload daily class activities</p>
       <span class="hc-tag">Teacher Access</span>
     </div>
     <div class="home-card student-card" onclick="go('student-login')">
-      <div class="hc-icon">🎒</div>
+      <div class="hc-icon" style="color: #16a34a;">
+        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+      </div>
       <h3>Student Login</h3>
       <p>View today's class activities</p>
       <span class="hc-tag">Student Access</span>
@@ -374,7 +381,9 @@
 <div id="teacher-panel" class="screen">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="t-icon purple">🏫</div>
+      <div class="t-icon purple" style="background: transparent; padding: 2px;">
+        <img src="asset/Images/zenithlogo.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+      </div>
       <div>
         <h2>Teacher Panel</h2>
         <span id="teacher-name-top">Welcome!</span>
@@ -386,7 +395,10 @@
 
     <!-- Upload Section -->
     <div class="upload-card">
-      <h3>📤 Upload Today's Activity</h3>
+      <h3>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-right: 6px; color: #7c3aed"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+        Upload Today's Activity
+      </h3>
 
       <label class="field-label">Select Class</label>
       <select class="big-select" id="up-class">
@@ -411,7 +423,8 @@
       <label class="field-label">Select Images</label>
       <div class="file-upload-area">
         <label class="file-btn-label" for="file-input">
-          📁 Choose Images from Folder
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px;"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+          Choose Images from Folder
         </label>
         <input type="file" id="file-input" accept="image/*" multiple onchange="onFilesSelected(this.files)">
         <div class="file-count" id="file-count">No files selected</div>
@@ -429,7 +442,9 @@
     <div class="section-label">Today's Uploads</div>
     <div id="teacher-gallery" class="act-grid"></div>
     <div id="teacher-empty" class="no-uploads">
-      <div class="nu-icon">🖼️</div>
+      <div class="nu-icon" style="color: #cbd5e1;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 0.5rem;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+      </div>
       <p>Nothing uploaded yet today</p>
     </div>
 
@@ -440,7 +455,9 @@
 <div id="student-panel" class="screen">
   <div class="topbar">
     <div class="topbar-left">
-      <div class="t-icon green">🏫</div>
+      <div class="t-icon green" style="background: transparent; padding: 2px;">
+        <img src="asset/Images/zenithlogo.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
+      </div>
       <div>
         <h2>Student Portal</h2>
         <span id="stu-name-top">Welcome!</span>
@@ -450,7 +467,9 @@
   </div>
   <div class="student-body">
     <div class="selector-card">
-      <div class="sc-icon">📚</div>
+      <div class="sc-icon" style="color: #1e293b;">
+        <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 0.5rem;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+      </div>
       <h2>View Today's Activities</h2>
       <p>Select your class below and tap View</p>
 
@@ -484,7 +503,9 @@
         </div>
         <div id="stu-gallery" class="stu-gallery"></div>
         <div id="no-act" class="no-activity" style="display:none">
-          <div class="na-icon">🌤️</div>
+          <div class="na-icon" style="color: #cbd5e1;">
+            <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 0.5rem;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+          </div>
           <h3>No activity uploaded today</h3>
           <p>Your teacher hasn't shared today's photos yet.<br>Please check back later!</p>
         </div>

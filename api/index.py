@@ -578,7 +578,9 @@ def _generate_otp():
 
 def _send_otp_email(code):
     if not SMTP_EMAIL or not SMTP_PASSWORD:
-        raise RuntimeError('SMTP_EMAIL and SMTP_PASSWORD environment variables are required to send emails.')
+        print("WARNING: SMTP_EMAIL or SMTP_PASSWORD not set. Mocking email send.")
+        print(f"MOCK EMAIL -> To: {ADMIN_EMAIL} | Verification Code: {code}")
+        return
     
     msg = MIMEMultipart('alternative')
     msg['From'] = SMTP_EMAIL
@@ -616,7 +618,14 @@ def forgot_password():
         _send_otp_email(code)
         # Mask the email for privacy in response
         masked = ADMIN_EMAIL[:3] + '***' + ADMIN_EMAIL[ADMIN_EMAIL.index('@'):]
-        return jsonify({'success': True, 'message': f'Verification code sent to {masked}'}), 200
+        
+        res_data = {'success': True, 'message': f'Verification code sent to {masked}'}
+        
+        # Pass the code to the frontend if SMTP is not configured (for easy testing)
+        if not SMTP_EMAIL or not SMTP_PASSWORD:
+            res_data['development_code'] = code
+            
+        return jsonify(res_data), 200
     except Exception as e:
         print('Forgot Password Error:', e)
         return jsonify({'success': False, 'message': 'Failed to send verification code. Please contact the administrator.'}), 500
