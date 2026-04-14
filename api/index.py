@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ORIGINAL_DB = os.path.join(BASE_DIR, 'portal', 'database.db')
 TMP_DB = '/tmp/database.db'
 
-if os.environ.get("VERCEL") or os.environ.get("VERCEL_URL") or os.environ.get("AWS_EXECUTION_ENV"):
+if os.environ.get("VERCEL") or os.environ.get("VERCEL_URL") or os.environ.get("AWS_EXECUTION_ENV") or os.environ.get("RENDER"):
     if not os.path.exists(TMP_DB):
         try: shutil.copyfile(ORIGINAL_DB, TMP_DB)
         except Exception: pass
@@ -36,12 +36,12 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 IS_POSTGRES = DATABASE_URL is not None and DATABASE_URL.startswith("postgres") and HAS_PSYCOPG2
 
 def get_db_connection():
-    # If on Vercel, mandate PostgreSQL. Warn loudly if misconfigured!
-    if os.environ.get("VERCEL") or os.environ.get("VERCEL_URL"):
+    # If on Vercel or Render, mandate PostgreSQL. Warn loudly if misconfigured!
+    if os.environ.get("VERCEL") or os.environ.get("VERCEL_URL") or os.environ.get("RENDER"):
         if not DATABASE_URL:
-            raise RuntimeError("CRITICAL ERROR: DATABASE_URL environment variable is missing in Vercel! You must add it to Vercel Settings to use this app.")
+            raise RuntimeError("CRITICAL ERROR: DATABASE_URL environment variable is missing in Vercel/Render! You must add it to Settings to use this app.")
         if not HAS_PSYCOPG2:
-            raise RuntimeError("CRITICAL ERROR: psycopg2 failed to load on Vercel! Please check build logs.")
+            raise RuntimeError("CRITICAL ERROR: psycopg2 failed to load! Please check build logs.")
         return psycopg2.connect(DATABASE_URL)
         
     # Local behavior
