@@ -254,11 +254,18 @@
   }
   .stu-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem}
   .stu-act-card{
-    border-radius:16px;overflow:hidden;
+    border-radius:16px;overflow:hidden; position: relative;
     box-shadow:0 4px 16px rgba(0,0,0,.1);cursor:pointer;transition:transform .2s;
   }
   .stu-act-card:hover{transform:scale(1.03)}
   .stu-act-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+  .btn-download-act {
+      position: absolute; bottom: 8px; right: 8px; width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.95); display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25); text-decoration:none; font-size: 1rem;
+      transition: all 0.2s; z-index: 10;
+  }
+  .btn-download-act:hover { background: #fff; transform: scale(1.08); }
   .no-activity{text-align:center;padding:3rem 1rem}
   .no-activity .na-icon{font-size:3rem;margin-bottom:.75rem}
   .no-activity h3{font-size:1.15rem;font-weight:800;color:#374151;margin-bottom:.5rem}
@@ -272,13 +279,13 @@
   }
   #lightbox.open{display:flex}
   #lightbox img{max-width:92%;max-height:88vh;border-radius:14px;object-fit:contain}
-  .lb-close{
-    position:absolute;top:1rem;right:1rem;
+  .lb-btn{
     background:rgba(255,255,255,.15);border:none;color:#fff;
     width:40px;height:40px;border-radius:50%;font-size:1.4rem;
     cursor:pointer;display:flex;align-items:center;justify-content:center;
+    text-decoration:none; transition: background 0.2s;
   }
-  .lb-close:hover{background:rgba(255,255,255,.25)}
+  .lb-btn:hover{background:rgba(255,255,255,.25)}
 
   /* ===== TOAST ===== */
   #toast-wrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9998;display:flex;flex-direction:column;gap:.5rem}
@@ -488,7 +495,10 @@
 
 <!-- ======== LIGHTBOX ======== -->
 <div id="lightbox" onclick="closeLightbox(event)">
-  <button class="lb-close" onclick="closeLightbox(event)">×</button>
+  <div style="position:absolute; top:1rem; right:1rem; display:flex; gap:10px; z-index:10000;">
+    <a id="lb-download" href="#" download="Activity_Image.jpg" class="lb-btn" onclick="event.stopPropagation()" title="Download Photo">⬇️</a>
+    <button class="lb-btn" onclick="closeLightbox(event)" title="Close">×</button>
+  </div>
   <img id="lb-img" src="" alt="Activity Photo">
 </div>
 
@@ -792,6 +802,7 @@
           gallery.innerHTML = acts.map(a => `
             <div class="stu-act-card" onclick="openLightbox('${a.image_data}')">
               <img src="${a.image_data}" alt="Activity">
+              <a href="${a.image_data}" download="Activity_${cls}_${a.id}.jpg" class="btn-download-act" onclick="event.stopPropagation()" title="Download Photo">⬇️</a>
             </div>
           `).join('');
         }
@@ -807,6 +818,7 @@
   // ── LIGHTBOX ──
   function openLightbox(src) {
     document.getElementById('lb-img').src = src;
+    document.getElementById('lb-download').href = src;
     document.getElementById('lightbox').classList.add('open');
   }
   function closeLightbox(e) {
