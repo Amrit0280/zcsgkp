@@ -151,6 +151,27 @@ def init_db():
             image_data TEXT NOT NULL, uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );''')
 
+        # Portals for Teacher & Student
+        cur.execute('''CREATE TABLE IF NOT EXISTS teachers (
+            id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL, name VARCHAR(255)
+        );''')
+        cur.execute("SELECT COUNT(*) FROM teachers;")
+        if cur.fetchone()[0] == 0:
+            cur.execute("INSERT INTO teachers (username, password, name) VALUES ('teacher', 'teacher123', 'Default Teacher');")
+
+        cur.execute('''CREATE TABLE IF NOT EXISTS students (
+            id SERIAL PRIMARY KEY, username VARCHAR(255) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL, name VARCHAR(255), class_name VARCHAR(50)
+        );''')
+        cur.execute("SELECT COUNT(*) FROM students;")
+        if cur.fetchone()[0] == 0:
+            cur.execute("INSERT INTO students (username, password, name, class_name) VALUES ('student', 'student123', 'Default Student', 'Class 1');")
+
+        cur.execute('''CREATE TABLE IF NOT EXISTS class_activities (
+            id SERIAL PRIMARY KEY, teacher_username VARCHAR(255), class_name VARCHAR(50), 
+            description TEXT, image_data TEXT NOT NULL, activity_date DATE DEFAULT CURRENT_DATE, 
+            uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );''')
+
         # Commit all table creations FIRST
         conn.commit()
 
@@ -445,15 +466,90 @@ def delete_gallery_image(img_id):
     db_query('DELETE FROM gallery_images WHERE id = ?', (img_id,), commit=True)
     return jsonify({'success': True, 'message': 'Image deleted.'}), 200
 
-# 20. Update gallery image metadata (Admin)
+# 20. Update an Image
 @app.route('/api/gallery/<int:img_id>', methods=['PUT'])
-def update_gallery_image(img_id):
+def update_gallery_img(img_id):
     data = request.json
-    title = (data.get('title') or '').strip()
+    title = data.get('title')
     category_id = data.get('category_id')
-    db_query('UPDATE gallery_images SET title = ?, category_id = ? WHERE id = ?',
+    db_query('UPDATE gallery_images SET title = ?, category_id = ? WHERE id = ?', 
              (title, category_id if category_id else None, img_id), commit=True)
     return jsonify({'success': True, 'message': 'Image updated.'}), 200
+
+# ─── TEACHER & STUDENT PORTAL ───
+
+@app.route('/api/teacher/login', methods=['POST'])
+def teacher_login():
+    data = request.json
+    teacher = db_query('SELECT * FROM teachers WHERE username = ? AND password = ?', (data.get('username'), data.get('password')), fetchone=True)
+    if teacher:
+        return jsonify({"success": True, "message": "Login successful", "user": {"username": teacher['username'], "name": teacher['name']}}), 200
+    return jsonify({"success": False, "message": "Invalid Username or Password"}), 401
+
+@app.route('/api/student/login', methods=['POST'])
+def student_login():
+    data = request.json
+    student = db_query('SELECT * FROM students WHERE username = ? AND password = ?', (data.get('username'), data.get('password')), fetchone=True)
+    if student:
+        return jsonify({"success": True, "message": "Login successful", "user": {"username": student['username'], "name": student['name'], "class_name": student['class_name']}}), 200
+    return jsonify({"success": False, "message": "Invalid Username or Password"}), 401
+
+@app.route('/api/activities', methods=['POST'])
+def add_activity():
+    data = request.json
+    teacher_username = data.get('teacher_username', 'teacher')
+    class_name = data.get('class_name')
+    image_data = data.get('image_data')  # Expected to be large base64
+    
+    if not class_name or not image_data:
+        return jsonify({"success": False, "message": "Class and Image are required."}), 400
+        
+    db_query('INSERT INTO class_activities (teacher_username, class_name, image_data) VALUES (?, ?, ?)',
+             (teacher_username, class_name, image_data), commit=True)
+    return jsonify({"success": True, "message": "Activity uploaded successfully!"}), 201
+
+@app.route('/api/activities', methods=['GET'])
+def get_activities():
+    class_name = request.args.get('class')
+    date_filter = request.args.get('date') # Optional date filter
+    
+    # Base query
+    query = 'SELECT * FROM class_activities'
+    params = []
+    conditions = []
+    
+    if class_name:
+        conditions.append('class_name = ?')
+        params.append(class_name)
+    
+    # Automatically filter by today if date is 'today', otherwise exact date, otherwise all
+    if date_filter == 'today':
+        import datetime
+        today_str = datetime.date.today().isoformat()
+        conditions.append('activity_date = ?')
+        params.append(today_str)
+    elif date_filter:
+        conditions.append('activity_date = ?')
+        params.append(date_filter)
+        
+    if conditions:
+        query += ' WHERE ' + ' AND '.join(conditions)
+        
+    query += ' ORDER BY uploaded_at DESC'
+    
+    activities = db_query(query, tuple(params), fetchall=True)
+    
+    # We may need to format activity_date to string for JSON serialization
+    for act in activities:
+        if 'activity_date' in act and hasattr(act['activity_date'], 'isoformat'):
+            act['activity_date'] = act['activity_date'].isoformat()
+            
+    return jsonify(activities), 200
+
+@app.route('/api/activities/<int:act_id>', methods=['DELETE'])
+def delete_activity(act_id):
+    db_query('DELETE FROM class_activities WHERE id = ?', (act_id,), commit=True)
+    return jsonify({"success": True, "message": "Activity deleted successfully"}), 200
 
 # ─── FORGOT PASSWORD / RESET PASSWORD ───
 

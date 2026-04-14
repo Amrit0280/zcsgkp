@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>School Activity Portal - Zenith Convent School</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap');
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito',sans-serif;min-height:100vh;background:#f0f4ff;color:#1e293b}
+  button{font-family:'Nunito',sans-serif;cursor:pointer;border:none}
+  input,select{font-family:'Nunito',sans-serif;outline:none}
+
+  .screen{display:none;min-height:100vh}
+  .screen.active{display:flex}
+
+  /* ===== HOME ===== */
+  #home{
+    flex-direction:column;align-items:center;justify-content:center;
+    padding:2rem;
+    background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  }
+  .home-logo{text-align:center;margin-bottom:2.5rem;color:#fff}
+  .home-logo .logo-icon{font-size:4rem;margin-bottom:.5rem}
+  .home-logo h1{font-size:2.4rem;font-weight:800;letter-spacing:-1px}
+  .home-logo p{opacity:.85;font-size:1rem;margin-top:.4rem}
+  .home-cards{display:flex;gap:1.25rem;flex-wrap:wrap;justify-content:center}
+  .home-card{
+    background:#fff;border-radius:20px;padding:2rem 2.5rem;
+    text-align:center;cursor:pointer;transition:all .2s;
+    min-width:190px;box-shadow:0 10px 40px rgba(0,0,0,.15);
+  }
+  .home-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,.22)}
+  .home-card .hc-icon{font-size:2.8rem;margin-bottom:.75rem}
+  .home-card h3{font-size:1.1rem;font-weight:800;margin-bottom:.3rem}
+  .home-card p{font-size:.82rem;color:#64748b}
+  .hc-tag{display:inline-block;margin-top:.75rem;padding:3px 14px;border-radius:20px;font-size:.75rem;font-weight:700}
+  .admin-card .hc-tag{background:#ede9fe;color:#7c3aed}
+  .student-card .hc-tag{background:#dcfce7;color:#16a34a}
+  
+  .back-btn-home {
+    position: absolute;
+    top: 20px; left: 20px;
+    background: rgba(255,255,255,0.2); color: white;
+    padding: 8px 16px; border-radius: 8px; font-weight: bold;
+    text-decoration: none; transition: background 0.2s;
+  }
+  .back-btn-home:hover { background: rgba(255,255,255,0.3); }
+
+  /* ===== LOGIN ===== */
+  .login-screen{
+    flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;
+  }
+  #teacher-login{background:linear-gradient(135deg,#667eea,#764ba2)}
+  #student-login{background:linear-gradient(135deg,#22c55e,#16a34a)}
+
+  .login-box{
+    background:#fff;border-radius:20px;padding:2.5rem;
+    width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.2);
+  }
+  .lb-back{
+    background:none;color:#7c3aed;font-size:.85rem;
+    font-weight:700;padding:0;margin-bottom:1.25rem;
+    display:flex;align-items:center;gap:4px;
+  }
+  #student-login .lb-back{color:#16a34a}
+  .login-box h2{font-size:1.5rem;font-weight:800;margin-bottom:.25rem}
+  .login-box .lb-sub{font-size:.85rem;color:#64748b;margin-bottom:1.75rem}
+  .form-field{margin-bottom:1.1rem}
+  .form-field label{display:block;font-size:.82rem;font-weight:700;color:#374151;margin-bottom:.4rem}
+  .form-field input{
+    width:100%;padding:.65rem 1rem;border:2px solid #e5e7eb;
+    border-radius:12px;font-size:.95rem;color:#1e293b;
+    transition:border-color .2s;background:#f9fafb;
+  }
+  .form-field input:focus{border-color:#7c3aed;background:#fff}
+  #student-login .form-field input:focus{border-color:#16a34a}
+  .btn-login{
+    width:100%;padding:.8rem;color:#fff;border-radius:12px;
+    font-size:1rem;font-weight:700;transition:all .2s;margin-top:.5rem;
+  }
+  .btn-login.purple{background:linear-gradient(135deg,#667eea,#764ba2)}
+  .btn-login.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+  .btn-login:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .hint-box{
+    background:#f8fafc;border:1.5px solid #e5e7eb;border-radius:10px;
+    padding:.6rem 1rem;font-size:.8rem;color:#64748b;margin-top:1rem;text-align:center;
+  }
+  .hint-box strong{color:#374151}
+  .err-box{
+    background:#fef2f2;border:1.5px solid #fca5a5;border-radius:10px;
+    padding:.6rem 1rem;color:#dc2626;font-size:.85rem;margin-bottom:1rem;
+  }
+  .loader{
+    display:inline-block;width:16px;height:16px;
+    border:2px solid rgba(255,255,255,.4);border-top-color:#fff;
+    border-radius:50%;animation:spin .6s linear infinite;
+    vertical-align:middle;margin-right:6px;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* ===== TOPBAR ===== */
+  .topbar{
+    background:#fff;padding:1rem 1.5rem;display:flex;
+    align-items:center;justify-content:space-between;
+    border-bottom:1.5px solid #e5e7eb;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);flex-shrink:0;
+  }
+  .topbar-left{display:flex;align-items:center;gap:.75rem}
+  .t-icon{
+    width:38px;height:38px;border-radius:11px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;flex-shrink:0;
+  }
+  .t-icon.purple{background:linear-gradient(135deg,#667eea,#764ba2)}
+  .t-icon.green{background:linear-gradient(135deg,#22c55e,#16a34a)}
+  .topbar-left h2{font-size:1.1rem;font-weight:800}
+  .topbar-left span{font-size:.8rem;color:#64748b;display:block}
+  .btn-logout{
+    background:#f1f5f9;border:1.5px solid #e5e7eb;border-radius:10px;
+    padding:.45rem 1rem;font-size:.82rem;font-weight:700;color:#64748b;
+    transition:all .2s;
+  }
+  .btn-logout:hover{border-color:#e11d48;color:#e11d48;background:#fff1f2}
+
+  /* ===== TEACHER PANEL ===== */
+  #teacher-panel{flex-direction:column}
+  .teacher-body{padding:1.5rem;max-width:740px;margin:0 auto;width:100%;flex:1;overflow-y:auto}
+
+  .upload-card{
+    background:#fff;border-radius:20px;padding:2rem;
+    box-shadow:0 4px 20px rgba(0,0,0,.07);margin-bottom:1.5rem;
+  }
+  .upload-card h3{font-size:1.05rem;font-weight:800;margin-bottom:1.25rem;color:#1e293b}
+
+  .field-label{font-size:.82rem;font-weight:700;color:#374151;margin-bottom:.4rem;display:block}
+
+  select.big-select{
+    width:100%;padding:.7rem 1rem;border:2px solid #e5e7eb;
+    border-radius:12px;font-size:.95rem;color:#1e293b;
+    background:#f9fafb;margin-bottom:1rem;cursor:pointer;
+    appearance:auto;
+    -webkit-appearance:auto;
+  }
+  select.big-select:focus{border-color:#7c3aed;background:#fff;outline:none}
+
+  .file-upload-area{margin-bottom:1rem}
+  .file-btn-label{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    color:#fff;border-radius:12px;padding:.7rem 1.5rem;
+    font-size:.95rem;font-weight:700;cursor:pointer;
+    transition:all .2s;margin-bottom:.75rem;
+  }
+  .file-btn-label:hover{filter:brightness(1.08)}
+  #file-input{display:none}
+
+  .preview-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1rem;min-height:10px}
+  .prev-item{
+    position:relative;width:90px;height:90px;
+    border-radius:12px;overflow:hidden;border:2px solid #e5e7eb;
+  }
+  .prev-item img{width:100%;height:100%;object-fit:cover}
+  .prev-del{
+    position:absolute;top:3px;right:3px;
+    background:rgba(0,0,0,.65);color:#fff;
+    width:22px;height:22px;border-radius:50%;
+    font-size:.9rem;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;border:none;line-height:1;
+  }
+  .file-count{font-size:.82rem;color:#64748b;margin-bottom:.75rem}
+
+  .action-row{display:flex;gap:.75rem;align-items:center;flex-wrap:wrap}
+  .btn-upload{
+    background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;
+    border-radius:12px;padding:.7rem 2rem;font-size:.95rem;font-weight:700;
+    transition:all .2s;
+  }
+  .btn-upload:hover{filter:brightness(1.08)}
+  .btn-upload:disabled{opacity:.6;cursor:not-allowed}
+  .btn-clear{
+    background:#f1f5f9;border:1.5px solid #e5e7eb;border-radius:12px;
+    padding:.7rem 1.25rem;font-size:.88rem;font-weight:700;color:#64748b;
+  }
+  .btn-clear:hover{border-color:#cbd5e1}
+
+  .section-label{
+    font-size:.85rem;font-weight:800;color:#475569;
+    margin-bottom:1rem;text-transform:uppercase;letter-spacing:.5px;
+  }
+  .act-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.85rem}
+  .act-card{
+    background:#fff;border-radius:16px;overflow:hidden;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);cursor:pointer;transition:transform .2s;
+    position: relative;
+  }
+  .act-card:hover{transform:translateY(-3px)}
+  .act-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+  .act-card-info{padding:.6rem .75rem}
+  .act-card-info .aci-class{font-size:.75rem;font-weight:700;color:#7c3aed}
+  .act-card-info .aci-date{font-size:.72rem;color:#94a3b8;margin-top:2px}
+  .btn-delete-act {
+      position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; border-radius: 50%;
+      background: rgba(231,76,60,0.9); color: white; display: flex; align-items: center; justify-content: center;
+      border: none; cursor: pointer; transition: background 0.2s;
+  }
+  .btn-delete-act:hover { background: #c0392b; }
+
+  .no-uploads{text-align:center;padding:2rem;color:#94a3b8}
+  .no-uploads .nu-icon{font-size:2.5rem;margin-bottom:.5rem}
+  .no-uploads p{font-size:.88rem}
+
+  /* ===== STUDENT PANEL ===== */
+  #student-panel{flex-direction:column}
+  .student-body{padding:1.5rem;max-width:700px;margin:0 auto;width:100%;flex:1;overflow-y:auto}
+
+  .selector-card{
+    background:#fff;border-radius:20px;padding:2rem;
+    box-shadow:0 4px 20px rgba(0,0,0,.07);margin-bottom:1.5rem;text-align:center;
+  }
+  .selector-card .sc-icon{font-size:2.5rem;margin-bottom:.75rem}
+  .selector-card h2{font-size:1.3rem;font-weight:800;margin-bottom:.35rem}
+  .selector-card p{font-size:.88rem;color:#64748b;margin-bottom:1.25rem}
+
+  select.stu-select{
+    width:100%;max-width:280px;padding:.7rem 1rem;
+    border:2px solid #e5e7eb;border-radius:12px;
+    font-size:.95rem;color:#1e293b;background:#f9fafb;
+    cursor:pointer;appearance:auto;-webkit-appearance:auto;
+    margin-bottom:1rem;
+  }
+  select.stu-select:focus{border-color:#16a34a;background:#fff;outline:none}
+
+  .btn-view{
+    display:block;margin:0 auto;
+    background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;
+    border-radius:12px;padding:.7rem 2.5rem;font-size:.95rem;font-weight:700;transition:all .2s;
+  }
+  .btn-view:hover{filter:brightness(1.08)}
+
+  .result-card{
+    background:#fff;border-radius:20px;padding:1.5rem;
+    box-shadow:0 4px 20px rgba(0,0,0,.07);
+  }
+  .result-header{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:1.25rem;flex-wrap:wrap;gap:.5rem;
+  }
+  .result-header h3{font-size:1rem;font-weight:800}
+  .date-pill{
+    background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:20px;
+    padding:4px 14px;font-size:.78rem;color:#16a34a;font-weight:700;
+  }
+  .stu-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem}
+  .stu-act-card{
+    border-radius:16px;overflow:hidden;
+    box-shadow:0 4px 16px rgba(0,0,0,.1);cursor:pointer;transition:transform .2s;
+  }
+  .stu-act-card:hover{transform:scale(1.03)}
+  .stu-act-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+  .no-activity{text-align:center;padding:3rem 1rem}
+  .no-activity .na-icon{font-size:3rem;margin-bottom:.75rem}
+  .no-activity h3{font-size:1.15rem;font-weight:800;color:#374151;margin-bottom:.5rem}
+  .no-activity p{font-size:.88rem;color:#94a3b8}
+
+  /* ===== LIGHTBOX ===== */
+  #lightbox{
+    display:none;position:fixed;inset:0;
+    background:rgba(0,0,0,.88);z-index:9999;
+    align-items:center;justify-content:center;padding:1rem;
+  }
+  #lightbox.open{display:flex}
+  #lightbox img{max-width:92%;max-height:88vh;border-radius:14px;object-fit:contain}
+  .lb-close{
+    position:absolute;top:1rem;right:1rem;
+    background:rgba(255,255,255,.15);border:none;color:#fff;
+    width:40px;height:40px;border-radius:50%;font-size:1.4rem;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+  }
+  .lb-close:hover{background:rgba(255,255,255,.25)}
+
+  /* ===== TOAST ===== */
+  #toast-wrap{position:fixed;bottom:1.5rem;right:1.5rem;z-index:9998;display:flex;flex-direction:column;gap:.5rem}
+  .toast{
+    background:#1e293b;color:#fff;border-radius:12px;
+    padding:.7rem 1.25rem;font-size:.85rem;font-weight:600;
+    box-shadow:0 8px 30px rgba(0,0,0,.25);
+    animation:tin .3s ease;max-width:300px;
+  }
+  .toast.ok{background:#16a34a}
+  .toast.er{background:#dc2626}
+  @keyframes tin{from{transform:translateX(120%);opacity:0}to{transform:none;opacity:1}}
+
+  @media(max-width:500px){
+    .home-card{min-width:150px;padding:1.5rem 1.25rem}
+    .act-grid{grid-template-columns:repeat(2,1fr)}
+    .stu-gallery{grid-template-columns:repeat(2,1fr)}
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== HOME ======== -->
+<div id="home" class="screen active">
+  <a href="../index.html" class="back-btn-home">← Home</a>
+  <div class="home-logo">
+    <div class="logo-icon">🏫</div>
+    <h1>School Portal</h1>
+    <p>Daily Class Activity Viewer</p>
+  </div>
+  <div class="home-cards">
+    <div class="home-card admin-card" onclick="go('teacher-login')">
+      <div class="hc-icon">👩‍🏫</div>
+      <h3>Teacher Login</h3>
+      <p>Upload daily class activities</p>
+      <span class="hc-tag">Teacher Access</span>
+    </div>
+    <div class="home-card student-card" onclick="go('student-login')">
+      <div class="hc-icon">🎒</div>
+      <h3>Student Login</h3>
+      <p>View today's class activities</p>
+      <span class="hc-tag">Student Access</span>
+    </div>
+  </div>
+</div>
+
+<!-- ======== TEACHER LOGIN ======== -->
+<div id="teacher-login" class="screen login-screen">
+  <div class="login-box">
+    <button class="lb-back" onclick="go('home')">← Back to Home</button>
+    <h2>Teacher Login</h2>
+    <div class="lb-sub">Sign in to upload class activities</div>
+    <div id="teacher-err" class="err-box" style="display:none"></div>
+    <div class="form-field">
+      <label>Username</label>
+      <input type="text" id="t-user" placeholder="Enter username" autocomplete="username">
+    </div>
+    <div class="form-field">
+      <label>Password</label>
+      <input type="password" id="t-pass" placeholder="Enter password" autocomplete="current-password">
+    </div>
+    <button class="btn-login purple" id="t-btn" onclick="teacherLogin()">Sign In</button>
+  </div>
+</div>
+
+<!-- ======== STUDENT LOGIN ======== -->
+<div id="student-login" class="screen login-screen">
+  <div class="login-box">
+    <button class="lb-back" onclick="go('home')" style="color:#16a34a">← Back to Home</button>
+    <h2>Student Login</h2>
+    <div class="lb-sub">Sign in to view today's activities</div>
+    <div id="student-err" class="err-box" style="display:none"></div>
+    <div class="form-field">
+      <label>Username</label>
+      <input type="text" id="s-user" placeholder="Enter username" autocomplete="username">
+    </div>
+    <div class="form-field">
+      <label>Password</label>
+      <input type="password" id="s-pass" placeholder="Enter password" autocomplete="current-password">
+    </div>
+    <button class="btn-login green" id="s-btn" onclick="studentLogin()">Sign In</button>
+  </div>
+</div>
+
+<!-- ======== TEACHER PANEL ======== -->
+<div id="teacher-panel" class="screen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="t-icon purple">🏫</div>
+      <div>
+        <h2>Teacher Panel</h2>
+        <span id="teacher-name-top">Welcome!</span>
+      </div>
+    </div>
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </div>
+  <div class="teacher-body">
+
+    <!-- Upload Section -->
+    <div class="upload-card">
+      <h3>📤 Upload Today's Activity</h3>
+
+      <label class="field-label">Select Class</label>
+      <select class="big-select" id="up-class">
+        <option value="">-- Choose Class --</option>
+        <option value="Playway">Playway</option>
+        <option value="LKG">LKG</option>
+        <option value="UKG">UKG</option>
+        <option value="Class 1">Class 1</option>
+        <option value="Class 2">Class 2</option>
+        <option value="Class 3">Class 3</option>
+        <option value="Class 4">Class 4</option>
+        <option value="Class 5">Class 5</option>
+        <option value="Class 6">Class 6</option>
+        <option value="Class 7">Class 7</option>
+        <option value="Class 8">Class 8</option>
+        <option value="Class 9">Class 9</option>
+        <option value="Class 10">Class 10</option>
+        <option value="Class 11">Class 11</option>
+        <option value="Class 12">Class 12</option>
+      </select>
+
+      <label class="field-label">Select Images</label>
+      <div class="file-upload-area">
+        <label class="file-btn-label" for="file-input">
+          📁 Choose Images from Folder
+        </label>
+        <input type="file" id="file-input" accept="image/*" multiple onchange="onFilesSelected(this.files)">
+        <div class="file-count" id="file-count">No files selected</div>
+      </div>
+
+      <div class="preview-row" id="prev-row"></div>
+
+      <div class="action-row">
+        <button class="btn-upload" id="up-btn" onclick="doUpload()">Upload Activity</button>
+        <button class="btn-clear" onclick="clearUpload()">Clear</button>
+      </div>
+    </div>
+
+    <!-- Today's Uploads -->
+    <div class="section-label">Today's Uploads</div>
+    <div id="teacher-gallery" class="act-grid"></div>
+    <div id="teacher-empty" class="no-uploads">
+      <div class="nu-icon">🖼️</div>
+      <p>Nothing uploaded yet today</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ======== STUDENT PANEL ======== -->
+<div id="student-panel" class="screen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <div class="t-icon green">🏫</div>
+      <div>
+        <h2>Student Portal</h2>
+        <span id="stu-name-top">Welcome!</span>
+      </div>
+    </div>
+    <button class="btn-logout" onclick="logout()">Sign Out</button>
+  </div>
+  <div class="student-body">
+    <div class="selector-card">
+      <div class="sc-icon">📚</div>
+      <h2>View Today's Activities</h2>
+      <p>Select your class below and tap View</p>
+
+      <select class="stu-select" id="stu-class">
+        <option value="">-- Select Your Class --</option>
+        <option value="Playway">Playway</option>
+        <option value="LKG">LKG</option>
+        <option value="UKG">UKG</option>
+        <option value="Class 1">Class 1</option>
+        <option value="Class 2">Class 2</option>
+        <option value="Class 3">Class 3</option>
+        <option value="Class 4">Class 4</option>
+        <option value="Class 5">Class 5</option>
+        <option value="Class 6">Class 6</option>
+        <option value="Class 7">Class 7</option>
+        <option value="Class 8">Class 8</option>
+        <option value="Class 9">Class 9</option>
+        <option value="Class 10">Class 10</option>
+        <option value="Class 11">Class 11</option>
+        <option value="Class 12">Class 12</option>
+      </select>
+
+      <button class="btn-view" id="stu-view-btn" onclick="viewActivities()">View Activities</button>
+    </div>
+
+    <div id="result-box" style="display:none">
+      <div class="result-card">
+        <div class="result-header">
+          <h3 id="result-title">Activities</h3>
+          <span class="date-pill" id="result-date"></span>
+        </div>
+        <div id="stu-gallery" class="stu-gallery"></div>
+        <div id="no-act" class="no-activity" style="display:none">
+          <div class="na-icon">🌤️</div>
+          <h3>No activity uploaded today</h3>
+          <p>Your teacher hasn't shared today's photos yet.<br>Please check back later!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== LIGHTBOX ======== -->
+<div id="lightbox" onclick="closeLightbox(event)">
+  <button class="lb-close" onclick="closeLightbox(event)">×</button>
+  <img id="lb-img" src="" alt="Activity Photo">
+</div>
+
+<!-- ======== TOAST ======== -->
+<div id="toast-wrap"></div>
+
+<script>
+  let currentUser = null; // { role: 'teacher'|'student', username: '...', name: '...', class_name?: '...' }
+  let selectedFiles = []; // array of { name, dataUrl }
+
+  // ── HELPERS ──
+  function todayLabel() {
+    return new Date().toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
+  }
+
+  // ── NAVIGATION ──
+  function go(screenId) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(screenId).classList.add('active');
+    // clear errors
+    ['teacher-err','student-err'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) { el.style.display = 'none'; el.textContent = ''; }
+    });
+  }
+
+  // ── LOGIN ──
+  async function teacherLogin() {
+    const u   = document.getElementById('t-user').value.trim();
+    const p   = document.getElementById('t-pass').value;
+    const err = document.getElementById('teacher-err');
+    const btn = document.getElementById('t-btn');
+
+    if (!u || !p) {
+      err.textContent = 'Please enter username and password.';
+      err.style.display = 'block';
+      return;
+    }
+    btn.innerHTML = '<span class="loader"></span>Signing in…';
+    btn.disabled  = true;
+
+    try {
+      const res = await fetch('/api/teacher/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
+      const data = await res.json();
+      if (data.success) {
+        currentUser = { role: 'teacher', ...data.user };
+        document.getElementById('teacher-name-top').textContent = 'Hi, ' + currentUser.name;
+        go('teacher-panel');
+        loadTeacherGallery();
+        toast('Welcome, ' + currentUser.name + '! 👋', 'ok');
+      } else {
+        err.textContent = data.message || 'Incorrect username or password.';
+        err.style.display = 'block';
+      }
+    } catch(e) {
+      err.textContent = 'Network error. Try again.';
+      err.style.display = 'block';
+    }
+    btn.innerHTML = 'Sign In';
+    btn.disabled  = false;
+  }
+
+  async function studentLogin() {
+    const u   = document.getElementById('s-user').value.trim();
+    const p   = document.getElementById('s-pass').value;
+    const err = document.getElementById('student-err');
+    const btn = document.getElementById('s-btn');
+
+    if (!u || !p) {
+      err.textContent = 'Please enter username and password.';
+      err.style.display = 'block';
+      return;
+    }
+    btn.innerHTML = '<span class="loader"></span>Signing in…';
+    btn.disabled  = true;
+
+    try {
+      const res = await fetch('/api/student/login', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: u, password: p })
+      });
+      const data = await res.json();
+      if (data.success) {
+        currentUser = { role: 'student', ...data.user };
+        document.getElementById('stu-name-top').textContent = 'Hi, ' + currentUser.name + '!';
+        document.getElementById('result-box').style.display = 'none';
+        
+        // Auto-select the student's class if available
+        if (currentUser.class_name) {
+             const classSelect = document.getElementById('stu-class');
+             const opts = Array.from(classSelect.options).map(o => o.value);
+             if (opts.includes(currentUser.class_name)) {
+                classSelect.value = currentUser.class_name;
+             }
+        }
+        
+        go('student-panel');
+        toast('Welcome! 🎒', 'ok');
+      } else {
+        err.textContent = data.message || 'Incorrect username or password.';
+        err.style.display = 'block';
+      }
+    } catch(e) {
+      err.textContent = 'Network error. Try again.';
+      err.style.display = 'block';
+    }
+    btn.innerHTML = 'Sign In';
+    btn.disabled  = false;
+  }
+
+  function logout() {
+    currentUser = null;
+    selectedFiles = [];
+    ['t-user','t-pass','s-user','s-pass'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+    go('home');
+  }
+
+  // ── FILE SELECTION (TEACHER) ──
+  function onFilesSelected(fileList) {
+    Array.from(fileList).forEach(file => {
+      if (!file.type.startsWith('image/')) {
+        toast('Only image files are allowed.', 'er');
+        return;
+      }
+      if (file.size > 20 * 1024 * 1024) { // Increase typical payload limit gracefully but we use base64
+        toast(file.name + ' is too large.', 'er');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = ev => {
+        // Compress image using canvas before storing to avoid massive Base64 payloads
+        const img = new Image();
+        img.src = ev.target.result;
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const MAX_WIDTH = 1200;
+            const MAX_HEIGHT = 1200;
+            let width = img.width;
+            let height = img.height;
+            if (width > height) {
+                if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+            } else {
+                if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            
+            const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+            selectedFiles.push({ name: file.name, dataUrl: compressedDataUrl });
+            renderPreviews();
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function renderPreviews() {
+    const row = document.getElementById('prev-row');
+    const cnt = document.getElementById('file-count');
+    cnt.textContent = selectedFiles.length
+      ? selectedFiles.length + ' image(s) selected'
+      : 'No files selected';
+
+    row.innerHTML = selectedFiles.map((f, i) => `
+      <div class="prev-item">
+        <img src="${f.dataUrl}" alt="${f.name}">
+        <button class="prev-del" onclick="removeFile(${i})">×</button>
+      </div>
+    `).join('');
+  }
+
+  function removeFile(index) {
+    selectedFiles.splice(index, 1);
+    renderPreviews();
+  }
+
+  function clearUpload() {
+    selectedFiles = [];
+    document.getElementById('file-input').value  = '';
+    document.getElementById('up-class').value    = '';
+    renderPreviews();
+  }
+
+  // ── UPLOAD (TEACHER) ──
+  async function doUpload() {
+    const cls = document.getElementById('up-class').value;
+    if (!cls) { toast('Please select a class first.', 'er'); return; }
+    if (!selectedFiles.length) { toast('Please select at least one image.', 'er'); return; }
+
+    const btn = document.getElementById('up-btn');
+    btn.innerHTML = '<span class="loader"></span>Uploading…';
+    btn.disabled  = true;
+
+    try {
+        // Upload images one by one or all? Let's do one by one.
+        for(let i=0; i<selectedFiles.length; i++) {
+           toast(`Uploading ${i+1}/${selectedFiles.length}...`, '');
+           const file = selectedFiles[i];
+           const res = await fetch('/api/activities', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({
+                  teacher_username: currentUser.username,
+                  class_name: cls,
+                  image_data: file.dataUrl
+              })
+           });
+           if (!res.ok) throw new Error('Upload failed');
+        }
+        toast(selectedFiles.length + ' image(s) uploaded for ' + cls + '! ✅', 'ok');
+        clearUpload();
+        await loadTeacherGallery();
+    } catch(e) {
+        toast('Failed to upload some images.', 'er');
+    }
+
+    btn.innerHTML = 'Upload Activity';
+    btn.disabled  = false;
+  }
+
+  // ── TEACHER GALLERY ──
+  async function loadTeacherGallery() {
+    try {
+        const res = await fetch('/api/activities?date=today');
+        const activities = await res.json();
+        
+        // Filter those uploaded by current teacher
+        const myUploads = activities.filter(a => a.teacher_username === currentUser.username);
+        
+        const grid  = document.getElementById('teacher-gallery');
+        const empty = document.getElementById('teacher-empty');
+
+        if (!myUploads.length) {
+          grid.innerHTML = '';
+          empty.style.display = 'block';
+          return;
+        }
+        empty.style.display = 'none';
+        grid.innerHTML = myUploads.map(a => `
+          <div class="act-card">
+            <img src="${a.image_data}" alt="Activity" onclick="openLightbox('${a.image_data}')">
+            <div class="act-card-info">
+              <div class="aci-class">${a.class_name}</div>
+              <div class="aci-date">${new Date(a.uploaded_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</div>
+            </div>
+            <button class="btn-delete-act" onclick="deleteActivity(${a.id})" title="Delete">×</button>
+          </div>
+        `).join('');
+    } catch(e) {
+        console.error("Failed to load activities", e);
+    }
+  }
+  
+  async function deleteActivity(id) {
+     if(!confirm('Are you sure you want to delete this activity photo?')) return;
+     try {
+         const res = await fetch('/api/activities/' + id, { method: 'DELETE' });
+         if (res.ok) {
+            toast('Activity deleted.', 'ok');
+            loadTeacherGallery();
+         } else {
+            toast('Failed to delete.', 'er');
+         }
+     } catch(e) {
+         toast('Network error.', 'er');
+     }
+  }
+
+  // ── STUDENT VIEW ──
+  async function viewActivities() {
+    const cls = document.getElementById('stu-class').value;
+    if (!cls) { toast('Please select your class.', 'er'); return; }
+
+    const btn = document.getElementById('stu-view-btn');
+    btn.innerHTML = '<span class="loader"></span>Loading…';
+    btn.disabled = true;
+
+    try {
+        const res = await fetch('/api/activities?class=' + encodeURIComponent(cls) + '&date=today');
+        const acts = await res.json();
+
+        document.getElementById('result-title').textContent = cls + ' — Today\'s Activities';
+        document.getElementById('result-date').textContent  = '📅 ' + todayLabel();
+        document.getElementById('result-box').style.display = 'block';
+
+        const gallery = document.getElementById('stu-gallery');
+        const noAct   = document.getElementById('no-act');
+
+        if (!acts.length) {
+          gallery.innerHTML = '';
+          noAct.style.display = 'block';
+        } else {
+          noAct.style.display = 'none';
+          gallery.innerHTML = acts.map(a => `
+            <div class="stu-act-card" onclick="openLightbox('${a.image_data}')">
+              <img src="${a.image_data}" alt="Activity">
+            </div>
+          `).join('');
+        }
+        document.getElementById('result-box').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch(e) {
+        toast('Failed to load activities.', 'er');
+    }
+    
+    btn.innerHTML = 'View Activities';
+    btn.disabled = false;
+  }
+
+  // ── LIGHTBOX ──
+  function openLightbox(src) {
+    document.getElementById('lb-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+  }
+  function closeLightbox(e) {
+    if (e.target.id === 'lightbox' || e.target.classList.contains('lb-close')) {
+      document.getElementById('lightbox').classList.remove('open');
+      document.getElementById('lb-img').src = '';
+    }
+  }
+
+  // ── TOAST ──
+  function toast(msg, type) {
+    const wrap = document.getElementById('toast-wrap');
+    const div  = document.createElement('div');
+    div.className   = 'toast ' + (type || '');
+    div.textContent = msg;
+    wrap.appendChild(div);
+    setTimeout(() => {
+      div.style.transition = 'all .3s';
+      div.style.opacity    = '0';
+      div.style.transform  = 'translateX(120%)';
+      setTimeout(() => div.remove(), 320);
+    }, 2800);
+  }
+
+  // ── KEYBOARD ──
+  document.getElementById('t-pass').addEventListener('keydown',  e => { if (e.key === 'Enter') teacherLogin(); });
+  document.getElementById('t-user').addEventListener('keydown',  e => { if (e.key === 'Enter') document.getElementById('t-pass').focus(); });
+  document.getElementById('s-pass').addEventListener('keydown',  e => { if (e.key === 'Enter') studentLogin(); });
+  document.getElementById('s-user').addEventListener('keydown',  e => { if (e.key === 'Enter') document.getElementById('s-pass').focus(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox({target: document.getElementById('lightbox')}); });
+</script>
+</body>
+</html>
