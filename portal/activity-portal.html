@@ -310,7 +310,10 @@
 
 <!-- ======== HOME ======== -->
 <div id="home" class="screen active">
-  <a href="../index.html" class="back-btn-home">← Home</a>
+  <a href="../index.html" class="back-btn-home" style="display:inline-flex; align-items:center; gap:8px;">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+    Home
+  </a>
   <div class="home-logo">
     <div class="logo-icon">
       <img src="asset/Images/zenithlogo.png" alt="Zenith Convent School Logo" style="height: 85px; margin-bottom: 0.5rem; filter: drop-shadow(0 4px 15px rgba(0,0,0,0.15));">
@@ -342,7 +345,10 @@
 <!-- ======== TEACHER LOGIN ======== -->
 <div id="teacher-login" class="screen login-screen">
   <div class="login-box">
-    <button class="lb-back" onclick="go('home')">← Back to Home</button>
+    <button class="lb-back" onclick="go('home')" style="display:inline-flex; align-items:center; gap:6px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Back to Home
+    </button>
     <h2>Teacher Login</h2>
     <div class="lb-sub">Sign in to upload class activities</div>
     <div id="teacher-err" class="err-box" style="display:none"></div>
@@ -361,7 +367,10 @@
 <!-- ======== STUDENT LOGIN ======== -->
 <div id="student-login" class="screen login-screen">
   <div class="login-box">
-    <button class="lb-back" onclick="go('home')" style="color:#16a34a">← Back to Home</button>
+    <button class="lb-back" onclick="go('home')" style="color:#16a34a; display:inline-flex; align-items:center; gap:6px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Back to Home
+    </button>
     <h2>Student Login</h2>
     <div class="lb-sub">Sign in to view today's activities</div>
     <div id="student-err" class="err-box" style="display:none"></div>
@@ -574,7 +583,7 @@
         document.getElementById('teacher-name-top').textContent = 'Hi, ' + currentUser.name;
         go('teacher-panel');
         loadTeacherGallery();
-        toast('Welcome, ' + currentUser.name + '! 👋', 'ok');
+        toast('Welcome, ' + currentUser.name + '!', 'ok');
       } else {
         err.textContent = data.message || 'Incorrect username or password.';
         err.style.display = 'block';
@@ -622,7 +631,7 @@
         }
         
         go('student-panel');
-        toast('Welcome! 🎒', 'ok');
+        toast('Welcome!', 'ok');
       } else {
         err.textContent = data.message || 'Incorrect username or password.';
         err.style.display = 'block';
@@ -738,7 +747,7 @@
            });
            if (!res.ok) throw new Error('Upload failed');
         }
-        toast(selectedFiles.length + ' image(s) uploaded for ' + cls + '! ✅', 'ok');
+        toast(selectedFiles.length + ' image(s) uploaded for ' + cls + '!', 'ok');
         clearUpload();
         await loadTeacherGallery();
     } catch(e) {
