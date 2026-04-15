@@ -99,7 +99,7 @@ if (admissionForm) {
 
     setTimeout(() => {
       if (btn) {
-        btn.textContent = 'Submit Application';
+        btn.textContent = 'Submit Application 🎓';
         btn.disabled = false;
       }
 
@@ -277,7 +277,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       const headline = document.getElementById('dynHeroHeadline');
       const subtitle = document.getElementById('dynHeroSubtitle');
 
-      if (banner) banner.innerHTML = '<strong>' + contentData.admissions_banner + '</strong>';
+      if (banner) banner.innerHTML = '🎓 <strong>' + contentData.admissions_banner + '</strong>';
       if (headline) headline.innerHTML = contentData.hero_headline;
       if (subtitle) subtitle.innerHTML = contentData.hero_subtitle;
       if (contentData.academic_year) {
@@ -331,9 +331,8 @@ window.addEventListener('DOMContentLoaded', async () => {
       const urgencySection = document.querySelector('.urgency');
       if (urgencySection) {
         urgencySection.innerHTML = `
-          <div class="urgency-badge" style="background:rgba(231,76,60,0.15);color:#e74c3c;border:1px solid rgba(231,76,60,0.3); display:inline-flex; align-items:center; gap:8px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            Admissions Closed
+          <div class="urgency-badge" style="background:rgba(231,76,60,0.15);color:#e74c3c;border:1px solid rgba(231,76,60,0.3);">
+            🔒 Admissions Closed
           </div>
           <h2 style="color:white;">Admissions<br><span style="color:#e74c3c;">Are Currently Closed.</span></h2>
           <p style="color:rgba(255,255,255,0.72);">We are not accepting new applications for the current session at this time. Please check back later or contact the school office for more information.</p>
@@ -348,9 +347,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       if (formSection) {
         formSection.innerHTML = `
           <div style="text-align:center;padding:60px 20px;max-width:600px;margin:0 auto;">
-            <div style="font-size:4rem;margin-bottom:20px; opacity:0.2;">
-              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            </div>
+            <div style="font-size:4rem;margin-bottom:20px;">🔒</div>
             <h2 class="section-title" style="margin-bottom:16px;">Admissions <span style="color:#e74c3c;">Closed</span></h2>
             <p class="section-sub" style="margin:0 auto 32px;text-align:center;">
               Applications for the current session are currently not being accepted.
