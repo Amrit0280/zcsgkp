@@ -557,7 +557,8 @@
     <!-- ─── Navigation ─────────────────────────────────────────────────── -->
     <nav class="kk-nav" id="kk-nav">
       <a href="#" class="kk-nav-logo" style="display:flex; align-items:center;">
-        <img src="portal/asset/Images/zenithlogo.png" style="width: 44px; height: auto; margin-right: 10px;" alt="Zenith Logo">
+        <img src="portal/asset/Images/zenithlogo.png" style="width: 44px; height: auto; margin-right: 10px;"
+          alt="Zenith Logo">
         <div>
           <span class="kk-nav-name">Kilkariyan</span>
           <span class="kk-nav-sub">Playway School</span>
@@ -575,22 +576,75 @@
 
     <!-- ─── Hero Section ───────────────────────────────────────────────── -->
     <section class="kk-hero" id="kk-hero">
-      
+
       <!-- HERO BACKGROUND SLIDESHOW -->
       <style>
-        .kk-hero-bg-slider { position: absolute; inset: 0; z-index: 0; overflow: hidden; background:#000; }
-        .hero-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; animation: fadeSlideshow 24s infinite; filter: brightness(0.7) contrast(1.1); }
-        .hero-slide:nth-child(1) { animation-delay: 0s; }
-        .hero-slide:nth-child(2) { animation-delay: 6s; }
-        .hero-slide:nth-child(3) { animation-delay: 12s; }
-        .hero-slide:nth-child(4) { animation-delay: 18s; }
-        .hero-gradient-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(135deg, rgba(255,107,53,0.7) 0%, rgba(255,154,60,0.6) 30%, rgba(255,95,160,0.6) 65%, rgba(168,85,247,0.7) 100%); mix-blend-mode: multiply; }
+        .kk-hero-bg-slider {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          overflow: hidden;
+          background: #000;
+        }
+
+        .hero-slide {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          opacity: 0;
+          animation: fadeSlideshow 24s infinite;
+          filter: brightness(0.7) contrast(1.1);
+        }
+
+        .hero-slide:nth-child(1) {
+          animation-delay: 0s;
+        }
+
+        .hero-slide:nth-child(2) {
+          animation-delay: 6s;
+        }
+
+        .hero-slide:nth-child(3) {
+          animation-delay: 12s;
+        }
+
+        .hero-slide:nth-child(4) {
+          animation-delay: 18s;
+        }
+
+        .hero-gradient-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+          background: linear-gradient(135deg, rgba(255, 107, 53, 0.7) 0%, rgba(255, 154, 60, 0.6) 30%, rgba(255, 95, 160, 0.6) 65%, rgba(168, 85, 247, 0.7) 100%);
+          mix-blend-mode: multiply;
+        }
+
         @keyframes fadeSlideshow {
-          0% { opacity: 0; transform: scale(1.0); }
-          5% { opacity: 1; }
-          25% { opacity: 1; }
-          30% { opacity: 0; transform: scale(1.05); }
-          100% { opacity: 0; }
+          0% {
+            opacity: 0;
+            transform: scale(1.0);
+          }
+
+          5% {
+            opacity: 1;
+          }
+
+          25% {
+            opacity: 1;
+          }
+
+          30% {
+            opacity: 0;
+            transform: scale(1.05);
+          }
+
+          100% {
+            opacity: 0;
+          }
         }
       </style>
       <div class="kk-hero-bg-slider">
@@ -729,9 +783,12 @@
             <a href="admission.html" class="kk-btn-primary">Begin Their Journey →</a>
           </div>
           <div class="kk-about-card">
-            <div class="kk-emoji-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
-              <img src="Images/Kilkariyan/Infra Structure10.jpg" style="width:100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-              <img src="Images/Kilkariyan/Infra Structure16.jpg" style="width:100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+            <div class="kk-emoji-grid"
+              style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+              <img src="Images/Kilkariyan/Infra Structure10.jpg"
+                style="width:100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+              <img src="Images/Kilkariyan/Infra Structure16.jpg"
+                style="width:100%; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
             </div>
             <blockquote>"At Kilkariyan, safety and emotional well-being come first. Our warm teachers ensure every
               child feels seen, heard, and celebrated."</blockquote>
@@ -889,38 +946,62 @@
         </div>
       </div>
 
-      <div class="gallery-slider-wrap" style="overflow: hidden; padding: 20px 0; background: linear-gradient(to right, rgba(255,255,255,0.8), transparent 10%, transparent 90%, rgba(255,255,255,0.8));">
-        <div class="gallery-slider-track" style="display: flex; gap: 20px; animation: scrollGallery 35s linear infinite; width: max-content;">
+      <div class="gallery-slider-wrap"
+        style="overflow: hidden; padding: 20px 0; background: linear-gradient(to right, rgba(255,255,255,0.8), transparent 10%, transparent 90%, rgba(255,255,255,0.8));">
+        <div class="gallery-slider-track"
+          style="display: flex; gap: 20px; animation: scrollGallery 35s linear infinite; width: max-content;">
           <!-- Using the kilkariyan folder images -->
-          <img src="Images/Kilkariyan/Infra Structure10.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure11.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure13.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure14.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure15.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure17.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure18.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure19.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure10.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure11.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure13.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure14.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure15.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure17.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure18.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure19.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
           <!-- Duplicate for infinite seamless scroll -->
-          <img src="Images/Kilkariyan/Infra Structure10.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure11.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure13.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure14.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure15.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure17.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure18.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
-          <img src="Images/Kilkariyan/Infra Structure19.jpg" style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure10.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure11.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure13.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure14.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure15.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure17.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure18.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
+          <img src="Images/Kilkariyan/Infra Structure19.jpg"
+            style="height:240px; border-radius:18px; box-shadow:0 8px 20px rgba(0,0,0,0.15);">
         </div>
       </div>
-      
+
       <div class="kk-container" style="text-align:center; margin-top: 40px;">
-        <a href="portal/asset/gallery.html" class="kk-btn-outline" style="border-color:#5C21A8; color:#5C21A8;">View All Gallery →</a>
+        <a href="/Tabs/gallery.html" class="kk-btn-outline" style="border-color:#5C21A8; color:#5C21A8;">View All
+          Gallery →</a>
       </div>
     </section>
-    
+
     <style>
       @keyframes scrollGallery {
-        from { transform: translateX(0); }
-        to { transform: translateX(-50%); }
+        from {
+          transform: translateX(0);
+        }
+
+        to {
+          transform: translateX(-50%);
+        }
       }
     </style>
 
