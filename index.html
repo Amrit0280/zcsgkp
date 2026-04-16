@@ -163,10 +163,12 @@
       border-bottom: 4px solid var(--gold);
     ">
     <div class="reveal" style="position: relative; z-index: 2; max-width: 800px; margin: 0 auto;">
-      <h2 style="font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; color: white; margin-bottom: 16px; text-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+      <h2
+        style="font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 800; color: white; margin-bottom: 16px; text-shadow: 0 4px 12px rgba(0,0,0,0.5);">
         Experience the <span style="color: var(--gold);">Zenith</span> Difference
       </h2>
-      <p style="font-size: 1.15rem; color: rgba(255,255,255,0.9); text-shadow: 0 2px 8px rgba(0,0,0,0.5); font-weight: 500;">
+      <p
+        style="font-size: 1.15rem; color: rgba(255,255,255,0.9); text-shadow: 0 2px 8px rgba(0,0,0,0.5); font-weight: 500;">
         A Sprawling Campus Designed for Holistic Growth, Safety, and Boundless Learning.
       </p>
     </div>
@@ -426,21 +428,25 @@
   </style>
 
   <!-- GALLERY HIGHLIGHTS -->
-  <section class="gallery-highlights" id="galleryHighlights" style="padding: 80px 5%; background: var(--bg-light); overflow: hidden;">
+  <section class="gallery-highlights" id="galleryHighlights"
+    style="padding: 80px 5%; background: var(--bg-light); overflow: hidden;">
     <div class="reveal" style="text-align:center">
       <div class="section-label">Campus Life</div>
       <h2 class="section-title">Gallery <span>Highlights</span></h2>
-      <p class="section-sub" style="margin:0 auto">A glimpse into the vibrant life, events, and infrastructure at Zenith Convent School.</p>
+      <p class="section-sub" style="margin:0 auto">A glimpse into the vibrant life, events, and infrastructure at Zenith
+        Convent School.</p>
     </div>
-    
-    <div class="gallery-slider-wrap reveal" style="margin-top: 40px; position: relative; width: 100vw; margin-left: -5%; overflow: hidden;">
+
+    <div class="gallery-slider-wrap reveal"
+      style="margin-top: 40px; position: relative; width: 100vw; margin-left: -5%; overflow: hidden;">
       <div class="gallery-track" id="homepageGalleryTrack" style="display: flex; gap: 20px; width: max-content;">
         <!-- populated by JS -->
       </div>
     </div>
 
     <div class="reveal" style="text-align: center; margin-top: 40px;">
-      <a href="Tabs/gallery.html" class="btn-primary" style="padding: 14px 36px; border-radius: 50px; font-size: 1.05rem; box-shadow: 0 8px 24px rgba(10,61,98,0.2);">
+      <a href="Tabs/gallery.html" class="btn-primary"
+        style="padding: 14px 36px; border-radius: 50px; font-size: 1.05rem; box-shadow: 0 8px 24px rgba(10,61,98,0.2);">
         View All Gallery →
       </a>
     </div>
@@ -449,9 +455,11 @@
     .gallery-track {
       animation: scrollGalleryMarquee 35s linear infinite;
     }
+
     .gallery-track:hover {
       animation-play-state: paused;
     }
+
     .gallery-card {
       width: 320px;
       height: 220px;
@@ -460,21 +468,26 @@
       position: relative;
       background: #eee;
       flex-shrink: 0;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
+
     .gallery-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
     }
+
     .gallery-card:hover img {
       transform: scale(1.08);
     }
+
     .gallery-card .img-title {
       position: absolute;
-      bottom: 0; left: 0; right: 0;
-      background: linear-gradient(to top, rgba(10,61,98,0.95), transparent);
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(10, 61, 98, 0.95), transparent);
       color: white;
       padding: 30px 16px 12px;
       font-size: 0.95rem;
@@ -483,17 +496,33 @@
       transform: translateY(10px);
       transition: all 0.3s ease;
     }
+
     .gallery-card:hover .img-title {
       opacity: 1;
       transform: translateY(0);
     }
+
     @keyframes scrollGalleryMarquee {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(calc(-50% - 10px)); } /* 50% of content plus half gap */
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(calc(-50% - 10px));
+      }
+
+      /* 50% of content plus half gap */
     }
+
     @media(max-width: 768px) {
-      .gallery-card { width: 260px; height: 180px; }
-      .gallery-track { animation-duration: 25s; }
+      .gallery-card {
+        width: 260px;
+        height: 180px;
+      }
+
+      .gallery-track {
+        animation-duration: 25s;
+      }
     }
   </style>
 
@@ -736,8 +765,10 @@
   <script src="portal/asset/script.js?v=2"></script>
 
   <!-- AI CHATBOT (Botpress) -->
+
   <script src="https://cdn.botpress.cloud/webchat/v3.6/inject.js"></script>
-  <script src="https://files.bpcontent.cloud/2026/04/10/09/20260410095211-YW8SJ0OX.js" defer></script>
+  <script src="https://files.bpcontent.cloud/2026/04/10/09/20260410093027-LXSEWVSR.js" defer></script>
+
   <script src="portal/asset/chatbot.js" defer></script>
 
 </body>
