@@ -1,4 +1,5 @@
 import sqlite3
+import sys
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
@@ -663,6 +664,207 @@ def reset_password():
 def health_check():
     return jsonify({"status": "healthy", "database": "postgres" if IS_POSTGRES else "sqlite"}), 200
 
+
+# ─── CHATBOT ENDPOINTS ─────────────────────────────────────────────────────────
+
+import json as _json_lib
+import math
+import re as _re
+
+CHATBOT_KB_PATH = os.path.join(BASE_DIR, 'chatbot', 'knowledge_base.json')
+_kb_cache = None  # in-memory cache
+
+def _load_kb():
+    global _kb_cache
+    if _kb_cache is not None:
+        return _kb_cache
+    if os.path.exists(CHATBOT_KB_PATH):
+        with open(CHATBOT_KB_PATH, 'r', encoding='utf-8') as f:
+            _kb_cache = _json_lib.load(f)
+    else:
+        _kb_cache = []
+    return _kb_cache
+
+def _tokenize(text: str) -> list:
+    return _re.findall(r'[a-zA-Z]{2,}', text.lower())
+
+def _tfidf_score(query_tokens: list, chunk_text: str, idf: dict) -> float:
+    """Simple TF-IDF dot-product score between query and a chunk."""
+    tokens = _tokenize(chunk_text)
+    if not tokens:
+        return 0.0
+    tf = {}
+    for t in tokens:
+        tf[t] = tf.get(t, 0) + 1
+    total = len(tokens)
+    score = 0.0
+    for qt in query_tokens:
+        if qt in tf:
+            tf_val = tf[qt] / total
+            idf_val = idf.get(qt, 1.0)
+            score += tf_val * idf_val
+    return score
+
+def _build_idf(chunks: list) -> dict:
+    """Build IDF from all chunks."""
+    doc_count = len(chunks)
+    df = {}
+    for ch in chunks:
+        words = set(_tokenize(ch.get('text', '')))
+        for w in words:
+            df[w] = df.get(w, 0) + 1
+    idf = {}
+    for w, cnt in df.items():
+        idf[w] = math.log((doc_count + 1) / (cnt + 1)) + 1.0
+    return idf
+
+_idf_cache = None
+
+def _get_idf():
+    global _idf_cache
+    if _idf_cache is None:
+        _idf_cache = _build_idf(_load_kb())
+    return _idf_cache
+
+def _retrieve_context(query: str, top_k: int = 5) -> list:
+    """Return the top-k most relevant chunks for the user query."""
+    chunks = _load_kb()
+    if not chunks:
+        return []
+    idf = _get_idf()
+    query_tokens = _tokenize(query)
+    if not query_tokens:
+        return []
+    scored = []
+    for ch in chunks:
+        sc = _tfidf_score(query_tokens, ch.get('text', ''), idf)
+        scored.append((sc, ch))
+    scored.sort(key=lambda x: x[0], reverse=True)
+    return [ch for sc, ch in scored[:top_k] if sc > 0]
+
+def _call_gemini(query: str, context_chunks: list) -> str:
+    """Call the Gemini API with RAG context and return a response string."""
+    gemini_key = os.environ.get('GEMINI_API_KEY', '')
+    if not gemini_key:
+        return "Chatbot is not configured yet. Please add your GEMINI_API_KEY to the .env file."
+
+    try:
+        import google.generativeai as genai
+        genai.configure(api_key=gemini_key)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+    except Exception as e:
+        return f"Gemini initialization error: {str(e)}"
+
+    # Build context block
+    if context_chunks:
+        context_block = "\n\n".join(
+            f"[Source: {ch.get('ref', 'unknown')}]\n{ch.get('text', '')}"
+            for ch in context_chunks
+        )
+    else:
+        context_block = "No relevant information found in the knowledge base."
+
+    system_prompt = f"""You are the official AI assistant for Zenith Convent School, Gorakhpur — a CBSE-affiliated institution.
+
+IMPORTANT INSTRUCTIONS:
+- Answer ONLY using the provided context below. Do NOT use external knowledge.
+- If the context does not contain the answer, say: "I'm sorry, I don't have that information. Please call us at +91 6391002700 or email zcsgkp@gmail.com."
+- Be friendly, helpful, and professional. Use clear, concise language.
+- For fees, admissions, rules, or faculty — refer precisely to the context.
+- Keep answers under 150 words unless necessary.
+
+KNOWLEDGE BASE CONTEXT:
+{context_block}
+
+USER QUESTION:
+{query}
+
+RESPONSE:"""
+
+    try:
+        response = model.generate_content(system_prompt)
+        return response.text.strip()
+    except Exception as e:
+        return f"Sorry, I encountered an error. Please contact us at zcsgkp@gmail.com. (Error: {str(e)})"
+
+def _source_label(ref: str) -> str:
+    """Convert a reference (URL or filename) to a human-friendly label."""
+    if ref.startswith('http'):
+        return f'School Website'
+    elif ref.endswith('.pdf'):
+        return f'Document: {ref}'
+    else:
+        return f'School Records: {ref.replace(".html", "").replace("-", " ").title()}'
+
+# 25. Chatbot Query Endpoint
+@app.route('/api/chatbot', methods=['POST'])
+def chatbot_query():
+    try:
+        data = request.json or {}
+        query = (data.get('query') or '').strip()
+        if not query:
+            return jsonify({'success': False, 'message': 'Query is required.'}), 400
+        if len(query) > 500:
+            return jsonify({'success': False, 'message': 'Query too long.'}), 400
+
+        # Retrieve relevant context
+        context_chunks = _retrieve_context(query, top_k=5)
+
+        # Generate response using Gemini
+        answer = _call_gemini(query, context_chunks)
+
+        # Build source citations (unique, max 3)
+        seen = set()
+        sources = []
+        for ch in context_chunks:
+            ref = ch.get('ref', '')
+            if ref and ref not in seen:
+                seen.add(ref)
+                sources.append({'ref': ref, 'label': _source_label(ref)})
+            if len(sources) >= 3:
+                break
+
+        return jsonify({
+            'success':  True,
+            'answer':   answer,
+            'sources':  sources,
+            'has_context': len(context_chunks) > 0
+        }), 200
+
+    except Exception as e:
+        print("Chatbot Error:", e)
+        return jsonify({'success': False, 'message': 'Internal server error.'}), 500
+
+# 26. Rebuild Knowledge Base (Admin protected)
+@app.route('/api/chatbot/rebuild', methods=['POST'])
+def chatbot_rebuild():
+    global _kb_cache, _idf_cache
+    try:
+        data = request.json or {}
+        token = data.get('token', '')
+        # Simple token check — use admin credentials from DB
+        admin = db_query('SELECT * FROM admins WHERE id = 1', fetchone=True)
+        if not admin or token != admin.get('password'):
+            return jsonify({'success': False, 'message': 'Unauthorized.'}), 401
+
+        # Run the builder
+        sys.path.insert(0, os.path.join(BASE_DIR, 'chatbot'))
+        import build_kb
+        import importlib
+        importlib.reload(build_kb)
+        chunks = build_kb.build()
+
+        # Clear caches
+        _kb_cache = None
+        _idf_cache = None
+
+        return jsonify({'success': True, 'chunks': len(chunks), 'message': f'Knowledge base rebuilt with {len(chunks)} chunks.'}), 200
+    except Exception as e:
+        print("KB Rebuild Error:", e)
+        return jsonify({'success': False, 'message': str(e)}), 500
+
+
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(debug=True, host='0.0.0.0', port=port)
+
