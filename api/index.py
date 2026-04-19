@@ -749,9 +749,9 @@ def _call_gemini(query: str, context_chunks: list) -> str:
         return "Chatbot is not configured yet. Please add your GEMINI_API_KEY to the .env file."
 
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=gemini_key)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        from google import genai
+        from google.genai import types
+        client = genai.Client(api_key=gemini_key)
     except Exception as e:
         return f"Gemini initialization error: {str(e)}"
 
@@ -782,10 +782,18 @@ USER QUESTION:
 RESPONSE:"""
 
     try:
-        response = model.generate_content(system_prompt)
+        response = client.models.generate_content(
+            model='gemini-2.0-flash',
+            contents=system_prompt,
+            config=types.GenerateContentConfig(
+                temperature=0.2,
+                max_output_tokens=512,
+            )
+        )
         return response.text.strip()
     except Exception as e:
         return f"Sorry, I encountered an error. Please contact us at zcsgkp@gmail.com. (Error: {str(e)})"
+
 
 def _source_label(ref: str) -> str:
     """Convert a reference (URL or filename) to a human-friendly label."""
