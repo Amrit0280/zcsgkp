@@ -764,11 +764,15 @@ def _call_gemini(query: str, context_chunks: list) -> str:
     else:
         context_block = "No relevant information found in the knowledge base."
 
-    system_prompt = f"""You are the official AI assistant for Zenith Convent School, Gorakhpur — a CBSE-affiliated institution.
+    system_prompt = f"""You are the official Zenith - Help Desk for Zenith Convent School, Gorakhpur — a CBSE-affiliated institution.
 
 IMPORTANT INSTRUCTIONS:
 - Answer ONLY using the provided context below. Do NOT use external knowledge.
 - If the context does not contain the answer, say: "I'm sorry, I don't have that information. Please call us at +91 6391002700 or email zcsgkp@gmail.com."
+- If the user asks for images of the school uniform, you MUST provide them using markdown image syntax:
+  * Summer Uniform: ![Summer Girls](https://zenithconventschoolgkp.com/Image/SUMMER_UNIFORM_GIRL.png) and ![Summer Boys](https://zenithconventschoolgkp.com/Image/SUMMER_UNIFORM_BOY.png)
+  * House Uniform: ![House Girls](https://zenithconventschoolgkp.com/Image/HOUSE_UNIFORM_GIRL.png) and ![House Boys](https://zenithconventschoolgkp.com/Image/HOUSE_UNIFORM_BOY.png)
+  * Winter Uniform: ![Winter Girls](https://zenithconventschoolgkp.com/Image/Winter_Uniform_Girl.png) and ![Winter Boys](https://zenithconventschoolgkp.com/Image/Winter_Uniform_Boy.png)
 - Be friendly, helpful, and professional. Use clear, concise language.
 - For fees, admissions, rules, or faculty — refer precisely to the context.
 - Keep answers under 150 words unless necessary.
@@ -781,18 +785,55 @@ USER QUESTION:
 
 RESPONSE:"""
 
-    try:
-        response = client.models.generate_content(
-            model='gemini-2.0-flash',
-            contents=system_prompt,
-            config=types.GenerateContentConfig(
-                temperature=0.2,
-                max_output_tokens=512,
-            )
-        )
-        return response.text.strip()
-    except Exception as e:
-        return f"Sorry, I encountered an error. Please contact us at zcsgkp@gmail.com. (Error: {str(e)})"
+    import time as _time
+
+    # Multiple models with separate quotas — if one is exhausted, try the next
+    models_to_try = [
+        'gemini-2.5-flash',
+        'gemini-2.0-flash',
+        'gemini-2.0-flash-lite',
+        'gemini-flash-latest',
+        'gemini-3-flash-preview'
+    ]
+    last_error = None
+
+    for model_name in models_to_try:
+        for attempt in range(2):  # up to 2 retries per model
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=system_prompt,
+                    config=types.GenerateContentConfig(
+                        temperature=0.2,
+                        max_output_tokens=512,
+                    )
+                )
+                return response.text.strip()
+            except Exception as e:
+                last_error = e
+                error_str = str(e).lower()
+                print(f"[Chatbot] Model {model_name} attempt {attempt+1} failed: {e}")
+                
+                # Hard quota exhaustion (limit: 0) — no point retrying, try next model
+                if 'limit: 0' in error_str or 'quota_failure' in error_str:
+                    break
+                # Temporary rate-limit (429) — retry with backoff
+                if '429' in error_str or 'quota' in error_str or 'rate' in error_str:
+                    _time.sleep(2 ** attempt)  # 1s, 2s backoff
+                    continue
+                # For non-rate-limit errors, try next model immediately
+                break
+
+    # Log the final error for debugging
+    print(f"[Chatbot] ALL models failed. Last error: {last_error}")
+    
+    # Return a helpful message based on the error type
+    if last_error:
+        err = str(last_error).lower()
+        if 'quota' in err or '429' in err or 'resource_exhausted' in err:
+            return "I'm sorry, the AI service has reached its daily usage limit. Please try again tomorrow, or call us at +91 6391002700 for immediate assistance."
+    
+    return "I'm sorry, the AI assistant is temporarily unavailable. Please try again in a moment or call us at +91 6391002700."
 
 
 def _source_label(ref: str) -> str:

@@ -1,5 +1,5 @@
 /* ============================================================
-   KILKARIYAN PLAYWAY SCHOOL — PHYSICS ENTRY APP
+   KILKARIYAAN PLAYWAY SCHOOL — PHYSICS ENTRY APP
    Physics: Matter.js | Animations: GSAP | Rendering: Canvas
    ============================================================ */
 

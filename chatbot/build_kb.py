@@ -182,11 +182,11 @@ def build():
     else:
         print("[1/3] No website.txt found — skipping")
 
-    # 2. Parse local HTML files
-    print(f"\n[2/3] Local HTML Files")
-    html_files = [f for f in os.listdir(DB_DIR) if f.endswith('.html')]
-    if html_files:
-        for fname in html_files:
+    # 2. Parse local HTML & TXT files
+    print(f"\n[2/3] Local HTML & TXT Files")
+    local_files = [f for f in os.listdir(DB_DIR) if (f.endswith('.html') or f.endswith('.txt')) and f != 'website.txt']
+    if local_files:
+        for fname in local_files:
             try:
                 chunks = parse_html_file(os.path.join(DB_DIR, fname))
                 all_chunks.extend(chunks)

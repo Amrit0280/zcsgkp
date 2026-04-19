@@ -22,7 +22,7 @@
     '📞 Contact details'
   ];
 
-  const GREET = `Hello! 👋 I'm the **Zenith AI Assistant**.\n\nAsk me anything about **admissions, fees, faculty, rules, or school activities**. I'm here to help!`;
+  const GREET = `Hello! 👋 I'm the **Zenith - Help Desk**.\n\nAsk me anything about **admissions, fees, faculty, rules, or school activities**. I'm here to help!`;
 
   // ──────────────────────────────────────────────
   // INJECT CSS
@@ -263,7 +263,7 @@
   const wrap = document.createElement('div');
   wrap.innerHTML = `
     <!-- FAB Button -->
-    <button id="zcs-chat-fab" aria-label="Open Zenith AI Chat">
+    <button id="zcs-chat-fab" aria-label="Open Zenith - Help Desk">
       <div class="notif-dot" id="zcsNotifDot"></div>
       <svg class="icon-chat" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
@@ -274,12 +274,14 @@
     </button>
 
     <!-- Chat Panel -->
-    <div id="zcs-chat-panel" role="dialog" aria-label="Zenith AI Assistant">
+    <div id="zcs-chat-panel" role="dialog" aria-label="Zenith - Help Desk">
       <!-- Header -->
       <div id="zcs-chat-header">
-        <div id="zcs-chat-avatar">🎓</div>
+        <div id="zcs-chat-avatar">
+          <img src="/Images/zenithlogo.png" alt="ZCS Logo" style="width: 100%; height: 100%; border-radius: 50%; object-fit: contain; background: white; padding: 2px;" />
+        </div>
         <div id="zcs-chat-header-info">
-          <div class="name">Zenith AI Assistant</div>
+          <div class="name">Zenith - Help Desk</div>
           <div class="status">Online · Powered by Gemini AI</div>
         </div>
         <button id="zcs-chat-close" aria-label="Close chat">✕</button>
@@ -337,8 +339,15 @@
   // ──────────────────────────────────────────────
   function mdToHtml(text) {
     return text
+      // Images: ![alt](url)
+      .replace(/!\[([^\]]+)\]\(([^)]+)\)/g, '<img src="$2" alt="$1" style="max-width:100%; border-radius:8px; margin-top:8px; display:block; border: 1px solid rgba(10,61,98,0.1);" referrerpolicy="no-referrer">')
+      // Links: [text](url)
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:#0A3D62; text-decoration:underline; font-weight:600;">$1</a>')
+      // Bold: **text**
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      // Italic: *text*
       .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      // Newlines
       .replace(/\n/g, '<br>');
   }
 
