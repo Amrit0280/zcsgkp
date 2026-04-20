@@ -65,41 +65,99 @@ if (submitBtn) {
 }
 
 // ─── FORM SUBMISSION ───
+
+/* Helper: show a validation hint below an input */
+function showFieldError(el, msg) {
+  el.style.borderColor = '#ef4444';
+  el.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.18)';
+
+  // Remove any old hint
+  const oldHint = el.parentElement.querySelector('.field-hint');
+  if (oldHint) oldHint.remove();
+
+  const hint = document.createElement('span');
+  hint.className = 'field-hint';
+  hint.style.cssText = 'display:block;color:#ef4444;font-size:0.78rem;margin-top:4px;padding-left:4px;';
+  hint.textContent = msg;
+  el.parentElement.appendChild(hint);
+
+  setTimeout(() => {
+    el.style.borderColor = '';
+    el.style.boxShadow = '';
+    hint.remove();
+  }, 3000);
+}
+
 const admissionForm = document.getElementById('admissionForm');
 if (admissionForm) {
   admissionForm.addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const fields = ['studentName', 'parentName', 'phone', 'email'];
     let valid = true;
 
-    fields.forEach(id => {
+    // ── Required text fields ──
+    ['studentName', 'parentName'].forEach(id => {
       const el = document.getElementById(id);
       if (el && !el.value.trim()) {
-        el.style.borderColor = '#ef4444';
+        showFieldError(el, 'This field is required.');
         valid = false;
-        setTimeout(() => el.style.borderColor = '', 2000);
       }
     });
 
+    // ── Class selection ──
     const cls = document.getElementById('classApplying');
     if (cls && !cls.value) {
       cls.style.borderColor = '#ef4444';
+      cls.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.18)';
       valid = false;
-      setTimeout(() => cls.style.borderColor = '', 2000);
+      setTimeout(() => { cls.style.borderColor = ''; cls.style.boxShadow = ''; }, 3000);
+    }
+
+    // ── Phone: exactly 10 digits, starts with 6-9 ──
+    const phoneEl = document.getElementById('phone');
+    if (phoneEl) {
+      const phoneVal = phoneEl.value.trim();
+      const phoneRegex = /^[6-9][0-9]{9}$/;
+      if (!phoneVal) {
+        showFieldError(phoneEl, 'Phone number is required.');
+        valid = false;
+      } else if (!/^\d+$/.test(phoneVal)) {
+        showFieldError(phoneEl, 'Phone number must contain digits only.');
+        valid = false;
+      } else if (phoneVal.length !== 10) {
+        showFieldError(phoneEl, `Phone must be exactly 10 digits (you entered ${phoneVal.length}).`);
+        valid = false;
+      } else if (!phoneRegex.test(phoneVal)) {
+        showFieldError(phoneEl, 'Enter a valid Indian mobile number (starts with 6–9).');
+        valid = false;
+      }
+    }
+
+    // ── Email: strict format check ──
+    const emailEl = document.getElementById('email');
+    if (emailEl) {
+      const emailVal = emailEl.value.trim();
+      const emailRegex = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
+      if (!emailVal) {
+        showFieldError(emailEl, 'Email address is required.');
+        valid = false;
+      } else if (!emailRegex.test(emailVal)) {
+        showFieldError(emailEl, 'Enter a valid email address (e.g. name@gmail.com).');
+        valid = false;
+      }
     }
 
     if (!valid) return;
 
     const btn = document.getElementById('submitBtn');
     if (btn) {
-      btn.textContent = 'Submitting…';
+      btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Submitting…';
       btn.disabled = true;
     }
 
     setTimeout(() => {
       if (btn) {
-        btn.textContent = 'Submit Application 🎓';
+        btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Submit Application';
         btn.disabled = false;
       }
 
@@ -117,6 +175,17 @@ if (admissionForm) {
       }
     }, 1400);
   });
+
+  // ── Phone: block non-numeric key presses live ──
+  const phoneInput = document.getElementById('phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function () {
+      this.value = this.value.replace(/\D/g, '').slice(0, 10);
+    });
+    phoneInput.addEventListener('keypress', function (e) {
+      if (!/[0-9]/.test(e.key)) e.preventDefault();
+    });
+  }
 }
 
 // ─── SELECT STYLE FIX ───
