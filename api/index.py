@@ -173,6 +173,14 @@ def init_db():
             uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );''')
 
+        cur.execute('''CREATE TABLE IF NOT EXISTS visitor_stats (
+            id SERIAL PRIMARY KEY,
+            ip VARCHAR(64) NOT NULL,
+            user_agent TEXT,
+            visit_date DATE NOT NULL DEFAULT CURRENT_DATE,
+            UNIQUE(ip, user_agent, visit_date)
+        );''')
+
         # Commit all table creations FIRST
         conn.commit()
 
@@ -663,6 +671,97 @@ def reset_password():
 @app.route('/api/health', methods=['GET'])
 def health_check():
     return jsonify({"status": "healthy", "database": "postgres" if IS_POSTGRES else "sqlite"}), 200
+
+# 25. Track a unique page visit
+@app.route('/api/track-visit', methods=['POST'])
+def track_visit():
+    import datetime
+    try:
+        ip = request.headers.get('X-Forwarded-For', request.remote_addr or 'unknown').split(',')[0].strip()
+        ua = (request.headers.get('User-Agent') or '')[:512]  # cap length
+        today = datetime.date.today().isoformat()
+        if IS_POSTGRES:
+            conn = get_db_connection()
+            try:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        'INSERT INTO visitor_stats (ip, user_agent, visit_date) VALUES (%s, %s, %s) ON CONFLICT (ip, user_agent, visit_date) DO NOTHING',
+                        (ip, ua, today)
+                    )
+                conn.commit()
+            finally:
+                conn.close()
+        else:
+            conn = sqlite3.connect(DB_PATH)
+            try:
+                conn.execute('''CREATE TABLE IF NOT EXISTS visitor_stats (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ip TEXT NOT NULL,
+                    user_agent TEXT,
+                    visit_date TEXT NOT NULL,
+                    UNIQUE(ip, user_agent, visit_date)
+                );''')
+                conn.execute(
+                    'INSERT OR IGNORE INTO visitor_stats (ip, user_agent, visit_date) VALUES (?, ?, ?)',
+                    (ip, ua, today)
+                )
+                conn.commit()
+            finally:
+                conn.close()
+        return jsonify({'success': True}), 200
+    except Exception as e:
+        print('Track visit error:', e)
+        return jsonify({'success': False}), 200  # silent fail — never block the user
+
+# 26. Get visitor stats for dashboard
+@app.route('/api/visitors/stats', methods=['GET'])
+def visitor_stats():
+    import datetime
+    try:
+        today = datetime.date.today().isoformat()
+        yesterday = (datetime.date.today() - datetime.timedelta(days=1)).isoformat()
+        if IS_POSTGRES:
+            conn = get_db_connection()
+            try:
+                with conn.cursor() as cur:
+                    cur.execute('SELECT COUNT(*) FROM visitor_stats WHERE visit_date = %s', (today,))
+                    today_count = cur.fetchone()[0]
+                    cur.execute('SELECT COUNT(*) FROM visitor_stats WHERE visit_date = %s', (yesterday,))
+                    yesterday_count = cur.fetchone()[0]
+            finally:
+                conn.close()
+        else:
+            conn = sqlite3.connect(DB_PATH)
+            try:
+                conn.execute('''CREATE TABLE IF NOT EXISTS visitor_stats (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ip TEXT NOT NULL,
+                    user_agent TEXT,
+                    visit_date TEXT NOT NULL,
+                    UNIQUE(ip, user_agent, visit_date)
+                );''')
+                today_count = conn.execute('SELECT COUNT(*) FROM visitor_stats WHERE visit_date = ?', (today,)).fetchone()[0]
+                yesterday_count = conn.execute('SELECT COUNT(*) FROM visitor_stats WHERE visit_date = ?', (yesterday,)).fetchone()[0]
+            finally:
+                conn.close()
+
+        # Calculate trend
+        if yesterday_count > 0:
+            change_pct = round(((today_count - yesterday_count) / yesterday_count) * 100)
+        elif today_count > 0:
+            change_pct = 100
+        else:
+            change_pct = 0
+
+        return jsonify({
+            'today': today_count,
+            'yesterday': yesterday_count,
+            'change_pct': change_pct,
+            'trend': 'up' if change_pct >= 0 else 'down'
+        }), 200
+    except Exception as e:
+        print('Visitor stats error:', e)
+        return jsonify({'today': 0, 'yesterday': 0, 'change_pct': 0, 'trend': 'up'}), 200
 
 
 # ─── CHATBOT ENDPOINTS ─────────────────────────────────────────────────────────

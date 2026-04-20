@@ -1,3 +1,16 @@
+// ─── VISITOR TRACKING ───
+(function () {
+  try {
+    // Fire-and-forget: records a unique daily visitor server-side
+    const body = JSON.stringify({ ts: Date.now() });
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('/api/track-visit', new Blob([body], { type: 'application/json' }));
+    } else {
+      fetch('/api/track-visit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body, keepalive: true }).catch(() => {});
+    }
+  } catch (e) { /* silent */ }
+})();
+
 // ─── SCROLL REVEAL ───
 const revealObserver = new IntersectionObserver((entries) => {
   entries.forEach(e => {

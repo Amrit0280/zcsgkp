@@ -128,7 +128,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initial load
   loadAdmissions();
+  loadVisitorStats();
 
+
+  // ══════════════════════════════════════════════
+  //  DATA: VISITOR STATS
+  // ══════════════════════════════════════════════
+  async function loadVisitorStats() {
+    const countEl = document.getElementById('visitorCount');
+    const trendEl = document.getElementById('visitorTrend');
+    try {
+      const res  = await fetch('/api/visitors/stats');
+      const data = await res.json();
+
+      if (countEl) countEl.textContent = data.today.toLocaleString('en-IN');
+
+      if (trendEl) {
+        const pct  = Math.abs(data.change_pct);
+        const arrow = data.trend === 'up' ? '↑' : '↓';
+        const color = data.trend === 'up' ? 'var(--admin-success)' : 'var(--admin-danger)';
+        trendEl.className = 'stat-trend ' + data.trend;
+        trendEl.style.color = color;
+        if (data.yesterday === 0 && data.today === 0) {
+          trendEl.textContent = 'No visits yet today';
+        } else if (data.yesterday === 0) {
+          trendEl.textContent = 'First visits today!';
+        } else {
+          trendEl.textContent = `${arrow} ${pct}% vs yesterday (${data.yesterday.toLocaleString('en-IN')})`;
+        }
+      }
+    } catch (e) {
+      if (countEl) countEl.textContent = '--';
+      if (trendEl) trendEl.textContent = 'Could not load';
+    }
+  }
 
   // ══════════════════════════════════════════════
   //  DATA: ADMISSIONS
